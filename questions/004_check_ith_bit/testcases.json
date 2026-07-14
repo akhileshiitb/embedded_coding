@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "description": "Bit 0 set in 0x01",
+    "inputs": {"num": 1, "i": 0},
+    "expected": 1
+  },
+  {
+    "id": 2,
+    "description": "Bit 1 set in 0x02",
+    "inputs": {"num": 2, "i": 1},
+    "expected": 1
+  },
+  {
+    "id": 3,
+    "description": "Bit 3 set in 0x08",
+    "inputs": {"num": 8, "i": 3},
+    "expected": 1
+  },
+  {
+    "id": 4,
+    "description": "Bit 7 set in 0x80",
+    "inputs": {"num": 128, "i": 7},
+    "expected": 1
+  },
+  {
+    "id": 5,
+    "description": "Bit 15 set in 0x8000",
+    "inputs": {"num": 32768, "i": 15},
+    "expected": 1
+  },
+  {
+    "id": 6,
+    "description": "Bit 31 set in 0x80000000",
+    "inputs": {"num": 2147483648, "i": 31},
+    "expected": 1
+  },
+  {
+    "id": 7,
+    "description": "Bit 0 clear in 0",
+    "inputs": {"num": 0, "i": 0},
+    "expected": 0
+  },
+  {
+    "id": 8,
+    "description": "Bit 31 clear in 0",
+    "inputs": {"num": 0, "i": 31},
+    "expected": 0
+  },
+  {
+    "id": 9,
+    "description": "Bit 1 clear in 0x01",
+    "inputs": {"num": 1, "i": 1},
+    "expected": 0
+  },
+  {
+    "id": 10,
+    "description": "Bit 31 clear in 0x01",
+    "inputs": {"num": 1, "i": 31},
+    "expected": 0
+  },
+  {
+    "id": 11,
+    "description": "Bit 0 clear in 0xFFFFFFFE",
+    "inputs": {"num": 4294967294, "i": 0},
+    "expected": 0
+  },
+  {
+    "id": 12,
+    "description": "Bit 31 clear in 0x7FFFFFFF",
+    "inputs": {"num": 2147483647, "i": 31},
+    "expected": 0
+  },
+  {
+    "id": 13,
+    "description": "Bit 3 set in 0x0F",
+    "inputs": {"num": 15, "i": 3},
+    "expected": 1
+  },
+  {
+    "id": 14,
+    "description": "Bit 4 clear in 0x0F",
+    "inputs": {"num": 15, "i": 4},
+    "expected": 0
+  },
+  {
+    "id": 15,
+    "description": "Bit 0 clear in 0xAAAAAAAA (alternating)",
+    "inputs": {"num": 2863311530, "i": 0},
+    "expected": 0
+  },
+  {
+    "id": 16,
+    "description": "Bit 1 set in 0xAAAAAAAA (alternating)",
+    "inputs": {"num": 2863311530, "i": 1},
+    "expected": 1
+  },
+  {
+    "id": 17,
+    "description": "Bit 0 set in 0x55555555 (alternating)",
+    "inputs": {"num": 1431655765, "i": 0},
+    "expected": 1
+  },
+  {
+    "id": 18,
+    "description": "Bit 1 clear in 0x55555555 (alternating)",
+    "inputs": {"num": 1431655765, "i": 1},
+    "expected": 0
+  },
+  {
+    "id": 19,
+    "description": "Bit 0 set in all ones",
+    "inputs": {"num": 4294967295, "i": 0},
+    "expected": 1
+  },
+  {
+    "id": 20,
+    "description": "Bit 31 set in all ones",
+    "inputs": {"num": 4294967295, "i": 31},
+    "expected": 1
+  }
+]

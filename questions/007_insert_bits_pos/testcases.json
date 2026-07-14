@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "description": "Insert 0xA into bits 0-3 of 0",
+    "inputs": {"reg": 0, "start": 0, "end": 3, "value": 10},
+    "expected": 10
+  },
+  {
+    "id": 2,
+    "description": "Insert 0xA into bits 4-7 of 0",
+    "inputs": {"reg": 0, "start": 4, "end": 7, "value": 10},
+    "expected": 160
+  },
+  {
+    "id": 3,
+    "description": "Insert 0x42 into bits 8-15 of 0",
+    "inputs": {"reg": 0, "start": 8, "end": 15, "value": 66},
+    "expected": 16896
+  },
+  {
+    "id": 4,
+    "description": "Insert 0xAB into bits 16-23 of 0",
+    "inputs": {"reg": 0, "start": 16, "end": 23, "value": 171},
+    "expected": 11206656
+  },
+  {
+    "id": 5,
+    "description": "Insert 0xCD into bits 24-31 of 0",
+    "inputs": {"reg": 0, "start": 24, "end": 31, "value": 205},
+    "expected": 3439329280
+  },
+  {
+    "id": 6,
+    "description": "Insert 0x5 into bits 0-3 of all ones",
+    "inputs": {"reg": 4294967295, "start": 0, "end": 3, "value": 5},
+    "expected": 4294967285
+  },
+  {
+    "id": 7,
+    "description": "Insert 0x42 into bits 8-15 of all ones",
+    "inputs": {"reg": 4294967295, "start": 8, "end": 15, "value": 66},
+    "expected": 4294950655
+  },
+  {
+    "id": 8,
+    "description": "Insert 0x00 into bits 24-31 of all ones",
+    "inputs": {"reg": 4294967295, "start": 24, "end": 31, "value": 0},
+    "expected": 16777215
+  },
+  {
+    "id": 9,
+    "description": "Insert 0xB into bits 0-3 of 0x12345678",
+    "inputs": {"reg": 305419896, "start": 0, "end": 3, "value": 11},
+    "expected": 305419899
+  },
+  {
+    "id": 10,
+    "description": "Insert 0xEF into bits 8-15 of 0xABCD0000",
+    "inputs": {"reg": 2882338816, "start": 8, "end": 15, "value": 239},
+    "expected": 2882400000
+  },
+  {
+    "id": 11,
+    "description": "Insert 0xCA into bits 16-23 of 0xDEADBEEF",
+    "inputs": {"reg": 3735928559, "start": 16, "end": 23, "value": 202},
+    "expected": 3737214703
+  },
+  {
+    "id": 12,
+    "description": "Insert 1 into single bit at position 0",
+    "inputs": {"reg": 0, "start": 0, "end": 0, "value": 1},
+    "expected": 1
+  },
+  {
+    "id": 13,
+    "description": "Insert 0 into single bit at position 31",
+    "inputs": {"reg": 4294967295, "start": 31, "end": 31, "value": 0},
+    "expected": 2147483647
+  },
+  {
+    "id": 14,
+    "description": "Insert 0x5 into 3-bit field bits 4-6",
+    "inputs": {"reg": 0, "start": 4, "end": 6, "value": 5},
+    "expected": 80
+  },
+  {
+    "id": 15,
+    "description": "Insert 0x7 into 3-bit field bits 10-12",
+    "inputs": {"reg": 0, "start": 10, "end": 12, "value": 7},
+    "expected": 7168
+  },
+  {
+    "id": 16,
+    "description": "Insert 0 to clear bits 0-7",
+    "inputs": {"reg": 4294967295, "start": 0, "end": 7, "value": 0},
+    "expected": 4294967040
+  },
+  {
+    "id": 17,
+    "description": "Insert 0 to clear bits 16-31",
+    "inputs": {"reg": 4294967295, "start": 16, "end": 31, "value": 0},
+    "expected": 65535
+  },
+  {
+    "id": 18,
+    "description": "Insert 0xCAFE into bits 0-15",
+    "inputs": {"reg": 3735928559, "start": 0, "end": 15, "value": 51966},
+    "expected": 3735879422
+  },
+  {
+    "id": 19,
+    "description": "Insert 0xABCD into bits 16-31",
+    "inputs": {"reg": 305419896, "start": 16, "end": 31, "value": 43981},
+    "expected": 2882395128
+  },
+  {
+    "id": 20,
+    "description": "Insert into full 32-bit field",
+    "inputs": {"reg": 3735928559, "start": 0, "end": 31, "value": 305419896},
+    "expected": 305419896
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "description": "Clear bit 0 of 0x01",
+    "inputs": {"num": 1, "i": 0},
+    "expected": 0
+  },
+  {
+    "id": 2,
+    "description": "Clear bit 1 of 0x02",
+    "inputs": {"num": 2, "i": 1},
+    "expected": 0
+  },
+  {
+    "id": 3,
+    "description": "Clear bit 3 of 0x08",
+    "inputs": {"num": 8, "i": 3},
+    "expected": 0
+  },
+  {
+    "id": 4,
+    "description": "Clear bit 7 of 0x80",
+    "inputs": {"num": 128, "i": 7},
+    "expected": 0
+  },
+  {
+    "id": 5,
+    "description": "Clear bit 15 of 0x8000",
+    "inputs": {"num": 32768, "i": 15},
+    "expected": 0
+  },
+  {
+    "id": 6,
+    "description": "Clear bit 31 (MSB) of 0x80000000",
+    "inputs": {"num": 2147483648, "i": 31},
+    "expected": 0
+  },
+  {
+    "id": 7,
+    "description": "Clear bit 0 of 0x0F",
+    "inputs": {"num": 15, "i": 0},
+    "expected": 14
+  },
+  {
+    "id": 8,
+    "description": "Clear bit 7 of 0xFF",
+    "inputs": {"num": 255, "i": 7},
+    "expected": 127
+  },
+  {
+    "id": 9,
+    "description": "Clear bit 8 of 0xFFFF",
+    "inputs": {"num": 65535, "i": 8},
+    "expected": 65279
+  },
+  {
+    "id": 10,
+    "description": "Clear bit 16 of 0xFFFFFFFF",
+    "inputs": {"num": 4294967295, "i": 16},
+    "expected": 4294901759
+  },
+  {
+    "id": 11,
+    "description": "Bit 0 already clear in 0",
+    "inputs": {"num": 0, "i": 0},
+    "expected": 0
+  },
+  {
+    "id": 12,
+    "description": "Bit 31 already clear in 0",
+    "inputs": {"num": 0, "i": 31},
+    "expected": 0
+  },
+  {
+    "id": 13,
+    "description": "Bit 0 already clear in 0xFFFFFFFE",
+    "inputs": {"num": 4294967294, "i": 0},
+    "expected": 4294967294
+  },
+  {
+    "id": 14,
+    "description": "Bit 31 already clear in 0x7FFFFFFF",
+    "inputs": {"num": 2147483647, "i": 31},
+    "expected": 2147483647
+  },
+  {
+    "id": 15,
+    "description": "Clear bit 0 of all ones",
+    "inputs": {"num": 4294967295, "i": 0},
+    "expected": 4294967294
+  },
+  {
+    "id": 16,
+    "description": "Clear bit 31 of all ones",
+    "inputs": {"num": 4294967295, "i": 31},
+    "expected": 2147483647
+  }
+]

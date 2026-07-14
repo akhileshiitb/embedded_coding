@@ -1,0 +1,146 @@
+[
+  {
+    "id": 1,
+    "description": "Extract bits 0-3: value 0xA",
+    "inputs": {"reg": 10, "mask": 15},
+    "expected": 10
+  },
+  {
+    "id": 2,
+    "description": "Extract bits 4-7: value 0xA",
+    "inputs": {"reg": 160, "mask": 240},
+    "expected": 10
+  },
+  {
+    "id": 3,
+    "description": "Extract bits 8-15: value 0x42",
+    "inputs": {"reg": 16896, "mask": 65280},
+    "expected": 66
+  },
+  {
+    "id": 4,
+    "description": "Extract bits 16-23: value 0xAB",
+    "inputs": {"reg": 11206656, "mask": 16711680},
+    "expected": 171
+  },
+  {
+    "id": 5,
+    "description": "Extract bits 24-31: value 0xCD",
+    "inputs": {"reg": 3439329280, "mask": 4278190080},
+    "expected": 205
+  },
+  {
+    "id": 6,
+    "description": "Extract 0x42 from all-ones surroundings",
+    "inputs": {"reg": 4294950655, "mask": 65280},
+    "expected": 66
+  },
+  {
+    "id": 7,
+    "description": "Extract nibble 0 from 0x1234567B",
+    "inputs": {"reg": 305419899, "mask": 15},
+    "expected": 11
+  },
+  {
+    "id": 8,
+    "description": "Extract byte 2 from 0xABCDEF00",
+    "inputs": {"reg": 2882400000, "mask": 16711680},
+    "expected": 205
+  },
+  {
+    "id": 9,
+    "description": "Extract byte 1 from 0xDEADBEEF",
+    "inputs": {"reg": 3735928559, "mask": 65280},
+    "expected": 190
+  },
+  {
+    "id": 10,
+    "description": "Extract zero field from non-zero register",
+    "inputs": {"reg": 4294902015, "mask": 65280},
+    "expected": 0
+  },
+  {
+    "id": 11,
+    "description": "Extract from zero register",
+    "inputs": {"reg": 0, "mask": 15},
+    "expected": 0
+  },
+  {
+    "id": 12,
+    "description": "Extract 16-bit field from zero register",
+    "inputs": {"reg": 0, "mask": 4294901760},
+    "expected": 0
+  },
+  {
+    "id": 13,
+    "description": "Extract bits 0-3 from all ones",
+    "inputs": {"reg": 4294967295, "mask": 15},
+    "expected": 15
+  },
+  {
+    "id": 14,
+    "description": "Extract bits 4-7 from all ones",
+    "inputs": {"reg": 4294967295, "mask": 240},
+    "expected": 15
+  },
+  {
+    "id": 15,
+    "description": "Extract bits 8-15 from all ones",
+    "inputs": {"reg": 4294967295, "mask": 65280},
+    "expected": 255
+  },
+  {
+    "id": 16,
+    "description": "Extract bits 24-31 from all ones",
+    "inputs": {"reg": 4294967295, "mask": 4278190080},
+    "expected": 255
+  },
+  {
+    "id": 17,
+    "description": "Extract single bit 0 (set)",
+    "inputs": {"reg": 1, "mask": 1},
+    "expected": 1
+  },
+  {
+    "id": 18,
+    "description": "Extract single bit 0 (clear)",
+    "inputs": {"reg": 0, "mask": 1},
+    "expected": 0
+  },
+  {
+    "id": 19,
+    "description": "Extract single bit 31 (set)",
+    "inputs": {"reg": 2147483648, "mask": 2147483648},
+    "expected": 1
+  },
+  {
+    "id": 20,
+    "description": "Extract single bit 31 (clear)",
+    "inputs": {"reg": 2147483647, "mask": 2147483648},
+    "expected": 0
+  },
+  {
+    "id": 21,
+    "description": "Extract 3-bit field at bits 4-6: value 5",
+    "inputs": {"reg": 80, "mask": 112},
+    "expected": 5
+  },
+  {
+    "id": 22,
+    "description": "Extract 3-bit field at bits 10-12: value 7",
+    "inputs": {"reg": 7168, "mask": 7168},
+    "expected": 7
+  },
+  {
+    "id": 23,
+    "description": "Extract 16-bit field bits 0-15",
+    "inputs": {"reg": 3735879422, "mask": 65535},
+    "expected": 51966
+  },
+  {
+    "id": 24,
+    "description": "Extract 16-bit field bits 16-31",
+    "inputs": {"reg": 2882395128, "mask": 4294901760},
+    "expected": 43981
+  }
+]

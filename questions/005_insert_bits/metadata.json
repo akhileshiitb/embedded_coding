@@ -1,0 +1,19 @@
+{
+  "id": 5,
+  "title": "Insert Value into Bit Field",
+  "slug": "insert_bits",
+  "difficulty": "medium",
+  "tags": ["bitwise", "bit-fields", "registers"],
+  "function_name": "insert_bits",
+  "parameters": [
+    {"name": "reg", "type": "uint32_t", "description": "The original 32-bit register value"},
+    {"name": "mask", "type": "uint32_t", "description": "Bit mask defining the target field"},
+    {"name": "value", "type": "uint32_t", "description": "The value to insert (unshifted)"}
+  ],
+  "return_type": "uint32_t",
+  "constraints": [
+    "mask contains one or more contiguous set bits",
+    "value fits within the field width defined by the mask",
+    "reg, mask, and value are valid 32-bit unsigned integers"
+  ]
+}

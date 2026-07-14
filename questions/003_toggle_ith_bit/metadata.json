@@ -1,0 +1,17 @@
+{
+  "id": 3,
+  "title": "Toggle the i-th Bit",
+  "slug": "toggle_ith_bit",
+  "difficulty": "easy",
+  "tags": ["bitwise", "basics"],
+  "function_name": "toggle_bit",
+  "parameters": [
+    {"name": "num", "type": "uint32_t", "description": "The input 32-bit unsigned integer"},
+    {"name": "i", "type": "int", "description": "The bit position to toggle (0-indexed)"}
+  ],
+  "return_type": "uint32_t",
+  "constraints": [
+    "0 <= i <= 31",
+    "num is a valid 32-bit unsigned integer"
+  ]
+}

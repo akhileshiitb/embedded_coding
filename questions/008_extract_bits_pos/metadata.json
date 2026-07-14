@@ -1,0 +1,18 @@
+{
+  "id": 8,
+  "title": "Extract Value from Bit Field (by Position)",
+  "slug": "extract_bits_pos",
+  "difficulty": "medium",
+  "tags": ["bitwise", "bit-fields", "registers"],
+  "function_name": "extract_bits_pos",
+  "parameters": [
+    {"name": "reg", "type": "uint32_t", "description": "The register value to extract from"},
+    {"name": "start", "type": "int", "description": "The lowest bit position of the field (inclusive)"},
+    {"name": "end", "type": "int", "description": "The highest bit position of the field (inclusive)"}
+  ],
+  "return_type": "uint32_t",
+  "constraints": [
+    "0 <= start <= end <= 31",
+    "reg is a valid 32-bit unsigned integer"
+  ]
+}

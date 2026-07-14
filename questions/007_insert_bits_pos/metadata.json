@@ -1,0 +1,20 @@
+{
+  "id": 7,
+  "title": "Insert Value into Bit Field (by Position)",
+  "slug": "insert_bits_pos",
+  "difficulty": "medium",
+  "tags": ["bitwise", "bit-fields", "registers"],
+  "function_name": "insert_bits_pos",
+  "parameters": [
+    {"name": "reg", "type": "uint32_t", "description": "The original 32-bit register value"},
+    {"name": "start", "type": "int", "description": "The lowest bit position of the field (inclusive)"},
+    {"name": "end", "type": "int", "description": "The highest bit position of the field (inclusive)"},
+    {"name": "value", "type": "uint32_t", "description": "The value to insert (unshifted)"}
+  ],
+  "return_type": "uint32_t",
+  "constraints": [
+    "0 <= start <= end <= 31",
+    "value fits within the field width (end - start + 1 bits)",
+    "reg and value are valid 32-bit unsigned integers"
+  ]
+}

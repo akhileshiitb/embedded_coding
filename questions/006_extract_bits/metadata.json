@@ -1,0 +1,17 @@
+{
+  "id": 6,
+  "title": "Extract Value from Bit Field",
+  "slug": "extract_bits",
+  "difficulty": "medium",
+  "tags": ["bitwise", "bit-fields", "registers"],
+  "function_name": "extract_bits",
+  "parameters": [
+    {"name": "reg", "type": "uint32_t", "description": "The register value to extract from"},
+    {"name": "mask", "type": "uint32_t", "description": "Bit mask defining the target field"}
+  ],
+  "return_type": "uint32_t",
+  "constraints": [
+    "mask contains one or more contiguous set bits",
+    "reg and mask are valid 32-bit unsigned integers"
+  ]
+}
