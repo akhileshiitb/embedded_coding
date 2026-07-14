@@ -1,0 +1,35 @@
+We want to make a lighweight coding platform like leetcode.com
+
+This coding platform is to practice embedded system related coding questions in C programming. 
+This may include C bitwise operator based questions or important embedded related data structure and concepts. 
+
+This coding platform will run on local host only. This mean all solutions will be compiled using gcc host based compiler. 
+There will be testcases also to test the solution provided by the user. 
+
+User interface: 
+
+1) Each question is a folder.
+2) In each folder, there will be 3 files - question.md solution.c and testcases.c 
+    Where, question.md file will have question with example input/outputs and input constraints. This should be similar to how typical leetcode style
+question looks like. 
+    Next, solution.c file will be the function templete that user will implement. This should also be like leedcode. Only function to be completed should be there in solution.c 
+   testcases.c file will have all required testcases to test the solution provided by the user. Consider all corner and edge cases. Cover all input. Write comprenhensive testcases. 
+
+3) User will read the question, and edit the solution.c file to complete the solution.
+   To submit and test the solution provide a shell script at the top. This shell script will have implementation to compile the solution code and run the testcases. That is this shell script will invoke compiler to compile solution and testcases and provide results pass/total_testcases. If all testcases pass, solution is accepted. If any testcase fail, print the testcase.  
+
+4) Add the mechanism in the shell script to give hits to the user if asked. 
+
+5) This shell scripts should be invokable from any question folder. That is it should compile and run tests in the current folder, this is to enable user not to invoke this by quetion numbers. 
+
+6) Number each question. Start question folder names as <nums>_<short_description>
+
+Internal implementations: 
+1) Use shell scripts for compilation and invoking any tools on the host. 
+2) This coding platform in only used to program in C (No any other language)
+3) Testcase logic and data shoud be written and stored in C language. 
+4) Implement the platform in such a way that we can add ARM assembly questions also in the future. So platform should support assembly questios and testcases. 
+5) Implement the mechanism to add new questions in the future. New questions will be added by the AI agents. So create a prompt to AI agent to read question in .txt format, generate question and testcases and add them in appropriate locations. 
+
+6) Update the README.md file to add user guide on how to use this platform.
+        
