@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "description": "Zero has no bits set",
+    "inputs": {"num": 0},
+    "expected": 0
+  },
+  {
+    "id": 2,
+    "description": "Only bit 0 set",
+    "inputs": {"num": 1},
+    "expected": 1
+  },
+  {
+    "id": 3,
+    "description": "Bits 0 and 1 set",
+    "inputs": {"num": 3},
+    "expected": 2
+  },
+  {
+    "id": 4,
+    "description": "Lower nibble all set (4 bits)",
+    "inputs": {"num": 15},
+    "expected": 4
+  },
+  {
+    "id": 5,
+    "description": "Lower byte all set (8 bits)",
+    "inputs": {"num": 255},
+    "expected": 8
+  },
+  {
+    "id": 6,
+    "description": "Bit 4 set (power of 2)",
+    "inputs": {"num": 16},
+    "expected": 1
+  },
+  {
+    "id": 7,
+    "description": "Bit 8 set (power of 2)",
+    "inputs": {"num": 256},
+    "expected": 1
+  },
+  {
+    "id": 8,
+    "description": "Only MSB set",
+    "inputs": {"num": 2147483648},
+    "expected": 1
+  },
+  {
+    "id": 9,
+    "description": "Alternating 10 pattern (16 bits)",
+    "inputs": {"num": 2863311530},
+    "expected": 16
+  },
+  {
+    "id": 10,
+    "description": "Alternating 01 pattern (16 bits)",
+    "inputs": {"num": 1431655765},
+    "expected": 16
+  },
+  {
+    "id": 11,
+    "description": "All 32 bits set",
+    "inputs": {"num": 4294967295},
+    "expected": 32
+  },
+  {
+    "id": 12,
+    "description": "Lower 16 bits set",
+    "inputs": {"num": 65535},
+    "expected": 16
+  },
+  {
+    "id": 13,
+    "description": "Upper 16 bits set",
+    "inputs": {"num": 4294901760},
+    "expected": 16
+  },
+  {
+    "id": 14,
+    "description": "Two bits set far apart",
+    "inputs": {"num": 65537},
+    "expected": 2
+  },
+  {
+    "id": 15,
+    "description": "All bits set except MSB",
+    "inputs": {"num": 2147483647},
+    "expected": 31
+  },
+  {
+    "id": 16,
+    "description": "All bits set except LSB",
+    "inputs": {"num": 4294967294},
+    "expected": 31
+  }
+]

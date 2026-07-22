@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "description": "Zero remains zero",
+    "inputs": {"num": 0},
+    "expected": 0
+  },
+  {
+    "id": 2,
+    "description": "All ones remains all ones",
+    "inputs": {"num": 4294967295},
+    "expected": 4294967295
+  },
+  {
+    "id": 3,
+    "description": "Low nibble swaps to high",
+    "inputs": {"num": 15},
+    "expected": 240
+  },
+  {
+    "id": 4,
+    "description": "High nibble swaps to low",
+    "inputs": {"num": 240},
+    "expected": 15
+  },
+  {
+    "id": 5,
+    "description": "Single byte nibble swap (0xAB)",
+    "inputs": {"num": 171},
+    "expected": 186
+  },
+  {
+    "id": 6,
+    "description": "All four bytes swapped",
+    "inputs": {"num": 305419896},
+    "expected": 558096007
+  },
+  {
+    "id": 7,
+    "description": "All four bytes swapped (hex letters)",
+    "inputs": {"num": 2882400001},
+    "expected": 3135076112
+  },
+  {
+    "id": 8,
+    "description": "Symmetric nibbles unchanged",
+    "inputs": {"num": 287454020},
+    "expected": 287454020
+  },
+  {
+    "id": 9,
+    "description": "All low nibbles become high",
+    "inputs": {"num": 252645135},
+    "expected": 4042322160
+  },
+  {
+    "id": 10,
+    "description": "All high nibbles become low",
+    "inputs": {"num": 4042322160},
+    "expected": 252645135
+  },
+  {
+    "id": 11,
+    "description": "Single bit in low nibble",
+    "inputs": {"num": 1},
+    "expected": 16
+  },
+  {
+    "id": 12,
+    "description": "Single bit in high nibble",
+    "inputs": {"num": 128},
+    "expected": 8
+  },
+  {
+    "id": 13,
+    "description": "MSB moves within MSB byte",
+    "inputs": {"num": 2147483648},
+    "expected": 134217728
+  },
+  {
+    "id": 14,
+    "description": "Each byte has one nibble set",
+    "inputs": {"num": 270544960},
+    "expected": 16909060
+  },
+  {
+    "id": 15,
+    "description": "Mixed pattern A5",
+    "inputs": {"num": 2779096485},
+    "expected": 1515870810
+  },
+  {
+    "id": 16,
+    "description": "Mixed pattern 5A",
+    "inputs": {"num": 1515870810},
+    "expected": 2779096485
+  }
+]

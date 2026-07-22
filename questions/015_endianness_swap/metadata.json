@@ -1,0 +1,15 @@
+{
+  "id": 15,
+  "title": "Endianness Swap (Byte Swap)",
+  "slug": "endianness_swap",
+  "difficulty": "easy",
+  "tags": ["bitwise", "endianness", "byte-order"],
+  "function_name": "swap_endianness",
+  "parameters": [
+    {"name": "num", "type": "uint32_t", "description": "The input 32-bit unsigned integer"}
+  ],
+  "return_type": "uint32_t",
+  "constraints": [
+    "num is a valid 32-bit unsigned integer"
+  ]
+}

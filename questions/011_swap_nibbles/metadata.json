@@ -1,0 +1,15 @@
+{
+  "id": 11,
+  "title": "Swap Nibbles",
+  "slug": "swap_nibbles",
+  "difficulty": "easy",
+  "tags": ["bitwise", "manipulation", "nibble"],
+  "function_name": "swap_nibbles",
+  "parameters": [
+    {"name": "num", "type": "uint32_t", "description": "The input 32-bit unsigned integer"}
+  ],
+  "return_type": "uint32_t",
+  "constraints": [
+    "num is a valid 32-bit unsigned integer"
+  ]
+}

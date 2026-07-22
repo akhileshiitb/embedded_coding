@@ -1,0 +1,15 @@
+{
+  "id": 14,
+  "title": "Check Power of Two",
+  "slug": "check_power_of_two",
+  "difficulty": "easy",
+  "tags": ["bitwise", "basics", "power-of-two"],
+  "function_name": "is_power_of_two",
+  "parameters": [
+    {"name": "num", "type": "uint32_t", "description": "The input 32-bit unsigned integer"}
+  ],
+  "return_type": "int",
+  "constraints": [
+    "num is a valid 32-bit unsigned integer"
+  ]
+}

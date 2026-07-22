@@ -1,0 +1,15 @@
+{
+  "id": 9,
+  "title": "Count Set Bits (Popcount / Hamming Weight)",
+  "slug": "count_set_bits",
+  "difficulty": "easy",
+  "tags": ["bitwise", "counting", "popcount"],
+  "function_name": "count_set_bits",
+  "parameters": [
+    {"name": "num", "type": "uint32_t", "description": "The input 32-bit unsigned integer"}
+  ],
+  "return_type": "int",
+  "constraints": [
+    "num is a valid 32-bit unsigned integer"
+  ]
+}

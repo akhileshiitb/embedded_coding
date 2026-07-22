@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "description": "Zero remains zero",
+    "inputs": {"num": 0},
+    "expected": 0
+  },
+  {
+    "id": 2,
+    "description": "All ones remains all ones",
+    "inputs": {"num": 4294967295},
+    "expected": 4294967295
+  },
+  {
+    "id": 3,
+    "description": "Standard test pattern",
+    "inputs": {"num": 305419896},
+    "expected": 2018915346
+  },
+  {
+    "id": 4,
+    "description": "Distinct bytes AABBCCDD",
+    "inputs": {"num": 2864434397},
+    "expected": 3721182122
+  },
+  {
+    "id": 5,
+    "description": "Byte 0 moves to byte 3",
+    "inputs": {"num": 255},
+    "expected": 4278190080
+  },
+  {
+    "id": 6,
+    "description": "Byte 1 moves to byte 2",
+    "inputs": {"num": 65280},
+    "expected": 16711680
+  },
+  {
+    "id": 7,
+    "description": "Byte 2 moves to byte 1",
+    "inputs": {"num": 16711680},
+    "expected": 65280
+  },
+  {
+    "id": 8,
+    "description": "Byte 3 moves to byte 0",
+    "inputs": {"num": 4278190080},
+    "expected": 255
+  },
+  {
+    "id": 9,
+    "description": "LSB byte moves to MSB position",
+    "inputs": {"num": 1},
+    "expected": 16777216
+  },
+  {
+    "id": 10,
+    "description": "MSB byte moves to LSB position",
+    "inputs": {"num": 2147483648},
+    "expected": 128
+  },
+  {
+    "id": 11,
+    "description": "Byte 1 bit moves to byte 2",
+    "inputs": {"num": 256},
+    "expected": 65536
+  },
+  {
+    "id": 12,
+    "description": "Byte 2 bit moves to byte 1",
+    "inputs": {"num": 65536},
+    "expected": 256
+  },
+  {
+    "id": 13,
+    "description": "Byte palindrome pattern",
+    "inputs": {"num": 16909825},
+    "expected": 16909825
+  },
+  {
+    "id": 14,
+    "description": "Symmetric ABCDCDAB",
+    "inputs": {"num": 2882379179},
+    "expected": 2882379179
+  },
+  {
+    "id": 15,
+    "description": "IP address 192.168.0.1 swap",
+    "inputs": {"num": 3232235521},
+    "expected": 16820416
+  },
+  {
+    "id": 16,
+    "description": "IP address 10.0.0.1 swap",
+    "inputs": {"num": 167772161},
+    "expected": 16777226
+  }
+]

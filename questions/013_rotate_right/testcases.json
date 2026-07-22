@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "description": "LSB wraps to MSB",
+    "inputs": {"num": 1, "n": 1},
+    "expected": 2147483648
+  },
+  {
+    "id": 2,
+    "description": "MSB moves to bit 30",
+    "inputs": {"num": 2147483648, "n": 1},
+    "expected": 1073741824
+  },
+  {
+    "id": 3,
+    "description": "Rotate 0x10 right by 4",
+    "inputs": {"num": 16, "n": 4},
+    "expected": 1
+  },
+  {
+    "id": 4,
+    "description": "Bit 1 moves to bit 0",
+    "inputs": {"num": 2, "n": 1},
+    "expected": 1
+  },
+  {
+    "id": 5,
+    "description": "Rotate by 0 is identity",
+    "inputs": {"num": 305419896, "n": 0},
+    "expected": 305419896
+  },
+  {
+    "id": 6,
+    "description": "Rotating zero gives zero",
+    "inputs": {"num": 0, "n": 5},
+    "expected": 0
+  },
+  {
+    "id": 7,
+    "description": "Rotating all ones gives all ones",
+    "inputs": {"num": 4294967295, "n": 7},
+    "expected": 4294967295
+  },
+  {
+    "id": 8,
+    "description": "Rotate right by 4 (one nibble)",
+    "inputs": {"num": 305419896, "n": 4},
+    "expected": 2166572167
+  },
+  {
+    "id": 9,
+    "description": "Rotate right by 8 (one byte)",
+    "inputs": {"num": 305419896, "n": 8},
+    "expected": 2018915346
+  },
+  {
+    "id": 10,
+    "description": "Rotate right by 16 (two bytes)",
+    "inputs": {"num": 305419896, "n": 16},
+    "expected": 1450709556
+  },
+  {
+    "id": 11,
+    "description": "Rotate right by 24 (three bytes)",
+    "inputs": {"num": 305419896, "n": 24},
+    "expected": 878082066
+  },
+  {
+    "id": 12,
+    "description": "Bit 2 moves to bit 1",
+    "inputs": {"num": 4, "n": 1},
+    "expected": 2
+  },
+  {
+    "id": 13,
+    "description": "Bit 2 moves to bit 0",
+    "inputs": {"num": 4, "n": 2},
+    "expected": 1
+  },
+  {
+    "id": 14,
+    "description": "Bit 2 wraps to MSB",
+    "inputs": {"num": 4, "n": 3},
+    "expected": 2147483648
+  },
+  {
+    "id": 15,
+    "description": "Alternating 01 rotated right by 1",
+    "inputs": {"num": 1431655765, "n": 1},
+    "expected": 2863311530
+  },
+  {
+    "id": 16,
+    "description": "Upper half rotates to lower half",
+    "inputs": {"num": 4294901760, "n": 16},
+    "expected": 65535
+  }
+]

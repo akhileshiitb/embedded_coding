@@ -1,0 +1,15 @@
+{
+  "id": 16,
+  "title": "Find First Set Bit",
+  "slug": "find_first_set_bit",
+  "difficulty": "easy",
+  "tags": ["bitwise", "scanning", "ffs"],
+  "function_name": "find_first_set",
+  "parameters": [
+    {"name": "num", "type": "uint32_t", "description": "The input 32-bit unsigned integer"}
+  ],
+  "return_type": "int",
+  "constraints": [
+    "num is a valid 32-bit unsigned integer"
+  ]
+}

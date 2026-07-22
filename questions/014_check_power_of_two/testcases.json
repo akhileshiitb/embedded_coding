@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "description": "2^0 = 1",
+    "inputs": {"num": 1},
+    "expected": 1
+  },
+  {
+    "id": 2,
+    "description": "2^1 = 2",
+    "inputs": {"num": 2},
+    "expected": 1
+  },
+  {
+    "id": 3,
+    "description": "2^2 = 4",
+    "inputs": {"num": 4},
+    "expected": 1
+  },
+  {
+    "id": 4,
+    "description": "2^3 = 8",
+    "inputs": {"num": 8},
+    "expected": 1
+  },
+  {
+    "id": 5,
+    "description": "2^4 = 16",
+    "inputs": {"num": 16},
+    "expected": 1
+  },
+  {
+    "id": 6,
+    "description": "2^8 = 256",
+    "inputs": {"num": 256},
+    "expected": 1
+  },
+  {
+    "id": 7,
+    "description": "2^16 = 65536",
+    "inputs": {"num": 65536},
+    "expected": 1
+  },
+  {
+    "id": 8,
+    "description": "2^31 = 2147483648 (largest power of 2 in uint32)",
+    "inputs": {"num": 2147483648},
+    "expected": 1
+  },
+  {
+    "id": 9,
+    "description": "Zero is not a power of two",
+    "inputs": {"num": 0},
+    "expected": 0
+  },
+  {
+    "id": 10,
+    "description": "3 is not a power of two",
+    "inputs": {"num": 3},
+    "expected": 0
+  },
+  {
+    "id": 11,
+    "description": "5 is not a power of two",
+    "inputs": {"num": 5},
+    "expected": 0
+  },
+  {
+    "id": 12,
+    "description": "6 is not a power of two",
+    "inputs": {"num": 6},
+    "expected": 0
+  },
+  {
+    "id": 13,
+    "description": "7 is not a power of two",
+    "inputs": {"num": 7},
+    "expected": 0
+  },
+  {
+    "id": 14,
+    "description": "15 is not a power of two",
+    "inputs": {"num": 15},
+    "expected": 0
+  },
+  {
+    "id": 15,
+    "description": "All bits set is not a power of two",
+    "inputs": {"num": 4294967295},
+    "expected": 0
+  },
+  {
+    "id": 16,
+    "description": "Two high bits set is not a power of two",
+    "inputs": {"num": 3221225472},
+    "expected": 0
+  }
+]

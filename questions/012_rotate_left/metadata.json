@@ -1,0 +1,17 @@
+{
+  "id": 12,
+  "title": "Rotate Left",
+  "slug": "rotate_left",
+  "difficulty": "easy",
+  "tags": ["bitwise", "rotation", "circular"],
+  "function_name": "rotate_left",
+  "parameters": [
+    {"name": "num", "type": "uint32_t", "description": "The input 32-bit unsigned integer"},
+    {"name": "n", "type": "int", "description": "Number of positions to rotate left (0-31)"}
+  ],
+  "return_type": "uint32_t",
+  "constraints": [
+    "0 <= n <= 31",
+    "num is a valid 32-bit unsigned integer"
+  ]
+}

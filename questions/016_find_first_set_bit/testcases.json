@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "description": "Zero returns 0 (no bits set)",
+    "inputs": {"num": 0},
+    "expected": 0
+  },
+  {
+    "id": 2,
+    "description": "Bit 0 set → position 1",
+    "inputs": {"num": 1},
+    "expected": 1
+  },
+  {
+    "id": 3,
+    "description": "Bit 1 set → position 2",
+    "inputs": {"num": 2},
+    "expected": 2
+  },
+  {
+    "id": 4,
+    "description": "Bit 2 set → position 3",
+    "inputs": {"num": 4},
+    "expected": 3
+  },
+  {
+    "id": 5,
+    "description": "Bit 3 set → position 4",
+    "inputs": {"num": 8},
+    "expected": 4
+  },
+  {
+    "id": 6,
+    "description": "Bit 4 set → position 5",
+    "inputs": {"num": 16},
+    "expected": 5
+  },
+  {
+    "id": 7,
+    "description": "Bit 8 set → position 9",
+    "inputs": {"num": 256},
+    "expected": 9
+  },
+  {
+    "id": 8,
+    "description": "Bit 16 set → position 17",
+    "inputs": {"num": 65536},
+    "expected": 17
+  },
+  {
+    "id": 9,
+    "description": "Bit 31 set → position 32",
+    "inputs": {"num": 2147483648},
+    "expected": 32
+  },
+  {
+    "id": 10,
+    "description": "0x60: bits 5,6 set → position 6",
+    "inputs": {"num": 96},
+    "expected": 6
+  },
+  {
+    "id": 11,
+    "description": "Lower nibble set → position 1",
+    "inputs": {"num": 15},
+    "expected": 1
+  },
+  {
+    "id": 12,
+    "description": "All bits set → position 1",
+    "inputs": {"num": 4294967295},
+    "expected": 1
+  },
+  {
+    "id": 13,
+    "description": "Upper 16 bits set → position 17",
+    "inputs": {"num": 4294901760},
+    "expected": 17
+  },
+  {
+    "id": 14,
+    "description": "0x18: bits 3,4 set → position 4",
+    "inputs": {"num": 24},
+    "expected": 4
+  },
+  {
+    "id": 15,
+    "description": "Bits 2 and 31 set → position 3",
+    "inputs": {"num": 2147483652},
+    "expected": 3
+  },
+  {
+    "id": 16,
+    "description": "Bits 13 and 30 set → position 14",
+    "inputs": {"num": 1073750016},
+    "expected": 14
+  }
+]

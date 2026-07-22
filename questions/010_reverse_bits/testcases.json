@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "description": "Zero remains zero",
+    "inputs": {"num": 0},
+    "expected": 0
+  },
+  {
+    "id": 2,
+    "description": "All ones remains all ones",
+    "inputs": {"num": 4294967295},
+    "expected": 4294967295
+  },
+  {
+    "id": 3,
+    "description": "Bit 0 becomes bit 31",
+    "inputs": {"num": 1},
+    "expected": 2147483648
+  },
+  {
+    "id": 4,
+    "description": "Bit 31 becomes bit 0",
+    "inputs": {"num": 2147483648},
+    "expected": 1
+  },
+  {
+    "id": 5,
+    "description": "Bit 1 becomes bit 30",
+    "inputs": {"num": 2},
+    "expected": 1073741824
+  },
+  {
+    "id": 6,
+    "description": "Lower nibble reverses to upper",
+    "inputs": {"num": 15},
+    "expected": 4026531840
+  },
+  {
+    "id": 7,
+    "description": "Upper nibble reverses to lower",
+    "inputs": {"num": 4026531840},
+    "expected": 15
+  },
+  {
+    "id": 8,
+    "description": "Lower byte reverses to upper",
+    "inputs": {"num": 255},
+    "expected": 4278190080
+  },
+  {
+    "id": 9,
+    "description": "Upper byte reverses to lower",
+    "inputs": {"num": 4278190080},
+    "expected": 255
+  },
+  {
+    "id": 10,
+    "description": "10101010... becomes 01010101...",
+    "inputs": {"num": 2863311530},
+    "expected": 1431655765
+  },
+  {
+    "id": 11,
+    "description": "01010101... becomes 10101010...",
+    "inputs": {"num": 1431655765},
+    "expected": 2863311530
+  },
+  {
+    "id": 12,
+    "description": "Symmetric byte pattern",
+    "inputs": {"num": 4278190207},
+    "expected": 4278190207
+  },
+  {
+    "id": 13,
+    "description": "Symmetric sparse pattern",
+    "inputs": {"num": 2164260993},
+    "expected": 2164260993
+  },
+  {
+    "id": 14,
+    "description": "Arbitrary value 0x12345678",
+    "inputs": {"num": 305419896},
+    "expected": 510934536
+  },
+  {
+    "id": 15,
+    "description": "Lower half set",
+    "inputs": {"num": 65535},
+    "expected": 4294901760
+  },
+  {
+    "id": 16,
+    "description": "Alternating bytes set",
+    "inputs": {"num": 16711935},
+    "expected": 4278255360
+  }
+]

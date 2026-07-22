@@ -1,0 +1,15 @@
+{
+  "id": 10,
+  "title": "Reverse Bits",
+  "slug": "reverse_bits",
+  "difficulty": "medium",
+  "tags": ["bitwise", "manipulation", "reversal"],
+  "function_name": "reverse_bits",
+  "parameters": [
+    {"name": "num", "type": "uint32_t", "description": "The input 32-bit unsigned integer"}
+  ],
+  "return_type": "uint32_t",
+  "constraints": [
+    "num is a valid 32-bit unsigned integer"
+  ]
+}
