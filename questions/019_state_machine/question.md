@@ -4,7 +4,7 @@
 
 ## Problem Statement
 
-Implement a simple state machine using function pointers to represent state handlers. Each state is a function that processes an event and returns the next state (as a function pointer). This is a common firmware pattern for protocol parsers, motor controllers, and UI logic.
+Implement a simple state machine using function pointers to represent state handlers. Each state is a function that processes an event and returns a status code. This is a common firmware pattern for protocol parsers, motor controllers, and UI logic.
 
 The state machine has these states:
 - **IDLE** — waiting for a START event
@@ -77,6 +77,7 @@ sm_process_event(EVENT_STOP, 0);   → 1 (ignored, already IDLE)
 
 ## Notes
 
-- Internally, represent each state as a handler function: `typedef int (*state_handler_fn)(int event, int data);`
+- Internally, represent each state as a handler function with signature: `int (*)(int event, int data)`
 - The current state is stored as a function pointer that gets reassigned on transitions.
 - This avoids large switch-case blocks and makes adding states trivial.
+- No typedef is used — practice declaring and assigning raw function pointers.

@@ -14,7 +14,7 @@ You must implement:
 
 The system supports IRQ numbers 0 through `NUM_IRQS - 1` (where `NUM_IRQS` is 8).
 
-Handler signature: `void (*isr_handler_fn)(int irq_num)`
+Handler signature: `void (*)(int irq_num)` — a pointer to a function that takes an `int` IRQ number and returns void.
 
 Since handlers return void, we verify behavior via a shared `irq_log` array that handlers write to.
 
@@ -23,10 +23,8 @@ Since handlers return void, we verify behavior via a shared `irq_log` array that
 ```c
 #define NUM_IRQS 8
 
-typedef void (*isr_handler_fn)(int irq_num);
-
 void ivt_init(void);
-int ivt_install_handler(int irq, isr_handler_fn handler);
+int ivt_install_handler(int irq, void (*handler)(int irq_num));
 int ivt_remove_handler(int irq);
 int ivt_dispatch(int irq);
 ```
@@ -34,10 +32,10 @@ int ivt_dispatch(int irq);
 ## Parameters
 
 ### ivt_install_handler
-| Parameter | Type             | Description                          |
-|-----------|------------------|--------------------------------------|
-| `irq`     | `int`            | IRQ number (0 to NUM_IRQS-1)        |
-| `handler` | `isr_handler_fn` | Function pointer to the ISR          |
+| Parameter | Type                      | Description                          |
+|-----------|---------------------------|--------------------------------------|
+| `irq`     | `int`                     | IRQ number (0 to NUM_IRQS-1)        |
+| `handler` | `void (*)(int irq_num)`   | Function pointer to the ISR          |
 
 ### ivt_remove_handler / ivt_dispatch
 | Parameter | Type  | Description              |
@@ -76,3 +74,4 @@ ivt_dispatch(-1);                        // → -1 (invalid)
 - In ARM Cortex-M, the vector table lives at address 0x00000000 (or VTOR offset).
 - In Linux, `request_irq()` / `free_irq()` install/remove interrupt handlers.
 - The "default handler" pattern catches spurious/unhandled interrupts without crashing.
+- No typedef is used — practice declaring arrays of raw function pointers.

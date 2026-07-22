@@ -3,11 +3,6 @@
 #define MAX_COMMANDS 8
 
 /**
- * Command handler function type: takes an int argument, returns an int result.
- */
-typedef int (*cmd_handler_fn)(int arg);
-
-/**
  * @brief Initialize the dispatch table, clearing all entries to NULL.
  */
 void init_dispatch_table(void) {
@@ -18,10 +13,10 @@ void init_dispatch_table(void) {
  * @brief Register a command handler for the given command ID.
  *
  * @param cmd_id   Command ID (0 to MAX_COMMANDS-1).
- * @param handler  Function pointer to register.
+ * @param handler  Function pointer (int (*)(int)) to register.
  * @return         0 on success, -1 if cmd_id is out of range.
  */
-int register_handler(int cmd_id, cmd_handler_fn handler) {
+int register_handler(int cmd_id, int (*handler)(int arg)) {
     /* TODO: Implement your solution here */
     (void)cmd_id;
     (void)handler;

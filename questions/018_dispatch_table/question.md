@@ -11,7 +11,7 @@ You must implement:
 2. `register_handler()` — register a handler function for a given command ID
 3. `dispatch_command()` — look up and execute the handler for a given command ID
 
-The command handler has the signature: `int (*cmd_handler_fn)(int arg)`
+The command handler has the signature: `int (*)(int arg)` — a pointer to a function that takes an `int` and returns an `int`.
 
 The system supports command IDs from 0 to `MAX_COMMANDS - 1` (where `MAX_COMMANDS` is 8).
 
@@ -20,20 +20,18 @@ The system supports command IDs from 0 to `MAX_COMMANDS - 1` (where `MAX_COMMAND
 ```c
 #define MAX_COMMANDS 8
 
-typedef int (*cmd_handler_fn)(int arg);
-
 void init_dispatch_table(void);
-int register_handler(int cmd_id, cmd_handler_fn handler);
+int register_handler(int cmd_id, int (*handler)(int arg));
 int dispatch_command(int cmd_id, int arg);
 ```
 
 ## Parameters
 
 ### register_handler
-| Parameter | Type             | Description                                  |
-|-----------|------------------|----------------------------------------------|
-| `cmd_id`  | `int`            | Command ID (0 to MAX_COMMANDS-1)             |
-| `handler` | `cmd_handler_fn` | Function pointer to register for this command |
+| Parameter | Type                  | Description                                  |
+|-----------|-----------------------|----------------------------------------------|
+| `cmd_id`  | `int`                 | Command ID (0 to MAX_COMMANDS-1)             |
+| `handler` | `int (*)(int arg)`    | Function pointer to register for this command |
 
 ### dispatch_command
 | Parameter | Type  | Description                        |
@@ -71,3 +69,4 @@ dispatch_command(5, 0);                  → returns -1 (no handler)
 - This pattern is used in UART command parsers, I2C slave handlers, and USB device class drivers.
 - The table is essentially an array of function pointers indexed by command ID.
 - This is more efficient than a switch-case for large numbers of commands and allows runtime registration.
+- No typedef is used — practice reading raw function pointer syntax.

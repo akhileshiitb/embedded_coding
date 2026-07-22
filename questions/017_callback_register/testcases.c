@@ -1,11 +1,8 @@
 #include <stdio.h>
 #include <stddef.h>
 
-/* Type definition matching solution.c */
-typedef int (*callback_fn)(int data);
-
-/* Declaration of the solution functions */
-extern void register_callback(callback_fn cb);
+/* Declaration of the solution functions (raw function pointer syntax) */
+extern void register_callback(int (*cb)(int data));
 extern int invoke_callback(int data);
 
 /* --- Test callback functions --- */
@@ -34,12 +31,6 @@ static int always_zero(int x) {
     (void)x;
     return 0;
 }
-
-/* Test case structure */
-struct test_case {
-    const char *description;
-    int expected;
-};
 
 int main(void) {
     int num_tests = 16;

@@ -10,29 +10,23 @@ You must implement two functions:
 1. `register_callback()` — stores a function pointer for later use
 2. `invoke_callback()` — calls the registered callback with provided data
 
-The callback has the signature: `int (*callback_fn)(int data)`
+The callback has the signature: `int (*)(int data)` — a pointer to a function that takes an `int` and returns an `int`.
 
 If no callback is registered (NULL), `invoke_callback()` should return -1.
 
 ## Function Signatures
 
 ```c
-void register_callback(callback_fn cb);
+void register_callback(int (*cb)(int data));
 int invoke_callback(int data);
-```
-
-## Type Definitions
-
-```c
-typedef int (*callback_fn)(int data);
 ```
 
 ## Parameters
 
 ### register_callback
-| Parameter | Type          | Description                    |
-|-----------|---------------|--------------------------------|
-| `cb`      | `callback_fn` | Function pointer to register (may be NULL) |
+| Parameter | Type                  | Description                    |
+|-----------|-----------------------|--------------------------------|
+| `cb`      | `int (*)(int data)`   | Function pointer to register (may be NULL) |
 
 ### invoke_callback
 | Parameter | Type  | Description                          |
@@ -77,3 +71,4 @@ invoke_callback(7);  → returns -7
 - This pattern is the foundation of event-driven firmware design.
 - In Linux kernel, `request_irq()` registers interrupt handler callbacks.
 - Use a static/global variable to store the function pointer.
+- No typedef is used — practice reading raw function pointer syntax.

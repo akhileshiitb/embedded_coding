@@ -1,19 +1,14 @@
 #include <stddef.h>
 
 /**
- * Callback function type: takes an int, returns an int.
- */
-typedef int (*callback_fn)(int data);
-
-/**
  * @brief Register a callback function pointer.
  *
  * Stores the given function pointer for later invocation.
  * Passing NULL deregisters any existing callback.
  *
- * @param cb  Function pointer to register, or NULL to deregister.
+ * @param cb  Function pointer to register (int (*)(int)), or NULL to deregister.
  */
-void register_callback(callback_fn cb) {
+void register_callback(int (*cb)(int data)) {
     /* TODO: Implement your solution here */
     (void)cb;
 }

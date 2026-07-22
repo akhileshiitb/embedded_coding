@@ -3,11 +3,6 @@
 #define NUM_IRQS 8
 
 /**
- * ISR handler function type: takes the IRQ number, returns void.
- */
-typedef void (*isr_handler_fn)(int irq_num);
-
-/**
  * Shared log array — handlers write to this to indicate they ran.
  * Index corresponds to IRQ number. Tests verify values here.
  * -1 = default handler ran, positive = custom handler ran.
@@ -27,10 +22,10 @@ void ivt_init(void) {
  * @brief Install a handler for the given IRQ number.
  *
  * @param irq      IRQ number (0 to NUM_IRQS-1).
- * @param handler  ISR function pointer (must not be NULL).
+ * @param handler  ISR function pointer: void (*)(int irq_num). Must not be NULL.
  * @return         0 on success, -1 if irq out of range or handler is NULL.
  */
-int ivt_install_handler(int irq, isr_handler_fn handler) {
+int ivt_install_handler(int irq, void (*handler)(int irq_num)) {
     /* TODO: Implement your solution here */
     (void)irq;
     (void)handler;

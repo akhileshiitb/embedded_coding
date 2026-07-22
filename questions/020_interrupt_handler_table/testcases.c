@@ -3,11 +3,9 @@
 
 #define NUM_IRQS 8
 
-typedef void (*isr_handler_fn)(int irq_num);
-
-/* Declaration of solution functions */
+/* Declaration of solution functions (raw function pointer syntax) */
 extern void ivt_init(void);
-extern int ivt_install_handler(int irq, isr_handler_fn handler);
+extern int ivt_install_handler(int irq, void (*handler)(int irq_num));
 extern int ivt_remove_handler(int irq);
 extern int ivt_dispatch(int irq);
 

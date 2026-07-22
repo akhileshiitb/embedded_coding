@@ -11,12 +11,11 @@
 #define STATE_ERROR   2
 
 /**
- * State handler function type.
+ * State handler function signature: int (*)(int event, int data)
  * Takes an event ID and data, returns:
  *   0 = event processed (transition occurred)
  *   1 = event ignored (not valid for this state)
  */
-typedef int (*state_handler_fn)(int event, int data);
 
 /**
  * @brief Initialize the state machine to IDLE with counter = 0.

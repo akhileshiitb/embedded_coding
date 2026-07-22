@@ -3,11 +3,9 @@
 
 #define MAX_COMMANDS 8
 
-typedef int (*cmd_handler_fn)(int arg);
-
-/* Declaration of solution functions */
+/* Declaration of solution functions (raw function pointer syntax) */
 extern void init_dispatch_table(void);
-extern int register_handler(int cmd_id, cmd_handler_fn handler);
+extern int register_handler(int cmd_id, int (*handler)(int arg));
 extern int dispatch_command(int cmd_id, int arg);
 
 /* --- Test handler functions --- */
