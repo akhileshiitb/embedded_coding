@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "description": "Read before open returns -1",
+    "inputs": {"action": "read_before_open"},
+    "expected": -1
+  },
+  {
+    "id": 2,
+    "description": "Open uart0 succeeds",
+    "inputs": {"action": "open", "device": "uart0", "flags": 0},
+    "expected": 0
+  },
+  {
+    "id": 3,
+    "description": "Double open fails (-1)",
+    "inputs": {"action": "open_again"},
+    "expected": -1
+  },
+  {
+    "id": 4,
+    "description": "Read 4 bytes from uart0",
+    "inputs": {"action": "read", "len": 4},
+    "expected": 4
+  },
+  {
+    "id": 5,
+    "description": "Write 5 bytes to uart0",
+    "inputs": {"action": "write", "data": "hello", "len": 5},
+    "expected": 5
+  },
+  {
+    "id": 6,
+    "description": "Close uart0 succeeds",
+    "inputs": {"action": "close"},
+    "expected": 0
+  },
+  {
+    "id": 7,
+    "description": "Read after close returns -1",
+    "inputs": {"action": "read_after_close"},
+    "expected": -1
+  },
+  {
+    "id": 8,
+    "description": "Write after close returns -1",
+    "inputs": {"action": "write_after_close"},
+    "expected": -1
+  },
+  {
+    "id": 9,
+    "description": "Close when not open returns -1",
+    "inputs": {"action": "close_when_closed"},
+    "expected": -1
+  },
+  {
+    "id": 10,
+    "description": "Sensor read 3 bytes",
+    "inputs": {"action": "sensor_read", "len": 3},
+    "expected": 3
+  },
+  {
+    "id": 11,
+    "description": "Sensor write returns -1 (no write op)",
+    "inputs": {"action": "sensor_write"},
+    "expected": -1
+  },
+  {
+    "id": 12,
+    "description": "Sensor close returns 0 (no close op, still succeeds)",
+    "inputs": {"action": "sensor_close"},
+    "expected": 0
+  },
+  {
+    "id": 13,
+    "description": "NULL device pointer returns -1",
+    "inputs": {"action": "null_device_open"},
+    "expected": -1
+  },
+  {
+    "id": 14,
+    "description": "Register NULL ops returns -1",
+    "inputs": {"action": "register_null_ops"},
+    "expected": -1
+  },
+  {
+    "id": 15,
+    "description": "Open without ops returns -1",
+    "inputs": {"action": "open_without_ops"},
+    "expected": -1
+  },
+  {
+    "id": 16,
+    "description": "Strict device rejects non-zero flags",
+    "inputs": {"action": "strict_open_with_flags", "flags": 1},
+    "expected": -1
+  }
+]

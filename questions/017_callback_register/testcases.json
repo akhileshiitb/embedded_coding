@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "description": "No callback registered returns -1",
+    "inputs": {"action": "invoke", "data": 42},
+    "expected": -1
+  },
+  {
+    "id": 2,
+    "description": "double_it(5) = 10",
+    "inputs": {"action": "register_then_invoke", "callback": "double_it", "data": 5},
+    "expected": 10
+  },
+  {
+    "id": 3,
+    "description": "double_it(0) = 0",
+    "inputs": {"action": "invoke", "data": 0},
+    "expected": 0
+  },
+  {
+    "id": 4,
+    "description": "double_it(-3) = -6",
+    "inputs": {"action": "invoke", "data": -3},
+    "expected": -6
+  },
+  {
+    "id": 5,
+    "description": "negate(7) = -7",
+    "inputs": {"action": "register_then_invoke", "callback": "negate", "data": 7},
+    "expected": -7
+  },
+  {
+    "id": 6,
+    "description": "negate(-4) = 4",
+    "inputs": {"action": "invoke", "data": -4},
+    "expected": 4
+  },
+  {
+    "id": 7,
+    "description": "add_ten(5) = 15",
+    "inputs": {"action": "register_then_invoke", "callback": "add_ten", "data": 5},
+    "expected": 15
+  },
+  {
+    "id": 8,
+    "description": "add_ten(0) = 10",
+    "inputs": {"action": "invoke", "data": 0},
+    "expected": 10
+  },
+  {
+    "id": 9,
+    "description": "square(4) = 16",
+    "inputs": {"action": "register_then_invoke", "callback": "square", "data": 4},
+    "expected": 16
+  },
+  {
+    "id": 10,
+    "description": "square(-3) = 9",
+    "inputs": {"action": "invoke", "data": -3},
+    "expected": 9
+  },
+  {
+    "id": 11,
+    "description": "identity(99) = 99",
+    "inputs": {"action": "register_then_invoke", "callback": "identity", "data": 99},
+    "expected": 99
+  },
+  {
+    "id": 12,
+    "description": "always_zero(12345) = 0",
+    "inputs": {"action": "register_then_invoke", "callback": "always_zero", "data": 12345},
+    "expected": 0
+  },
+  {
+    "id": 13,
+    "description": "After NULL registration, returns -1",
+    "inputs": {"action": "register_null_then_invoke", "data": 5},
+    "expected": -1
+  },
+  {
+    "id": 14,
+    "description": "Re-register double_it after NULL, double_it(100) = 200",
+    "inputs": {"action": "register_then_invoke", "callback": "double_it", "data": 100},
+    "expected": 200
+  },
+  {
+    "id": 15,
+    "description": "Multiple invokes: double(1)+double(2)+double(3)=12",
+    "inputs": {"action": "multiple_invoke", "data": [1, 2, 3]},
+    "expected": 12
+  },
+  {
+    "id": 16,
+    "description": "Double registration of same function works",
+    "inputs": {"action": "register_twice_then_invoke", "callback": "negate", "data": 8},
+    "expected": -8
+  }
+]

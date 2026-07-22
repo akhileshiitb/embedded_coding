@@ -1,0 +1,19 @@
+{
+  "id": 18,
+  "title": "Command Dispatch Table",
+  "slug": "dispatch_table",
+  "difficulty": "medium",
+  "tags": ["function-pointers", "dispatch-table", "firmware-patterns"],
+  "function_name": "init_dispatch_table/register_handler/dispatch_command",
+  "parameters": [
+    {"name": "cmd_id", "type": "int", "description": "Command ID (0 to MAX_COMMANDS-1)"},
+    {"name": "handler", "type": "cmd_handler_fn", "description": "Function pointer to register"},
+    {"name": "arg", "type": "int", "description": "Argument to pass to handler"}
+  ],
+  "return_type": "void / int",
+  "constraints": [
+    "MAX_COMMANDS is 8",
+    "Out-of-range cmd_id returns -1",
+    "Unregistered commands return -1 on dispatch"
+  ]
+}

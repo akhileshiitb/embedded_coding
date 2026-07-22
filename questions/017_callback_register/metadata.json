@@ -1,0 +1,18 @@
+{
+  "id": 17,
+  "title": "Callback Registration",
+  "slug": "callback_register",
+  "difficulty": "easy",
+  "tags": ["function-pointers", "callbacks", "firmware-patterns"],
+  "function_name": "register_callback/invoke_callback",
+  "parameters": [
+    {"name": "cb", "type": "callback_fn", "description": "Function pointer to register (for register_callback)"},
+    {"name": "data", "type": "int", "description": "Data to pass to callback (for invoke_callback)"}
+  ],
+  "return_type": "void / int",
+  "constraints": [
+    "Only one callback active at a time",
+    "NULL registration deregisters the callback",
+    "invoke_callback returns -1 if no callback registered"
+  ]
+}

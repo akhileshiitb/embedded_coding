@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "description": "Default handler writes -1 to irq_log[0]",
+    "inputs": {"action": "dispatch", "irq": 0},
+    "expected_log": -1
+  },
+  {
+    "id": 2,
+    "description": "Default handler writes -1 to irq_log[7]",
+    "inputs": {"action": "dispatch", "irq": 7},
+    "expected_log": -1
+  },
+  {
+    "id": 3,
+    "description": "Install uart_isr at IRQ 0 succeeds",
+    "inputs": {"action": "install", "irq": 0, "handler": "uart_isr"},
+    "expected": 0
+  },
+  {
+    "id": 4,
+    "description": "uart_isr writes 100 to irq_log[0]",
+    "inputs": {"action": "dispatch", "irq": 0},
+    "expected_log": 100
+  },
+  {
+    "id": 5,
+    "description": "timer_isr writes 203 to irq_log[3]",
+    "inputs": {"action": "install_and_dispatch", "irq": 3, "handler": "timer_isr"},
+    "expected_log": 203
+  },
+  {
+    "id": 6,
+    "description": "Install NULL handler returns -1",
+    "inputs": {"action": "install", "irq": 2, "handler": null},
+    "expected": -1
+  },
+  {
+    "id": 7,
+    "description": "Install out-of-range IRQ 8 returns -1",
+    "inputs": {"action": "install", "irq": 8, "handler": "gpio_isr"},
+    "expected": -1
+  },
+  {
+    "id": 8,
+    "description": "Install negative IRQ -1 returns -1",
+    "inputs": {"action": "install", "irq": -1, "handler": "gpio_isr"},
+    "expected": -1
+  },
+  {
+    "id": 9,
+    "description": "Dispatch out-of-range IRQ 8 returns -1",
+    "inputs": {"action": "dispatch", "irq": 8},
+    "expected": -1
+  },
+  {
+    "id": 10,
+    "description": "Dispatch negative IRQ -2 returns -1",
+    "inputs": {"action": "dispatch", "irq": -2},
+    "expected": -1
+  },
+  {
+    "id": 11,
+    "description": "After remove, default handler restored for IRQ 0",
+    "inputs": {"action": "remove_and_dispatch", "irq": 0},
+    "expected_log": -1
+  },
+  {
+    "id": 12,
+    "description": "Remove out-of-range IRQ 10 returns -1",
+    "inputs": {"action": "remove", "irq": 10},
+    "expected": -1
+  },
+  {
+    "id": 13,
+    "description": "Multiple ISRs coexist correctly",
+    "inputs": {"action": "dispatch_multiple", "irqs": [4, 5, 6]},
+    "expected_log": [304, 405, 506]
+  },
+  {
+    "id": 14,
+    "description": "Replace timer_isr with dma_isr on IRQ 3",
+    "inputs": {"action": "replace_and_dispatch", "irq": 3, "handler": "dma_isr"},
+    "expected_log": 503
+  },
+  {
+    "id": 15,
+    "description": "Dispatch returns 0 on success",
+    "inputs": {"action": "dispatch", "irq": 5},
+    "expected": 0
+  },
+  {
+    "id": 16,
+    "description": "After re-init, IRQ 3 back to default handler",
+    "inputs": {"action": "reinit_and_dispatch", "irq": 3},
+    "expected_log": -1
+  }
+]

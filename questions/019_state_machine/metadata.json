@@ -1,0 +1,19 @@
+{
+  "id": 19,
+  "title": "State Machine with Function Pointers",
+  "slug": "state_machine",
+  "difficulty": "medium",
+  "tags": ["function-pointers", "state-machine", "firmware-patterns"],
+  "function_name": "sm_init/sm_process_event/sm_get_state/sm_get_counter",
+  "parameters": [
+    {"name": "event", "type": "int", "description": "Event ID (0-4)"},
+    {"name": "data", "type": "int", "description": "Event data (used by EVENT_DATA)"}
+  ],
+  "return_type": "void / int",
+  "constraints": [
+    "States: IDLE(0), RUNNING(1), ERROR(2)",
+    "Events: START(0), STOP(1), DATA(2), ERROR(3), RESET(4)",
+    "Invalid events return -1",
+    "Ignored events return 1"
+  ]
+}

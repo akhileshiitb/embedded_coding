@@ -1,0 +1,19 @@
+{
+  "id": 20,
+  "title": "Interrupt Vector Table",
+  "slug": "interrupt_handler_table",
+  "difficulty": "medium",
+  "tags": ["function-pointers", "interrupt", "firmware-patterns", "ISR"],
+  "function_name": "ivt_init/ivt_install_handler/ivt_remove_handler/ivt_dispatch",
+  "parameters": [
+    {"name": "irq", "type": "int", "description": "IRQ number (0 to NUM_IRQS-1)"},
+    {"name": "handler", "type": "isr_handler_fn", "description": "ISR function pointer"}
+  ],
+  "return_type": "void / int",
+  "constraints": [
+    "NUM_IRQS is 8",
+    "Out-of-range IRQ returns -1",
+    "NULL handler installation returns -1",
+    "Default handler writes -1 to irq_log"
+  ]
+}

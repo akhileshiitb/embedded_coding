@@ -1,0 +1,23 @@
+{
+  "id": 21,
+  "title": "Device Operations Struct (Linux Kernel Style)",
+  "slug": "device_ops",
+  "difficulty": "medium",
+  "tags": ["function-pointers", "ops-struct", "linux-kernel", "firmware-patterns"],
+  "function_name": "device_init/device_register_ops/device_open/device_read/device_write/device_close",
+  "parameters": [
+    {"name": "dev", "type": "struct device *", "description": "Pointer to device context"},
+    {"name": "ops", "type": "const struct device_ops *", "description": "Operations struct"},
+    {"name": "flags", "type": "int", "description": "Open flags"},
+    {"name": "buf", "type": "char *", "description": "Read/write buffer"},
+    {"name": "len", "type": "int", "description": "Buffer length"}
+  ],
+  "return_type": "void / int",
+  "constraints": [
+    "NULL dev pointer returns -1",
+    "NULL ops pointer on register returns -1",
+    "Individual ops can be NULL (optional)",
+    "Device must be open for read/write",
+    "Cannot double-open"
+  ]
+}

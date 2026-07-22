@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "description": "Dispatch empty table returns -1",
+    "inputs": {"action": "dispatch", "cmd_id": 0, "arg": 10},
+    "expected": -1
+  },
+  {
+    "id": 2,
+    "description": "Register cmd 0 succeeds",
+    "inputs": {"action": "register", "cmd_id": 0, "handler": "cmd_read"},
+    "expected": 0
+  },
+  {
+    "id": 3,
+    "description": "Dispatch cmd 0 (read) with arg=42",
+    "inputs": {"action": "dispatch", "cmd_id": 0, "arg": 42},
+    "expected": 42
+  },
+  {
+    "id": 4,
+    "description": "Dispatch cmd 3 (write) with arg=5",
+    "inputs": {"action": "register_and_dispatch", "cmd_id": 3, "handler": "cmd_write", "arg": 5},
+    "expected": 10
+  },
+  {
+    "id": 5,
+    "description": "Dispatch unregistered cmd 5 returns -1",
+    "inputs": {"action": "dispatch", "cmd_id": 5, "arg": 99},
+    "expected": -1
+  },
+  {
+    "id": 6,
+    "description": "Register out-of-range cmd 8 returns -1",
+    "inputs": {"action": "register", "cmd_id": 8, "handler": "cmd_status"},
+    "expected": -1
+  },
+  {
+    "id": 7,
+    "description": "Register negative cmd -1 returns -1",
+    "inputs": {"action": "register", "cmd_id": -1, "handler": "cmd_status"},
+    "expected": -1
+  },
+  {
+    "id": 8,
+    "description": "Dispatch out-of-range cmd 10 returns -1",
+    "inputs": {"action": "dispatch", "cmd_id": 10, "arg": 0},
+    "expected": -1
+  },
+  {
+    "id": 9,
+    "description": "Dispatch negative cmd -2 returns -1",
+    "inputs": {"action": "dispatch", "cmd_id": -2, "arg": 0},
+    "expected": -1
+  },
+  {
+    "id": 10,
+    "description": "Dispatch cmd 1 (status) arg=5 → 105",
+    "inputs": {"action": "dispatch", "cmd_id": 1, "arg": 5},
+    "expected": 105
+  },
+  {
+    "id": 11,
+    "description": "Dispatch cmd 2 (reset) always returns 0",
+    "inputs": {"action": "dispatch", "cmd_id": 2, "arg": 999},
+    "expected": 0
+  },
+  {
+    "id": 12,
+    "description": "Dispatch cmd 5 (negate) arg=7 → -7",
+    "inputs": {"action": "dispatch", "cmd_id": 5, "arg": 7},
+    "expected": -7
+  },
+  {
+    "id": 13,
+    "description": "Replace cmd 0 handler, negate(3) = -3",
+    "inputs": {"action": "register_and_dispatch", "cmd_id": 0, "handler": "cmd_negate", "arg": 3},
+    "expected": -3
+  },
+  {
+    "id": 14,
+    "description": "Dispatch cmd 7 (write) arg=4 → 8",
+    "inputs": {"action": "dispatch", "cmd_id": 7, "arg": 4},
+    "expected": 8
+  },
+  {
+    "id": 15,
+    "description": "After re-init, dispatch returns -1",
+    "inputs": {"action": "reinit_then_dispatch", "cmd_id": 0, "arg": 10},
+    "expected": -1
+  },
+  {
+    "id": 16,
+    "description": "After re-init, cmd 3 also returns -1",
+    "inputs": {"action": "dispatch", "cmd_id": 3, "arg": 10},
+    "expected": -1
+  }
+]

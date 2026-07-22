@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "description": "Initial state is IDLE",
+    "inputs": {"action": "get_state"},
+    "expected": 0
+  },
+  {
+    "id": 2,
+    "description": "STOP while IDLE is ignored (returns 1)",
+    "inputs": {"action": "process_event", "event": 1, "data": 0},
+    "expected": 1
+  },
+  {
+    "id": 3,
+    "description": "START transitions IDLE → RUNNING",
+    "inputs": {"action": "process_event", "event": 0, "data": 0},
+    "expected": 0
+  },
+  {
+    "id": 4,
+    "description": "DATA(5) while RUNNING, counter=5",
+    "inputs": {"action": "process_event", "event": 2, "data": 5},
+    "expected": 0
+  },
+  {
+    "id": 5,
+    "description": "DATA(3) accumulates, counter=8",
+    "inputs": {"action": "process_event_check_counter", "event": 2, "data": 3},
+    "expected": 8
+  },
+  {
+    "id": 6,
+    "description": "START while RUNNING is ignored",
+    "inputs": {"action": "process_event", "event": 0, "data": 0},
+    "expected": 1
+  },
+  {
+    "id": 7,
+    "description": "STOP transitions RUNNING → IDLE",
+    "inputs": {"action": "process_event", "event": 1, "data": 0},
+    "expected": 0
+  },
+  {
+    "id": 8,
+    "description": "Counter preserved after STOP (=8)",
+    "inputs": {"action": "get_counter"},
+    "expected": 8
+  },
+  {
+    "id": 9,
+    "description": "ERROR transitions IDLE → ERROR",
+    "inputs": {"action": "process_event", "event": 3, "data": 0},
+    "expected": 0
+  },
+  {
+    "id": 10,
+    "description": "DATA while ERROR is ignored",
+    "inputs": {"action": "process_event", "event": 2, "data": 10},
+    "expected": 1
+  },
+  {
+    "id": 11,
+    "description": "RESET transitions ERROR → IDLE, counter cleared",
+    "inputs": {"action": "process_event", "event": 4, "data": 0},
+    "expected": 0
+  },
+  {
+    "id": 12,
+    "description": "RESET while IDLE is ignored",
+    "inputs": {"action": "process_event", "event": 4, "data": 0},
+    "expected": 1
+  },
+  {
+    "id": 13,
+    "description": "Invalid event 99 returns -1",
+    "inputs": {"action": "process_event", "event": 99, "data": 0},
+    "expected": -1
+  },
+  {
+    "id": 14,
+    "description": "Negative event -1 returns -1",
+    "inputs": {"action": "process_event", "event": -1, "data": 0},
+    "expected": -1
+  },
+  {
+    "id": 15,
+    "description": "ERROR transitions RUNNING → ERROR",
+    "inputs": {"action": "start_data_then_error", "data": 7},
+    "expected": 0
+  },
+  {
+    "id": 16,
+    "description": "sm_init resets state to IDLE and counter to 0",
+    "inputs": {"action": "reinit_check"},
+    "expected": 0
+  }
+]
