@@ -5,6 +5,8 @@
  *
  * @param num   The input 32-bit unsigned integer.
  * @return      The number of bits set to 1 (0 to 32).
+ *
+ * @note Also consider: parallel bit manipulation (SWAR) approach for O(1) branchless solution.
  */
 int count_set_bits(uint32_t num) {
     /* TODO: Implement your solution here */
