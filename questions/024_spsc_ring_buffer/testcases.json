@@ -1,0 +1,18 @@
+[
+  {"id": 1, "description": "spsc_init(8) succeeds", "function": "spsc_init", "inputs": {"capacity": 8}, "expected": 0},
+  {"id": 2, "description": "spsc_init(5) fails (not power of 2)", "function": "spsc_init", "inputs": {"capacity": 5}, "expected": -1},
+  {"id": 3, "description": "Buffer starts empty", "function": "spsc_is_empty", "inputs": {}, "expected": 1},
+  {"id": 4, "description": "Push 42 succeeds, count=1", "function": "spsc_push", "inputs": {"value": 42}, "expected": 0},
+  {"id": 5, "description": "Not empty after push", "function": "spsc_is_empty", "inputs": {}, "expected": 0},
+  {"id": 6, "description": "Pop returns 42", "function": "spsc_pop", "inputs": {}, "expected": 42},
+  {"id": 7, "description": "Pop from empty returns -1", "function": "spsc_pop", "inputs": {}, "expected": -1},
+  {"id": 8, "description": "Fill 7 elements into capacity-8 buffer", "function": "multi_push", "inputs": {"count": 7}, "expected": 7},
+  {"id": 9, "description": "Buffer is full (7/7 usable slots)", "function": "spsc_is_full", "inputs": {}, "expected": 1},
+  {"id": 10, "description": "Push to full buffer returns -1", "function": "spsc_push", "inputs": {"value": 999}, "expected": -1},
+  {"id": 11, "description": "FIFO order preserved on pop", "function": "multi_pop_fifo", "inputs": {"count": 7}, "expected": 1},
+  {"id": 12, "description": "Wrap-around works correctly", "function": "wrap_test", "inputs": {}, "expected": 1},
+  {"id": 13, "description": "Count = 2 after 3 push + 1 pop", "function": "spsc_count", "inputs": {}, "expected": 2},
+  {"id": 14, "description": "spsc_init(0) fails", "function": "spsc_init", "inputs": {"capacity": 0}, "expected": -1},
+  {"id": 15, "description": "spsc_init(1) fails (need >= 2)", "function": "spsc_init", "inputs": {"capacity": 1}, "expected": -1},
+  {"id": 16, "description": "Capacity-2 buffer works (1 usable slot)", "function": "capacity2_test", "inputs": {}, "expected": 1}
+]

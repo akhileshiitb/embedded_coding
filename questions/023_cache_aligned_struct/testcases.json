@@ -1,0 +1,18 @@
+[
+  {"id": 1, "description": "get_padded_size() = 32", "function": "get_padded_size", "inputs": {}, "expected": 32},
+  {"id": 2, "description": "get_optimized_size() = 16", "function": "get_optimized_size", "inputs": {}, "expected": 16},
+  {"id": 3, "description": "get_packed_size() = 15", "function": "get_packed_size", "inputs": {}, "expected": 15},
+  {"id": 4, "description": "compute_padding(1, 4) = 3", "function": "compute_padding", "inputs": {"offset": 1, "alignment": 4}, "expected": 3},
+  {"id": 5, "description": "compute_padding(4, 4) = 0", "function": "compute_padding", "inputs": {"offset": 4, "alignment": 4}, "expected": 0},
+  {"id": 6, "description": "compute_padding(5, 8) = 3", "function": "compute_padding", "inputs": {"offset": 5, "alignment": 8}, "expected": 3},
+  {"id": 7, "description": "compute_padding(0, 8) = 0", "function": "compute_padding", "inputs": {"offset": 0, "alignment": 8}, "expected": 0},
+  {"id": 8, "description": "compute_padding(7, 8) = 1", "function": "compute_padding", "inputs": {"offset": 7, "alignment": 8}, "expected": 1},
+  {"id": 9, "description": "compute_padding(13, 4) = 3", "function": "compute_padding", "inputs": {"offset": 13, "alignment": 4}, "expected": 3},
+  {"id": 10, "description": "64-byte aligned pointer detected", "function": "is_cache_aligned", "inputs": {"aligned": true}, "expected": 1},
+  {"id": 11, "description": "Unaligned pointer (offset +1) detected", "function": "is_cache_aligned", "inputs": {"aligned": false}, "expected": 0},
+  {"id": 12, "description": "NULL pointer is considered aligned", "function": "is_cache_aligned", "inputs": {"ptr": null}, "expected": 1},
+  {"id": 13, "description": "get_aligned_offset(1, 4) = 4", "function": "get_aligned_offset", "inputs": {"current_offset": 1, "alignment": 4}, "expected": 4},
+  {"id": 14, "description": "get_aligned_offset(8, 8) = 8", "function": "get_aligned_offset", "inputs": {"current_offset": 8, "alignment": 8}, "expected": 8},
+  {"id": 15, "description": "get_aligned_offset(63, 64) = 64", "function": "get_aligned_offset", "inputs": {"current_offset": 63, "alignment": 64}, "expected": 64},
+  {"id": 16, "description": "get_aligned_offset(0, 64) = 0", "function": "get_aligned_offset", "inputs": {"current_offset": 0, "alignment": 64}, "expected": 0}
+]

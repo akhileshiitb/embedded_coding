@@ -1,0 +1,39 @@
+{
+  "id": 23,
+  "title": "Cache-Conscious Data Layout",
+  "slug": "cache_aligned_struct",
+  "difficulty": "medium",
+  "tags": ["struct-padding", "alignment", "cache", "memory-layout", "pragma-pack"],
+  "functions": [
+    {"name": "get_padded_size", "parameters": [], "return_type": "size_t"},
+    {"name": "get_optimized_size", "parameters": [], "return_type": "size_t"},
+    {"name": "get_packed_size", "parameters": [], "return_type": "size_t"},
+    {
+      "name": "compute_padding",
+      "parameters": [
+        {"name": "offset", "type": "int", "description": "Current byte offset"},
+        {"name": "alignment", "type": "int", "description": "Required alignment"}
+      ],
+      "return_type": "int"
+    },
+    {
+      "name": "is_cache_aligned",
+      "parameters": [{"name": "ptr", "type": "void *", "description": "Pointer to check"}],
+      "return_type": "int"
+    },
+    {
+      "name": "get_aligned_offset",
+      "parameters": [
+        {"name": "current_offset", "type": "int", "description": "Current offset"},
+        {"name": "alignment", "type": "int", "description": "Required alignment"}
+      ],
+      "return_type": "int"
+    }
+  ],
+  "constraints": [
+    "64-bit system assumed: char=1, int=4, double=8",
+    "alignment is always a power of 2",
+    "offset >= 0",
+    "Cache line size is 64 bytes"
+  ]
+}

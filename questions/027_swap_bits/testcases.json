@@ -1,0 +1,116 @@
+[
+  {
+    "id": 1,
+    "description": "Swap bit 0 (1) and bit 1 (0) of 0x01",
+    "inputs": {"num": 1, "pos1": 0, "pos2": 1},
+    "expected": 2
+  },
+  {
+    "id": 2,
+    "description": "Swap bit 0 (0) and bit 1 (1) of 0x02",
+    "inputs": {"num": 2, "pos1": 0, "pos2": 1},
+    "expected": 1
+  },
+  {
+    "id": 3,
+    "description": "Swap bit 0 (1) and bit 7 (0) of 0x01",
+    "inputs": {"num": 1, "pos1": 0, "pos2": 7},
+    "expected": 128
+  },
+  {
+    "id": 4,
+    "description": "Swap bit 0 (0) and bit 7 (1) of 0x80",
+    "inputs": {"num": 128, "pos1": 0, "pos2": 7},
+    "expected": 1
+  },
+  {
+    "id": 5,
+    "description": "Swap bit 0 (0) and bit 31 (1) - MSB to LSB",
+    "inputs": {"num": 2147483648, "pos1": 0, "pos2": 31},
+    "expected": 1
+  },
+  {
+    "id": 6,
+    "description": "Both bits are 1, no change",
+    "inputs": {"num": 3, "pos1": 0, "pos2": 1},
+    "expected": 3
+  },
+  {
+    "id": 7,
+    "description": "Both bits are 0, no change on zero",
+    "inputs": {"num": 0, "pos1": 0, "pos2": 1},
+    "expected": 0
+  },
+  {
+    "id": 8,
+    "description": "All bits set, swap has no effect",
+    "inputs": {"num": 4294967295, "pos1": 5, "pos2": 20},
+    "expected": 4294967295
+  },
+  {
+    "id": 9,
+    "description": "Zero input, swap any positions",
+    "inputs": {"num": 0, "pos1": 15, "pos2": 31},
+    "expected": 0
+  },
+  {
+    "id": 10,
+    "description": "Same position (0,0), no change",
+    "inputs": {"num": 1, "pos1": 0, "pos2": 0},
+    "expected": 1
+  },
+  {
+    "id": 11,
+    "description": "Same position (16,16), no change",
+    "inputs": {"num": 2882400001, "pos1": 16, "pos2": 16},
+    "expected": 2882400001
+  },
+  {
+    "id": 12,
+    "description": "Swap in alternating 1010 pattern",
+    "inputs": {"num": 2863311530, "pos1": 0, "pos2": 1},
+    "expected": 2863311529
+  },
+  {
+    "id": 13,
+    "description": "Swap in alternating 0101 pattern",
+    "inputs": {"num": 1431655765, "pos1": 0, "pos2": 1},
+    "expected": 1431655766
+  },
+  {
+    "id": 14,
+    "description": "Swap top 2 bits of 0xAAAAAAAA",
+    "inputs": {"num": 2863311530, "pos1": 30, "pos2": 31},
+    "expected": 1521884074
+  },
+  {
+    "id": 15,
+    "description": "Move LSB to MSB position",
+    "inputs": {"num": 1, "pos1": 0, "pos2": 31},
+    "expected": 2147483648
+  },
+  {
+    "id": 16,
+    "description": "Swap bit 30 (1) with bit 0 (0)",
+    "inputs": {"num": 1073741824, "pos1": 30, "pos2": 0},
+    "expected": 1
+  },
+  {
+    "id": 17,
+    "description": "Swap across byte boundary (bit 15 and 16)",
+    "inputs": {"num": 32768, "pos1": 15, "pos2": 16},
+    "expected": 65536
+  },
+  {
+    "id": 18,
+    "description": "Swap bit 4 and bit 28 of 0xDEADBEEF",
+    "inputs": {"num": 3735928559, "pos1": 4, "pos2": 28},
+    "expected": 3468553983
+  },
+  {
+    "id": 19,
+    "description": "Swap bit 0 (0) and bit 4 (1) of 0x12345678",
+    "inputs": {"num": 305419896, "pos1": 0, "pos2": 4},
+    "expected": 305419881
+  }
+]

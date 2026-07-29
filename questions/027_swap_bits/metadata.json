@@ -1,0 +1,19 @@
+{
+  "id": 27,
+  "title": "Swap Bits at Two Positions",
+  "slug": "swap_bits",
+  "difficulty": "easy",
+  "tags": ["bitwise", "manipulation", "xor", "swap"],
+  "function_name": "swap_bits",
+  "parameters": [
+    {"name": "num", "type": "uint32_t", "description": "The input 32-bit unsigned integer"},
+    {"name": "pos1", "type": "int", "description": "First bit position to swap (0-indexed)"},
+    {"name": "pos2", "type": "int", "description": "Second bit position to swap (0-indexed)"}
+  ],
+  "return_type": "uint32_t",
+  "constraints": [
+    "0 <= pos1 <= 31",
+    "0 <= pos2 <= 31",
+    "num is a valid 32-bit unsigned integer"
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {"id": 1, "description": "modify_through_ptr(&5) returns 10, original unchanged", "function": "modify_through_ptr", "inputs": {"ptr_value": 5}, "expected": 10},
+  {"id": 2, "description": "modify_through_ptr(&0) returns 0", "function": "modify_through_ptr", "inputs": {"ptr_value": 0}, "expected": 0},
+  {"id": 3, "description": "modify_through_ptr(&-7) returns -14, original unchanged", "function": "modify_through_ptr", "inputs": {"ptr_value": -7}, "expected": -14},
+  {"id": 4, "description": "advance_pointer offset=0 reads first element", "function": "advance_pointer", "inputs": {"array": [100, 200, 300, 400], "offset": 0}, "expected": 100},
+  {"id": 5, "description": "advance_pointer offset=2 reads third element", "function": "advance_pointer", "inputs": {"array": [100, 200, 300, 400], "offset": 2}, "expected": 300},
+  {"id": 6, "description": "advance_pointer offset=3 reads fourth element", "function": "advance_pointer", "inputs": {"array": [100, 200, 300, 400], "offset": 3}, "expected": 400},
+  {"id": 7, "description": "sum_rom_table({1,2,3,4}) = 10", "function": "sum_rom_table", "inputs": {"table": [1, 2, 3, 4], "len": 4}, "expected": 10},
+  {"id": 8, "description": "sum_rom_table({42}) = 42", "function": "sum_rom_table", "inputs": {"table": [42], "len": 1}, "expected": 42},
+  {"id": 9, "description": "sum_rom_table(NULL, 0) = 0", "function": "sum_rom_table", "inputs": {"table": null, "len": 0}, "expected": 0},
+  {"id": 10, "description": "sum_rom_table({-5,10,-3,8}) = 10", "function": "sum_rom_table", "inputs": {"table": [-5, 10, -3, 8], "len": 4}, "expected": 10},
+  {"id": 11, "description": "swap_const_ptrs swaps pointers correctly", "function": "swap_const_ptrs", "inputs": {"val1": 100, "val2": 200}, "expected": {"pa": 200, "pb": 100}},
+  {"id": 12, "description": "Double swap restores original", "function": "swap_const_ptrs", "inputs": {"val1": 100, "val2": 200, "double_swap": true}, "expected": {"pa": 100, "pb": 200}},
+  {"id": 13, "description": "Self-swap preserves value", "function": "swap_const_ptrs", "inputs": {"val1": 999, "self_swap": true}, "expected": {"pa": 999}},
+  {"id": 14, "description": "LUT[0] = 10", "function": "get_readonly_lut_value", "inputs": {"index": 0}, "expected": 10},
+  {"id": 15, "description": "LUT[7] = 80", "function": "get_readonly_lut_value", "inputs": {"index": 7}, "expected": 80},
+  {"id": 16, "description": "LUT[8] out of range returns -1", "function": "get_readonly_lut_value", "inputs": {"index": 8}, "expected": -1}
+]

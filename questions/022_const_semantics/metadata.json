@@ -1,0 +1,49 @@
+{
+  "id": 22,
+  "title": "Const Semantics & ROM Placement",
+  "slug": "const_semantics",
+  "difficulty": "medium",
+  "tags": ["const", "pointers", "memory-layout", "rom", "language-mechanics"],
+  "functions": [
+    {
+      "name": "modify_through_ptr",
+      "parameters": [{"name": "ptr", "type": "const int *", "description": "Pointer to const int"}],
+      "return_type": "int"
+    },
+    {
+      "name": "advance_pointer",
+      "parameters": [
+        {"name": "ptr_to_const_ptr", "type": "int *const *", "description": "Pointer to const pointer to int"},
+        {"name": "offset", "type": "int", "description": "Array offset"}
+      ],
+      "return_type": "int"
+    },
+    {
+      "name": "sum_rom_table",
+      "parameters": [
+        {"name": "table", "type": "const int *", "description": "Pointer to read-only array"},
+        {"name": "len", "type": "int", "description": "Number of elements"}
+      ],
+      "return_type": "int"
+    },
+    {
+      "name": "swap_const_ptrs",
+      "parameters": [
+        {"name": "pp1", "type": "const int **", "description": "Pointer to first pointer-to-const"},
+        {"name": "pp2", "type": "const int **", "description": "Pointer to second pointer-to-const"}
+      ],
+      "return_type": "void"
+    },
+    {
+      "name": "get_readonly_lut_value",
+      "parameters": [{"name": "index", "type": "int", "description": "LUT index (0-7 valid)"}],
+      "return_type": "int"
+    }
+  ],
+  "constraints": [
+    "modify_through_ptr: ptr is never NULL",
+    "advance_pointer: offset is always valid",
+    "sum_rom_table: len >= 0, table may be NULL if len == 0",
+    "get_readonly_lut_value: valid indices 0-7, return -1 otherwise"
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {"id": 1, "description": "pool_init(16, 4) succeeds", "function": "pool_init", "inputs": {"block_size": 16, "num_blocks": 4}, "expected": 0},
+  {"id": 2, "description": "pool_available() = 4 after init", "function": "pool_available", "inputs": {}, "expected": 4},
+  {"id": 3, "description": "pool_alloc() returns non-NULL", "function": "pool_alloc", "inputs": {}, "expected": "non-null"},
+  {"id": 4, "description": "pool_available() = 3 after 1 alloc", "function": "pool_available", "inputs": {}, "expected": 3},
+  {"id": 5, "description": "Allocated block is 16-byte aligned", "function": "pool_is_aligned", "inputs": {"alignment": 16}, "expected": 1},
+  {"id": 6, "description": "All 4 blocks allocated, available=0", "function": "multi_alloc", "inputs": {"count": 3}, "expected": 0},
+  {"id": 7, "description": "pool_alloc() returns NULL when exhausted", "function": "pool_alloc", "inputs": {}, "expected": null},
+  {"id": 8, "description": "pool_contains(valid_block) = 1", "function": "pool_contains", "inputs": {"valid": true}, "expected": 1},
+  {"id": 9, "description": "pool_contains(stack_var) = 0", "function": "pool_contains", "inputs": {"valid": false}, "expected": 0},
+  {"id": 10, "description": "pool_contains(NULL) = 0", "function": "pool_contains", "inputs": {"ptr": null}, "expected": 0},
+  {"id": 11, "description": "pool_free succeeds, available=1", "function": "pool_free", "inputs": {}, "expected": 0},
+  {"id": 12, "description": "Re-alloc after free succeeds", "function": "pool_alloc", "inputs": {}, "expected": "non-null"},
+  {"id": 13, "description": "pool_free(NULL) returns -1", "function": "pool_free", "inputs": {"ptr": null}, "expected": -1},
+  {"id": 14, "description": "pool_free(non-pool ptr) returns -1", "function": "pool_free", "inputs": {"valid": false}, "expected": -1},
+  {"id": 15, "description": "pool_init(12, 4) fails (not power of 2)", "function": "pool_init", "inputs": {"block_size": 12, "num_blocks": 4}, "expected": -1},
+  {"id": 16, "description": "pool_init(4, 4) fails (block_size < 8)", "function": "pool_init", "inputs": {"block_size": 4, "num_blocks": 4}, "expected": -1}
+]

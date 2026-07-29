@@ -1,0 +1,18 @@
+[
+  {"id": 1, "description": "ppbuf_init(64) succeeds", "expected": 0},
+  {"id": 2, "description": "ppbuf_init(0) fails", "expected": -1},
+  {"id": 3, "description": "Initial state is IDLE", "expected": 0},
+  {"id": 4, "description": "No read buffer initially (NULL)", "expected": null},
+  {"id": 5, "description": "Write buffer is non-NULL", "expected": "non-null"},
+  {"id": 6, "description": "Write samples to buffer", "expected": "pass"},
+  {"id": 7, "description": "Swap makes buffer ready, write buffer changes", "expected": 0},
+  {"id": 8, "description": "Read sample[0] = 1000 from ready buffer", "expected": 1000},
+  {"id": 9, "description": "Read sample[3] = 4000 from ready buffer", "expected": 4000},
+  {"id": 10, "description": "Consume succeeds, state=IDLE, read=NULL", "expected": 0},
+  {"id": 11, "description": "Consume with no ready buffer returns -1", "expected": -1},
+  {"id": 12, "description": "Overrun detected on double swap", "expected": -1},
+  {"id": 13, "description": "State is OVERRUN after overrun", "expected": 2},
+  {"id": 14, "description": "System recovers after overrun", "expected": 9999},
+  {"id": 15, "description": "write_sample out of range returns -1", "expected": -1},
+  {"id": 16, "description": "ppbuf_init(129) fails (too large)", "expected": -1}
+]

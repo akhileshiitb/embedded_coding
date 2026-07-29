@@ -1,0 +1,20 @@
+{
+  "id": 24,
+  "title": "Lock-Free SPSC Ring Buffer",
+  "slug": "spsc_ring_buffer",
+  "difficulty": "hard",
+  "tags": ["lock-free", "atomics", "ring-buffer", "concurrency", "SPSC", "memory-ordering"],
+  "functions": [
+    {"name": "spsc_init", "parameters": [{"name": "capacity", "type": "int", "description": "Buffer capacity (power of 2)"}], "return_type": "int"},
+    {"name": "spsc_push", "parameters": [{"name": "value", "type": "int32_t", "description": "Value to enqueue"}], "return_type": "int"},
+    {"name": "spsc_pop", "parameters": [{"name": "out", "type": "int32_t *", "description": "Output pointer"}], "return_type": "int"},
+    {"name": "spsc_is_empty", "parameters": [], "return_type": "int"},
+    {"name": "spsc_is_full", "parameters": [], "return_type": "int"},
+    {"name": "spsc_count", "parameters": [], "return_type": "int"}
+  ],
+  "constraints": [
+    "capacity must be power of 2, between 2 and 256",
+    "Buffer holds at most capacity-1 elements",
+    "Single producer, single consumer only"
+  ]
+}
