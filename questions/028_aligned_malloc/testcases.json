@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "description": "Basic 16-byte alignment",
+    "inputs": {"size": 100, "alignment": 16},
+    "expected": "non-NULL, aligned to 16"
+  },
+  {
+    "id": 2,
+    "description": "64-byte alignment",
+    "inputs": {"size": 64, "alignment": 64},
+    "expected": "non-NULL, aligned to 64"
+  },
+  {
+    "id": 3,
+    "description": "256-byte alignment",
+    "inputs": {"size": 32, "alignment": 256},
+    "expected": "non-NULL, aligned to 256"
+  },
+  {
+    "id": 4,
+    "description": "128-byte alignment",
+    "inputs": {"size": 200, "alignment": 128},
+    "expected": "non-NULL, aligned to 128"
+  },
+  {
+    "id": 5,
+    "description": "Minimum alignment (sizeof(void*), typically 8)",
+    "inputs": {"size": 50, "alignment": 8},
+    "expected": "non-NULL, aligned to 8"
+  },
+  {
+    "id": 6,
+    "description": "Memory is writable for the full requested size",
+    "inputs": {"size": 128, "alignment": 32},
+    "expected": "non-NULL, aligned to 32, writable for 128 bytes"
+  },
+  {
+    "id": 7,
+    "description": "Multiple allocations are all aligned",
+    "inputs": {"size": 32, "alignment": 64, "count": 4},
+    "expected": "all 4 non-NULL, all aligned to 64"
+  },
+  {
+    "id": 8,
+    "description": "Multiple allocations return distinct pointers",
+    "inputs": {"size": 64, "alignment": 32, "count": 2},
+    "expected": "two distinct non-NULL pointers"
+  },
+  {
+    "id": 9,
+    "description": "Size 0 returns NULL",
+    "inputs": {"size": 0, "alignment": 16},
+    "expected": null
+  },
+  {
+    "id": 10,
+    "description": "Alignment not a power of 2 returns NULL",
+    "inputs": {"size": 64, "alignment": 3},
+    "expected": null
+  },
+  {
+    "id": 11,
+    "description": "Alignment of 0 returns NULL",
+    "inputs": {"size": 64, "alignment": 0},
+    "expected": null
+  },
+  {
+    "id": 12,
+    "description": "Alignment smaller than sizeof(void*) returns NULL",
+    "inputs": {"size": 64, "alignment": 2},
+    "expected": null
+  },
+  {
+    "id": 13,
+    "description": "aligned_free(NULL) does not crash",
+    "inputs": {"ptr": null},
+    "expected": "no crash"
+  },
+  {
+    "id": 14,
+    "description": "Large alignment (1024 bytes)",
+    "inputs": {"size": 64, "alignment": 1024},
+    "expected": "non-NULL, aligned to 1024"
+  },
+  {
+    "id": 15,
+    "description": "Large allocation size with alignment",
+    "inputs": {"size": 4096, "alignment": 64},
+    "expected": "non-NULL, aligned to 64"
+  },
+  {
+    "id": 16,
+    "description": "Alloc-write-free-realloc pattern works correctly",
+    "inputs": {"size": 64, "alignment": 32},
+    "expected": "non-NULL, aligned to 32, survives alloc-free-realloc cycle"
+  }
+]

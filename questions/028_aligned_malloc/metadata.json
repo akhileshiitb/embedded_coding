@@ -1,0 +1,29 @@
+{
+  "id": 28,
+  "title": "Aligned Malloc",
+  "slug": "aligned_malloc",
+  "difficulty": "medium",
+  "tags": ["memory", "alignment", "malloc", "embedded", "pointers"],
+  "function_name": "aligned_malloc",
+  "parameters": [
+    {"name": "size", "type": "size_t", "description": "Number of bytes to allocate (must be > 0)"},
+    {"name": "alignment", "type": "size_t", "description": "Required alignment in bytes (power of 2, >= sizeof(void*))"}
+  ],
+  "additional_functions": [
+    {
+      "function_name": "aligned_free",
+      "parameters": [
+        {"name": "ptr", "type": "void *", "description": "Pointer previously returned by aligned_malloc, or NULL"}
+      ],
+      "return_type": "void"
+    }
+  ],
+  "return_type": "void *",
+  "constraints": [
+    "alignment must be a power of 2 and >= sizeof(void*)",
+    "size must be > 0",
+    "Return NULL if parameters are invalid or malloc fails",
+    "aligned_free(NULL) must be a safe no-op",
+    "Allocated memory must be writable for 'size' bytes from the returned pointer"
+  ]
+}
