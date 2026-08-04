@@ -1,0 +1,21 @@
+{
+  "id": 29,
+  "title": "Insert Value into Bit Field (Macro)",
+  "slug": "bitfield_insert_macro",
+  "difficulty": "medium",
+  "tags": ["bitwise", "macros", "bit-fields", "registers"],
+  "function_name": "BITFIELD_INSERT",
+  "parameters": [
+    {"name": "reg", "type": "uint32_t", "description": "The original register value"},
+    {"name": "mask", "type": "uint32_t", "description": "Bit mask defining the target field"},
+    {"name": "shift", "type": "int", "description": "Number of bits to left-shift value before insert"},
+    {"name": "value", "type": "uint32_t", "description": "The value to insert (right-aligned)"}
+  ],
+  "return_type": "uint32_t",
+  "constraints": [
+    "mask contains one or more contiguous set bits",
+    "shift equals the position of the mask's lowest set bit",
+    "value fits within the field width",
+    "All values are valid 32-bit unsigned integers"
+  ]
+}

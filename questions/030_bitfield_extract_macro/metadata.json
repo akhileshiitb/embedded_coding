@@ -1,0 +1,19 @@
+{
+  "id": 30,
+  "title": "Extract Value from Bit Field (Macro)",
+  "slug": "bitfield_extract_macro",
+  "difficulty": "medium",
+  "tags": ["bitwise", "macros", "bit-fields", "registers"],
+  "function_name": "BITFIELD_EXTRACT",
+  "parameters": [
+    {"name": "reg", "type": "uint32_t", "description": "The register value to extract from"},
+    {"name": "mask", "type": "uint32_t", "description": "Bit mask defining the target field"},
+    {"name": "shift", "type": "int", "description": "Number of bits to right-shift after masking"}
+  ],
+  "return_type": "uint32_t",
+  "constraints": [
+    "mask contains one or more contiguous set bits",
+    "shift equals the position of the mask's lowest set bit",
+    "All values are valid 32-bit unsigned integers"
+  ]
+}

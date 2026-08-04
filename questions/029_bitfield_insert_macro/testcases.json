@@ -1,0 +1,134 @@
+[
+  {
+    "id": 1,
+    "description": "Insert 0xA into bits 0-3 of zero reg",
+    "inputs": {"reg": 0, "mask": 15, "shift": 0, "value": 10},
+    "expected": 10
+  },
+  {
+    "id": 2,
+    "description": "Insert 0xA into bits 4-7 of zero reg",
+    "inputs": {"reg": 0, "mask": 240, "shift": 4, "value": 10},
+    "expected": 160
+  },
+  {
+    "id": 3,
+    "description": "Insert 0x42 into bits 8-15 of zero reg",
+    "inputs": {"reg": 0, "mask": 65280, "shift": 8, "value": 66},
+    "expected": 16896
+  },
+  {
+    "id": 4,
+    "description": "Insert 0xAB into bits 16-23 of zero reg",
+    "inputs": {"reg": 0, "mask": 16711680, "shift": 16, "value": 171},
+    "expected": 11206656
+  },
+  {
+    "id": 5,
+    "description": "Insert 0xCD into bits 24-31 of zero reg",
+    "inputs": {"reg": 0, "mask": 4278190080, "shift": 24, "value": 205},
+    "expected": 3439329280
+  },
+  {
+    "id": 6,
+    "description": "Insert 0x42 into all-ones reg bits 8-15",
+    "inputs": {"reg": 4294967295, "mask": 65280, "shift": 8, "value": 66},
+    "expected": 4294950655
+  },
+  {
+    "id": 7,
+    "description": "Insert 0xB into bits 0-3 of 0x12345678",
+    "inputs": {"reg": 305419896, "mask": 15, "shift": 0, "value": 11},
+    "expected": 305419899
+  },
+  {
+    "id": 8,
+    "description": "Insert 0xEF into bits 16-23 of 0xABCD0000",
+    "inputs": {"reg": 2882338816, "mask": 16711680, "shift": 16, "value": 239},
+    "expected": 2884632576
+  },
+  {
+    "id": 9,
+    "description": "Insert 0x00 into bits 8-15 (clear field)",
+    "inputs": {"reg": 3735928559, "mask": 65280, "shift": 8, "value": 0},
+    "expected": 3735879919
+  },
+  {
+    "id": 10,
+    "description": "Overwrite 0xA with 0x5 in bits 4-7",
+    "inputs": {"reg": 160, "mask": 240, "shift": 4, "value": 5},
+    "expected": 80
+  },
+  {
+    "id": 11,
+    "description": "Overwrite 0x42 with 0xBE in bits 8-15",
+    "inputs": {"reg": 4294950655, "mask": 65280, "shift": 8, "value": 190},
+    "expected": 4294918911
+  },
+  {
+    "id": 12,
+    "description": "Insert 0 into bits 0-3 (clear nibble)",
+    "inputs": {"reg": 4294967295, "mask": 15, "shift": 0, "value": 0},
+    "expected": 4294967280
+  },
+  {
+    "id": 13,
+    "description": "Insert 0 into bits 24-31 (clear top byte)",
+    "inputs": {"reg": 4294967295, "mask": 4278190080, "shift": 24, "value": 0},
+    "expected": 16777215
+  },
+  {
+    "id": 14,
+    "description": "Insert max 4-bit value 0xF",
+    "inputs": {"reg": 0, "mask": 15, "shift": 0, "value": 15},
+    "expected": 15
+  },
+  {
+    "id": 15,
+    "description": "Insert max 8-bit value 0xFF",
+    "inputs": {"reg": 0, "mask": 65280, "shift": 8, "value": 255},
+    "expected": 65280
+  },
+  {
+    "id": 16,
+    "description": "Set single bit 0",
+    "inputs": {"reg": 0, "mask": 1, "shift": 0, "value": 1},
+    "expected": 1
+  },
+  {
+    "id": 17,
+    "description": "Clear single bit 31",
+    "inputs": {"reg": 4294967295, "mask": 2147483648, "shift": 31, "value": 0},
+    "expected": 2147483647
+  },
+  {
+    "id": 18,
+    "description": "Set single bit 31",
+    "inputs": {"reg": 0, "mask": 2147483648, "shift": 31, "value": 1},
+    "expected": 2147483648
+  },
+  {
+    "id": 19,
+    "description": "Insert 16-bit value 0xCAFE into bits 0-15",
+    "inputs": {"reg": 0, "mask": 65535, "shift": 0, "value": 51966},
+    "expected": 51966
+  },
+  {
+    "id": 20,
+    "description": "Insert 16-bit value 0xBEEF into bits 16-31",
+    "inputs": {"reg": 3735552000, "mask": 4294901760, "shift": 16, "value": 48879},
+    "expected": 3203334144
+  },
+  {
+    "id": 21,
+    "description": "Insert 0x77 preserving pattern 0xAA55AA55",
+    "inputs": {"reg": 2857740885, "mask": 65280, "shift": 8, "value": 119},
+    "expected": 2857738069
+  },
+  {
+    "id": 22,
+    "description": "Insert 0x99 preserving 0x12345678",
+    "inputs": {"reg": 305419896, "mask": 16711680, "shift": 16, "value": 153},
+    "expected": 313791096
+  }
+]
