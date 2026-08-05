@@ -1,0 +1,19 @@
+{
+  "id": 32,
+  "title": "Implement memmove()",
+  "slug": "memmove",
+  "difficulty": "medium",
+  "tags": ["memory", "pointers", "overlap", "embedded-interview"],
+  "function_name": "my_memmove",
+  "parameters": [
+    {"name": "dest", "type": "void *", "description": "Pointer to destination memory"},
+    {"name": "src", "type": "const void *", "description": "Pointer to source memory"},
+    {"name": "n", "type": "size_t", "description": "Number of bytes to copy"}
+  ],
+  "return_type": "void *",
+  "constraints": [
+    "dest and src are valid non-NULL pointers (when n > 0)",
+    "dest and src may overlap in any configuration",
+    "0 <= n <= 4096"
+  ]
+}

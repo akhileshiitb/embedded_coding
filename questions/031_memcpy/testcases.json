@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "description": "Zero-length copy (n=0) — dest unchanged",
+    "inputs": {"n": 0, "alignment": "aligned"},
+    "expected": "dest unchanged, return == dest"
+  },
+  {
+    "id": 2,
+    "description": "Single byte copy (n=1)",
+    "inputs": {"n": 1, "alignment": "aligned"},
+    "expected": "dest[0] == src[0]"
+  },
+  {
+    "id": 3,
+    "description": "Small copy (n=3, less than one word)",
+    "inputs": {"n": 3, "alignment": "aligned"},
+    "expected": "3 bytes copied correctly"
+  },
+  {
+    "id": 4,
+    "description": "Exactly 4 bytes, aligned (one word)",
+    "inputs": {"n": 4, "alignment": "aligned"},
+    "expected": "4 bytes copied correctly"
+  },
+  {
+    "id": 5,
+    "description": "8 bytes, aligned (two words)",
+    "inputs": {"n": 8, "alignment": "aligned"},
+    "expected": "8 bytes copied correctly"
+  },
+  {
+    "id": 6,
+    "description": "16 bytes, aligned (four words)",
+    "inputs": {"n": 16, "alignment": "aligned"},
+    "expected": "16 bytes copied correctly"
+  },
+  {
+    "id": 7,
+    "description": "Unaligned source (offset +1), 12 bytes",
+    "inputs": {"n": 12, "alignment": "src_unaligned_1"},
+    "expected": "12 bytes copied correctly"
+  },
+  {
+    "id": 8,
+    "description": "Unaligned destination (offset +1), 12 bytes",
+    "inputs": {"n": 12, "alignment": "dest_unaligned_1"},
+    "expected": "12 bytes copied correctly"
+  },
+  {
+    "id": 9,
+    "description": "Both unaligned (offset +3), 10 bytes",
+    "inputs": {"n": 10, "alignment": "both_unaligned_3"},
+    "expected": "10 bytes copied correctly"
+  },
+  {
+    "id": 10,
+    "description": "Large aligned copy (256 bytes)",
+    "inputs": {"n": 256, "alignment": "aligned"},
+    "expected": "256 bytes copied correctly"
+  },
+  {
+    "id": 11,
+    "description": "Large aligned copy (1024 bytes)",
+    "inputs": {"n": 1024, "alignment": "aligned"},
+    "expected": "1024 bytes copied correctly"
+  },
+  {
+    "id": 12,
+    "description": "13 bytes aligned (3 words + 1 trailing byte)",
+    "inputs": {"n": 13, "alignment": "aligned"},
+    "expected": "13 bytes copied correctly"
+  },
+  {
+    "id": 13,
+    "description": "Return value equals dest pointer",
+    "inputs": {"n": 8, "alignment": "aligned"},
+    "expected": "return == dest"
+  },
+  {
+    "id": 14,
+    "description": "Source buffer not modified after copy",
+    "inputs": {"n": 16, "alignment": "aligned"},
+    "expected": "src unchanged"
+  },
+  {
+    "id": 15,
+    "description": "Bytes beyond n not modified",
+    "inputs": {"n": 8, "alignment": "aligned"},
+    "expected": "dest[8..15] unchanged"
+  },
+  {
+    "id": 16,
+    "description": "Copy 32 bytes of 0xFF",
+    "inputs": {"n": 32, "alignment": "aligned", "pattern": "0xFF"},
+    "expected": "32 bytes of 0xFF copied"
+  },
+  {
+    "id": 17,
+    "description": "Copy 32 bytes of 0x00",
+    "inputs": {"n": 32, "alignment": "aligned", "pattern": "0x00"},
+    "expected": "32 bytes of 0x00 copied"
+  },
+  {
+    "id": 18,
+    "description": "Mismatched alignment (src aligned, dest +2), 20 bytes",
+    "inputs": {"n": 20, "alignment": "dest_unaligned_2"},
+    "expected": "20 bytes copied correctly"
+  }
+]

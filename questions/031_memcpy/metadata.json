@@ -1,0 +1,20 @@
+{
+  "id": 31,
+  "title": "Implement memcpy()",
+  "slug": "memcpy",
+  "difficulty": "medium",
+  "tags": ["memory", "pointers", "optimization", "alignment"],
+  "function_name": "my_memcpy",
+  "parameters": [
+    {"name": "dest", "type": "void *", "description": "Pointer to destination memory"},
+    {"name": "src", "type": "const void *", "description": "Pointer to source memory"},
+    {"name": "n", "type": "size_t", "description": "Number of bytes to copy"}
+  ],
+  "return_type": "void *",
+  "constraints": [
+    "dest and src are valid non-NULL pointers (when n > 0)",
+    "dest and src do NOT overlap",
+    "0 <= n <= 4096",
+    "Optimization should use 4-byte (uint32_t) word copies when aligned"
+  ]
+}

@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "description": "Zero-length move (n=0) — buffer unchanged",
+    "inputs": {"n": 0, "overlap": "none"},
+    "expected": "buffer unchanged, return == dest"
+  },
+  {
+    "id": 2,
+    "description": "Non-overlapping copy, 16 bytes",
+    "inputs": {"n": 16, "overlap": "none"},
+    "expected": "16 bytes copied correctly"
+  },
+  {
+    "id": 3,
+    "description": "Forward overlap (dest < src), move 6 bytes",
+    "inputs": {"n": 6, "overlap": "forward", "src_offset": 4, "dest_offset": 2},
+    "expected": "data shifted left correctly"
+  },
+  {
+    "id": 4,
+    "description": "Backward overlap (dest > src), move 6 bytes",
+    "inputs": {"n": 6, "overlap": "backward", "src_offset": 2, "dest_offset": 4},
+    "expected": "data shifted right correctly"
+  },
+  {
+    "id": 5,
+    "description": "Complete overlap (dest == src), 8 bytes unchanged",
+    "inputs": {"n": 8, "overlap": "complete"},
+    "expected": "buffer unchanged"
+  },
+  {
+    "id": 6,
+    "description": "Overlap by 1 forward (shift left by 1)",
+    "inputs": {"n": 5, "overlap": "forward", "src_offset": 1, "dest_offset": 0},
+    "expected": "data shifted left by 1"
+  },
+  {
+    "id": 7,
+    "description": "Overlap by 1 backward (shift right by 1)",
+    "inputs": {"n": 5, "overlap": "backward", "src_offset": 0, "dest_offset": 1},
+    "expected": "data shifted right by 1"
+  },
+  {
+    "id": 8,
+    "description": "Large forward overlap (shift left by 4, 32 bytes)",
+    "inputs": {"n": 32, "overlap": "forward", "src_offset": 4, "dest_offset": 0},
+    "expected": "32 bytes shifted left by 4"
+  },
+  {
+    "id": 9,
+    "description": "Large backward overlap (shift right by 4, 32 bytes)",
+    "inputs": {"n": 32, "overlap": "backward", "src_offset": 0, "dest_offset": 4},
+    "expected": "32 bytes shifted right by 4"
+  },
+  {
+    "id": 10,
+    "description": "Almost complete overlap (shift right by 1, 31 bytes)",
+    "inputs": {"n": 31, "overlap": "backward", "src_offset": 0, "dest_offset": 1},
+    "expected": "31 bytes shifted right by 1"
+  },
+  {
+    "id": 11,
+    "description": "Single byte move (adjacent, overlap)",
+    "inputs": {"n": 1, "overlap": "backward", "src_offset": 0, "dest_offset": 1},
+    "expected": "single byte moved"
+  },
+  {
+    "id": 12,
+    "description": "Return value equals dest",
+    "inputs": {"n": 4, "overlap": "backward"},
+    "expected": "return == dest"
+  },
+  {
+    "id": 13,
+    "description": "Non-overlapping large copy (128 bytes)",
+    "inputs": {"n": 128, "overlap": "none"},
+    "expected": "128 bytes copied correctly"
+  },
+  {
+    "id": 14,
+    "description": "Forward overlap, half-size (8 bytes, overlap 4)",
+    "inputs": {"n": 8, "overlap": "forward", "src_offset": 8, "dest_offset": 4},
+    "expected": "8 bytes shifted correctly"
+  },
+  {
+    "id": 15,
+    "description": "Backward overlap, half-size (8 bytes, overlap 4)",
+    "inputs": {"n": 8, "overlap": "backward", "src_offset": 4, "dest_offset": 8},
+    "expected": "8 bytes shifted correctly"
+  },
+  {
+    "id": 16,
+    "description": "All same bytes (0x77), overlap doesn't matter",
+    "inputs": {"n": 16, "overlap": "backward", "pattern": "0x77"},
+    "expected": "buffer unchanged (all same)"
+  },
+  {
+    "id": 17,
+    "description": "Source fully within extended dest region (forward)",
+    "inputs": {"n": 12, "overlap": "forward", "src_offset": 2, "dest_offset": 0},
+    "expected": "12 bytes shifted left by 2"
+  },
+  {
+    "id": 18,
+    "description": "Large backward overlap (shift right by 2, 64 bytes)",
+    "inputs": {"n": 64, "overlap": "backward", "src_offset": 0, "dest_offset": 2},
+    "expected": "64 bytes shifted right by 2"
+  }
+]
