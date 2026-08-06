@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "description": "Basic: two unique in mixed array",
+    "inputs": {"arr": [2, 3, 7, 9, 11, 2, 3, 11], "n": 8},
+    "expected": {"out1": 7, "out2": 9}
+  },
+  {
+    "id": 2,
+    "description": "Basic: small array with unique 3 and 4",
+    "inputs": {"arr": [1, 2, 3, 2, 1, 4], "n": 6},
+    "expected": {"out1": 3, "out2": 4}
+  },
+  {
+    "id": 3,
+    "description": "Basic: unique elements not adjacent",
+    "inputs": {"arr": [4, 1, 4, 6, 1, 3, 6, 8], "n": 8},
+    "expected": {"out1": 3, "out2": 8}
+  },
+  {
+    "id": 4,
+    "description": "Basic: unique values are multiples of 10",
+    "inputs": {"arr": [10, 20, 30, 10, 20, 40], "n": 6},
+    "expected": {"out1": 30, "out2": 40}
+  },
+  {
+    "id": 5,
+    "description": "Negative: one negative, one positive unique",
+    "inputs": {"arr": [-1, 5, -1, 10, 5, 99, 10, -42], "n": 8},
+    "expected": {"out1": -42, "out2": 99}
+  },
+  {
+    "id": 6,
+    "description": "Negative: both unique are negative",
+    "inputs": {"arr": [-5, -3, -5, -7, -3, -9], "n": 6},
+    "expected": {"out1": -9, "out2": -7}
+  },
+  {
+    "id": 7,
+    "description": "Negative: mixed sign unique values",
+    "inputs": {"arr": [-100, 100, 50, -100, 50, -50], "n": 6},
+    "expected": {"out1": -50, "out2": 100}
+  },
+  {
+    "id": 8,
+    "description": "Boundary: INT_MIN and INT_MAX",
+    "inputs": {"arr": [0, 2147483647, 0, -2147483648], "n": 4},
+    "expected": {"out1": -2147483648, "out2": 2147483647}
+  },
+  {
+    "id": 9,
+    "description": "Boundary: zero is one of the unique values",
+    "inputs": {"arr": [0, 1, 2, 2, 1, 3], "n": 6},
+    "expected": {"out1": 0, "out2": 3}
+  },
+  {
+    "id": 10,
+    "description": "Boundary: two large adjacent values",
+    "inputs": {"arr": [2147483647, 5, 5, 2147483646, 10, 10], "n": 6},
+    "expected": {"out1": 2147483646, "out2": 2147483647}
+  },
+  {
+    "id": 11,
+    "description": "Adjacent: unique values differ by 1",
+    "inputs": {"arr": [7, 8, 100, 100, 200, 200], "n": 6},
+    "expected": {"out1": 7, "out2": 8}
+  },
+  {
+    "id": 12,
+    "description": "Adjacent: many pairs, unique at end",
+    "inputs": {"arr": [1, 2, 1, 3, 2, 3, 4, 5], "n": 8},
+    "expected": {"out1": 4, "out2": 5}
+  },
+  {
+    "id": 13,
+    "description": "Bits: unique values differ by 1 bit (0x0E vs 0x0F)",
+    "inputs": {"arr": [15, 14, 170, 170, 187, 187], "n": 6},
+    "expected": {"out1": 14, "out2": 15}
+  },
+  {
+    "id": 14,
+    "description": "Bits: zero and 0xFF as unique",
+    "inputs": {"arr": [255, 0, 18, 18, 52, 52], "n": 6},
+    "expected": {"out1": 0, "out2": 255}
+  },
+  {
+    "id": 15,
+    "description": "Large: 9 pairs + two unique",
+    "inputs": {"arr": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8], "n": 18},
+    "expected": {"out1": 9, "out2": 10}
+  },
+  {
+    "id": 16,
+    "description": "Sign: negation pair as unique values",
+    "inputs": {"arr": [42, -42, 100, 200, 100, 200, 300, 300], "n": 8},
+    "expected": {"out1": -42, "out2": 42}
+  },
+  {
+    "id": 17,
+    "description": "MinSize: smallest valid array (one pair + two unique)",
+    "inputs": {"arr": [5, 5, 11, 22], "n": 4},
+    "expected": {"out1": 11, "out2": 22}
+  },
+  {
+    "id": 18,
+    "description": "Powers: both unique are powers of 2",
+    "inputs": {"arr": [16, 32, 3, 3, 7, 7, 9, 9], "n": 8},
+    "expected": {"out1": 16, "out2": 32}
+  }
+]

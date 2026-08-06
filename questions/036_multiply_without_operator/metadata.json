@@ -1,0 +1,19 @@
+{
+  "id": 36,
+  "title": "Multiplication Without the Multiply Operator",
+  "slug": "multiply_without_operator",
+  "difficulty": "hard",
+  "tags": ["bitwise", "shift-and-add", "russian-peasant", "alu-design", "overflow", "interview-classic"],
+  "function_name": "multiply",
+  "parameters": [
+    {"name": "a", "type": "int32_t", "description": "Multiplicand"},
+    {"name": "b", "type": "int32_t", "description": "Multiplier"}
+  ],
+  "return_type": "int32_t",
+  "constraints": [
+    "a and b are any valid int32_t values (including INT_MIN, INT_MAX)",
+    "Must not use *, /, or % operators",
+    "May use + operator (or bitwise addition for full marks)",
+    "Result wraps on overflow (lower 32 bits of mathematical product)"
+  ]
+}

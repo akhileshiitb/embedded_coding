@@ -1,0 +1,134 @@
+[
+  {
+    "id": 1,
+    "description": "Basic: 5 + 3 = 8",
+    "inputs": {"a": 5, "b": 3},
+    "expected": 8
+  },
+  {
+    "id": 2,
+    "description": "Basic: 1 + 1 = 2",
+    "inputs": {"a": 1, "b": 1},
+    "expected": 2
+  },
+  {
+    "id": 3,
+    "description": "Basic: 100 + 200 = 300",
+    "inputs": {"a": 100, "b": 200},
+    "expected": 300
+  },
+  {
+    "id": 4,
+    "description": "Zero: 0 + 0 = 0",
+    "inputs": {"a": 0, "b": 0},
+    "expected": 0
+  },
+  {
+    "id": 5,
+    "description": "Identity: 0 + 42 = 42",
+    "inputs": {"a": 0, "b": 42},
+    "expected": 42
+  },
+  {
+    "id": 6,
+    "description": "Identity: 42 + 0 = 42",
+    "inputs": {"a": 42, "b": 0},
+    "expected": 42
+  },
+  {
+    "id": 7,
+    "description": "Cancel: -1 + 1 = 0 (carry propagates all 32 bits)",
+    "inputs": {"a": -1, "b": 1},
+    "expected": 0
+  },
+  {
+    "id": 8,
+    "description": "Negative: -5 + -3 = -8",
+    "inputs": {"a": -5, "b": -3},
+    "expected": -8
+  },
+  {
+    "id": 9,
+    "description": "Negative: -1 + -1 = -2",
+    "inputs": {"a": -1, "b": -1},
+    "expected": -2
+  },
+  {
+    "id": 10,
+    "description": "Mixed: 10 + (-3) = 7",
+    "inputs": {"a": 10, "b": -3},
+    "expected": 7
+  },
+  {
+    "id": 11,
+    "description": "Mixed: -10 + 3 = -7",
+    "inputs": {"a": -10, "b": 3},
+    "expected": -7
+  },
+  {
+    "id": 12,
+    "description": "Boundary: INT_MAX + 0",
+    "inputs": {"a": 2147483647, "b": 0},
+    "expected": 2147483647
+  },
+  {
+    "id": 13,
+    "description": "Boundary: INT_MIN + 0",
+    "inputs": {"a": -2147483648, "b": 0},
+    "expected": -2147483648
+  },
+  {
+    "id": 14,
+    "description": "Overflow: INT_MAX + 1 wraps to INT_MIN",
+    "inputs": {"a": 2147483647, "b": 1},
+    "expected": -2147483648
+  },
+  {
+    "id": 15,
+    "description": "Overflow: INT_MIN + (-1) wraps to INT_MAX",
+    "inputs": {"a": -2147483648, "b": -1},
+    "expected": 2147483647
+  },
+  {
+    "id": 16,
+    "description": "Overflow: INT_MIN + INT_MIN wraps to 0",
+    "inputs": {"a": -2147483648, "b": -2147483648},
+    "expected": 0
+  },
+  {
+    "id": 17,
+    "description": "Overflow: INT_MAX + INT_MAX wraps to -2",
+    "inputs": {"a": 2147483647, "b": 2147483647},
+    "expected": -2
+  },
+  {
+    "id": 18,
+    "description": "Carry: 1 + 0x7FFFFFFE = INT_MAX",
+    "inputs": {"a": 1, "b": 2147483646},
+    "expected": 2147483647
+  },
+  {
+    "id": 19,
+    "description": "Carry: -1 + -1 = -2 (all bits carry)",
+    "inputs": {"a": -1, "b": -1},
+    "expected": -2
+  },
+  {
+    "id": 20,
+    "description": "Complementary: 0x5555... + 0xAAAA... = 0xFFFF... = -1",
+    "inputs": {"a": 1431655765, "b": -1431655766},
+    "expected": -1
+  },
+  {
+    "id": 21,
+    "description": "Powers: 1024 + 1024 = 2048",
+    "inputs": {"a": 1024, "b": 1024},
+    "expected": 2048
+  },
+  {
+    "id": 22,
+    "description": "Powers: 2^30 + 2^30 = 2^31 (INT_MIN via overflow)",
+    "inputs": {"a": 1073741824, "b": 1073741824},
+    "expected": -2147483648
+  }
+]

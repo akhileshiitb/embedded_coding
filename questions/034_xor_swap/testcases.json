@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "description": "Basic positive swap (5,9)",
+    "inputs": {"a": 5, "b": 9, "aliased": false},
+    "expected": {"a": 9, "b": 5}
+  },
+  {
+    "id": 2,
+    "description": "Swap 100 and 200",
+    "inputs": {"a": 100, "b": 200, "aliased": false},
+    "expected": {"a": 200, "b": 100}
+  },
+  {
+    "id": 3,
+    "description": "Swap zero and 7",
+    "inputs": {"a": 0, "b": 7, "aliased": false},
+    "expected": {"a": 7, "b": 0}
+  },
+  {
+    "id": 4,
+    "description": "Swap two zeros (different addresses)",
+    "inputs": {"a": 0, "b": 0, "aliased": false},
+    "expected": {"a": 0, "b": 0}
+  },
+  {
+    "id": 5,
+    "description": "Same value (42), different addresses",
+    "inputs": {"a": 42, "b": 42, "aliased": false},
+    "expected": {"a": 42, "b": 42}
+  },
+  {
+    "id": 6,
+    "description": "ALIASING: same address, value 42 preserved",
+    "inputs": {"a": 42, "b": 42, "aliased": true},
+    "expected": {"a": 42, "b": 42}
+  },
+  {
+    "id": 7,
+    "description": "ALIASING: same address, value -99 preserved",
+    "inputs": {"a": -99, "b": -99, "aliased": true},
+    "expected": {"a": -99, "b": -99}
+  },
+  {
+    "id": 8,
+    "description": "ALIASING: same address, value 0 preserved",
+    "inputs": {"a": 0, "b": 0, "aliased": true},
+    "expected": {"a": 0, "b": 0}
+  },
+  {
+    "id": 9,
+    "description": "ALIASING: same address, INT_MAX preserved",
+    "inputs": {"a": 2147483647, "b": 2147483647, "aliased": true},
+    "expected": {"a": 2147483647, "b": 2147483647}
+  },
+  {
+    "id": 10,
+    "description": "ALIASING: same address, INT_MIN preserved",
+    "inputs": {"a": -2147483648, "b": -2147483648, "aliased": true},
+    "expected": {"a": -2147483648, "b": -2147483648}
+  },
+  {
+    "id": 11,
+    "description": "Swap -10 and -20",
+    "inputs": {"a": -10, "b": -20, "aliased": false},
+    "expected": {"a": -20, "b": -10}
+  },
+  {
+    "id": 12,
+    "description": "Swap -1 (0xFFFFFFFF) and 1",
+    "inputs": {"a": -1, "b": 1, "aliased": false},
+    "expected": {"a": 1, "b": -1}
+  },
+  {
+    "id": 13,
+    "description": "Swap INT_MIN and INT_MAX",
+    "inputs": {"a": -2147483648, "b": 2147483647, "aliased": false},
+    "expected": {"a": 2147483647, "b": -2147483648}
+  },
+  {
+    "id": 14,
+    "description": "Swap complementary bit patterns (0xAAAA.., 0x5555..)",
+    "inputs": {"a": -1431655766, "b": 1431655765, "aliased": false},
+    "expected": {"a": 1431655765, "b": -1431655766}
+  },
+  {
+    "id": 15,
+    "description": "Swap arr[1] and arr[3] in array",
+    "inputs": {"a": 20, "b": 40, "aliased": false},
+    "expected": {"a": 40, "b": 20}
+  },
+  {
+    "id": 16,
+    "description": "ALIASING in array: swap arr[2] with itself preserved",
+    "inputs": {"a": 30, "b": 30, "aliased": true},
+    "expected": {"a": 30, "b": 30}
+  },
+  {
+    "id": 17,
+    "description": "Swap 1 and 0x80000000",
+    "inputs": {"a": 1, "b": -2147483648, "aliased": false},
+    "expected": {"a": -2147483648, "b": 1}
+  },
+  {
+    "id": 18,
+    "description": "Swap adjacent values 127 and 128",
+    "inputs": {"a": 127, "b": 128, "aliased": false},
+    "expected": {"a": 128, "b": 127}
+  }
+]

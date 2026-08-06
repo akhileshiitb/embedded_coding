@@ -1,0 +1,20 @@
+{
+  "id": 33,
+  "title": "Find Two Non-Repeating Elements",
+  "slug": "find_two_non_repeating",
+  "difficulty": "medium",
+  "tags": ["bitwise", "xor", "bit-partitioning", "arrays", "interview-classic"],
+  "function_name": "find_two_non_repeating",
+  "parameters": [
+    {"name": "arr", "type": "const int32_t*", "description": "Input array of integers"},
+    {"name": "n", "type": "int", "description": "Number of elements in the array"},
+    {"name": "out1", "type": "int32_t*", "description": "Output pointer for the smaller unique value"},
+    {"name": "out2", "type": "int32_t*", "description": "Output pointer for the larger unique value"}
+  ],
+  "return_type": "void",
+  "constraints": [
+    "4 <= n <= 1000 (n is always even)",
+    "Exactly two elements appear once; all others appear exactly twice",
+    "Elements can be any valid int32_t value (including negative, zero, INT_MIN, INT_MAX)"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": 35,
+  "title": "Addition Without Arithmetic Operators",
+  "slug": "add_without_arithmetic",
+  "difficulty": "medium",
+  "tags": ["bitwise", "xor", "carry", "undefined-behavior", "alu-design", "interview-classic"],
+  "function_name": "add",
+  "parameters": [
+    {"name": "a", "type": "int32_t", "description": "First integer"},
+    {"name": "b", "type": "int32_t", "description": "Second integer"}
+  ],
+  "return_type": "int32_t",
+  "constraints": [
+    "a and b are any valid int32_t values (including INT_MIN, INT_MAX)",
+    "Must not use +, -, *, /, or % operators",
+    "Must cast to uint32_t before left-shifting carry to avoid UB",
+    "Result wraps on overflow (same as hardware addition)"
+  ]
+}

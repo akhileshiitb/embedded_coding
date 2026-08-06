@@ -1,0 +1,19 @@
+{
+  "id": 34,
+  "title": "XOR Swap with Aliasing Guard",
+  "slug": "xor_swap",
+  "difficulty": "medium",
+  "tags": ["bitwise", "xor", "aliasing", "embedded-pitfall", "pipeline", "interview-classic"],
+  "function_name": "xor_swap",
+  "parameters": [
+    {"name": "a", "type": "int32_t*", "description": "Pointer to the first integer"},
+    {"name": "b", "type": "int32_t*", "description": "Pointer to the second integer"}
+  ],
+  "return_type": "void",
+  "constraints": [
+    "a and b are valid non-NULL pointers to int32_t",
+    "Pointers may alias (point to the same memory location)",
+    "Values can be any valid int32_t including 0, INT_MIN, INT_MAX",
+    "Must not use a temporary variable or arithmetic operators for swap logic"
+  ]
+}
