@@ -90,3 +90,5 @@ spsc_pop(&val);            // → -1 (empty)
 - **Memory ordering**: The producer uses `memory_order_release` when advancing head (ensures data write is visible before the index update). The consumer uses `memory_order_acquire` when reading head (ensures it sees the producer's data).
 - **No locks needed** because head is only written by the producer and tail is only written by the consumer — there is no contention on any single variable.
 - This pattern is ubiquitous: Linux `kfifo`, DPDK ring, audio driver DMA buffers.
+- Use below blog to understand the implementation better: 
+https://hubble.com/community/guides/how-to-implement-a-ring-buffer-for-embedded-logging-and-telemetry/
