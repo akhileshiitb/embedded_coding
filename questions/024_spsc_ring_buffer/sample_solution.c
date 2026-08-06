@@ -3,6 +3,14 @@
 
 #define SPSC_MAX_CAPACITY 256
 
+/**
+ * SPSC Ring Buffer State.
+ * - buffer[]: storage array
+ * - head: next write position (only producer modifies)
+ * - tail: next read position (only consumer modifies)
+ * - mask: capacity - 1 (for efficient modulo)
+ * - capacity: size of the buffer array
+ */
 static int32_t buffer[SPSC_MAX_CAPACITY];
 
 static struct ring_buf {
@@ -25,7 +33,19 @@ int spsc_init(int capacity) {
      * - Set mask = capacity - 1
      * - Reset head and tail to 0
      */
-    (void)capacity;
+
+    if (capacity & (capacity - 1))
+        return -1;
+
+    if ((capacity < 2) || (capacity > SPSC_MAX_CAPACITY))
+        return -1;
+
+    my_circ_buf.size = capacity;
+    my_circ_buf.mask = my_circ_buf.size - 1;
+    my_circ_buf.head = 0;
+    my_circ_buf.tail = 0;
+    my_circ_buf.buf = buffer;
+
     return 0;
 }
 
@@ -35,7 +55,7 @@ int spsc_init(int capacity) {
  */
 int spsc_is_empty(void) {
     /* TODO: Implement your solution here */
-    return 0;
+    return my_circ_buf.head == my_circ_buf.tail;
 }
 
 /**
@@ -44,7 +64,8 @@ int spsc_is_empty(void) {
  */
 int spsc_is_full(void) {
     /* TODO: Implement your solution here */
-    return 0;
+    //return ((my_circ_buf.head + 1) & my_circ_buf.mask) == (my_circ_buf.tail & my_circ_buf.mask);
+    return (my_circ_buf.head - my_circ_buf.tail) == (my_circ_buf.size - 1);
 }
 
 /**
@@ -62,7 +83,13 @@ int spsc_push(int32_t value) {
      * - Store new head with release ordering (publishes the data)
      */
 
-    (void)value;
+    if (spsc_is_full())
+        return -1;
+    
+    my_circ_buf.buf[my_circ_buf.head & my_circ_buf.mask] = value;
+
+    my_circ_buf.head += 1;
+
     return 0;
 }
 
@@ -81,7 +108,13 @@ int spsc_pop(int32_t *out) {
      * - Store new tail with release ordering
      */
 
-    (void)out;
+    if (spsc_is_empty())
+        return -1;
+
+    *out = my_circ_buf.buf[my_circ_buf.tail & my_circ_buf.mask];
+
+    my_circ_buf.tail += 1;
+
     return 0;
 }
 
@@ -92,5 +125,5 @@ int spsc_pop(int32_t *out) {
  */
 int spsc_count(void) {
     /* TODO: Implement your solution here */
-    return 0;
+    return my_circ_buf.head - my_circ_buf.tail;
 }
