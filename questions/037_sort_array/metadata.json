@@ -1,0 +1,20 @@
+{
+  "id": 37,
+  "title": "Sort an Array (In-Place, Embedded-Constrained)",
+  "slug": "sort_array",
+  "difficulty": "medium",
+  "tags": ["sorting", "in-place", "embedded-constraints", "stack-safety", "O(1)-space", "insertion-sort"],
+  "function_name": "sort_array",
+  "parameters": [
+    {"name": "arr", "type": "int32_t*", "description": "Pointer to the array to sort in-place"},
+    {"name": "n", "type": "int", "description": "Number of elements in the array"}
+  ],
+  "return_type": "void",
+  "constraints": [
+    "1 <= n <= 1000",
+    "Elements can be any valid int32_t (including negative, zero, INT_MIN, INT_MAX)",
+    "Duplicates are allowed",
+    "Must sort in-place with O(1) auxiliary space",
+    "Recursion allowed but discouraged (stack constraints)"
+  ]
+}

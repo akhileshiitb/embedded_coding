@@ -1,0 +1,116 @@
+[
+  {
+    "id": 1,
+    "description": "Basic: mixed with duplicate",
+    "inputs": {"arr": [5, 2, 9, 1, 5, 6], "n": 6},
+    "expected": [1, 2, 5, 5, 6, 9]
+  },
+  {
+    "id": 2,
+    "description": "Basic: digits of pi",
+    "inputs": {"arr": [3, 1, 4, 1, 5, 9, 2, 6], "n": 8},
+    "expected": [1, 1, 2, 3, 4, 5, 6, 9]
+  },
+  {
+    "id": 3,
+    "description": "Already sorted",
+    "inputs": {"arr": [10, 20, 30, 40, 50], "n": 5},
+    "expected": [10, 20, 30, 40, 50]
+  },
+  {
+    "id": 4,
+    "description": "Reverse sorted (worst case for insertion sort)",
+    "inputs": {"arr": [5, 4, 3, 2, 1], "n": 5},
+    "expected": [1, 2, 3, 4, 5]
+  },
+  {
+    "id": 5,
+    "description": "Single element",
+    "inputs": {"arr": [42], "n": 1},
+    "expected": [42]
+  },
+  {
+    "id": 6,
+    "description": "Two elements: needs swap",
+    "inputs": {"arr": [7, 3], "n": 2},
+    "expected": [3, 7]
+  },
+  {
+    "id": 7,
+    "description": "Two elements: already sorted",
+    "inputs": {"arr": [3, 7], "n": 2},
+    "expected": [3, 7]
+  },
+  {
+    "id": 8,
+    "description": "Negative: mixed positive and negative",
+    "inputs": {"arr": [3, -1, 0, -7, 4], "n": 5},
+    "expected": [-7, -1, 0, 3, 4]
+  },
+  {
+    "id": 9,
+    "description": "Negative: all negative",
+    "inputs": {"arr": [-5, -3, -8, -1, -4], "n": 5},
+    "expected": [-8, -5, -4, -3, -1]
+  },
+  {
+    "id": 10,
+    "description": "Negative: symmetric around zero",
+    "inputs": {"arr": [-100, 100, -50, 50, 0], "n": 5},
+    "expected": [-100, -50, 0, 50, 100]
+  },
+  {
+    "id": 11,
+    "description": "Duplicates: all same value",
+    "inputs": {"arr": [7, 7, 7, 7, 7], "n": 5},
+    "expected": [7, 7, 7, 7, 7]
+  },
+  {
+    "id": 12,
+    "description": "Duplicates: alternating two values",
+    "inputs": {"arr": [1, 3, 1, 3, 1, 3], "n": 6},
+    "expected": [1, 1, 1, 3, 3, 3]
+  },
+  {
+    "id": 13,
+    "description": "Duplicates: groups",
+    "inputs": {"arr": [5, 5, 5, 1, 1, 1, 9, 9], "n": 8},
+    "expected": [1, 1, 1, 5, 5, 5, 9, 9]
+  },
+  {
+    "id": 14,
+    "description": "Boundary: INT_MAX, INT_MIN, 0",
+    "inputs": {"arr": [2147483647, -2147483648, 0], "n": 3},
+    "expected": [-2147483648, 0, 2147483647]
+  },
+  {
+    "id": 15,
+    "description": "Boundary: near INT_MAX with duplicate",
+    "inputs": {"arr": [2147483647, 2147483646, 2147483647], "n": 3},
+    "expected": [2147483646, 2147483647, 2147483647]
+  },
+  {
+    "id": 16,
+    "description": "Boundary: near INT_MIN with duplicate",
+    "inputs": {"arr": [-2147483648, -2147483648, -2147483647], "n": 3},
+    "expected": [-2147483648, -2147483648, -2147483647]
+  },
+  {
+    "id": 17,
+    "description": "Nearly sorted: one swap needed",
+    "inputs": {"arr": [1, 2, 3, 5, 4, 6, 7, 8], "n": 8},
+    "expected": [1, 2, 3, 4, 5, 6, 7, 8]
+  },
+  {
+    "id": 18,
+    "description": "Nearly sorted: adjacent pairs swapped",
+    "inputs": {"arr": [2, 1, 4, 3, 6, 5, 8, 7], "n": 8},
+    "expected": [1, 2, 3, 4, 5, 6, 7, 8]
+  },
+  {
+    "id": 19,
+    "description": "Large: 20 elements shuffled",
+    "inputs": {"arr": [19, 7, 15, 3, 11, 1, 17, 5, 13, 9, 20, 8, 16, 4, 12, 2, 18, 6, 14, 10], "n": 20},
+    "expected": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  }
+]
