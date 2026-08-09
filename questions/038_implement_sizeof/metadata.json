@@ -1,0 +1,18 @@
+{
+  "id": 38,
+  "title": "Implement sizeof() Using Pointer Arithmetic",
+  "slug": "implement_sizeof",
+  "difficulty": "medium",
+  "tags": ["pointer-arithmetic", "macros", "alignment", "padding", "sizeof", "embedded-fundamentals"],
+  "function_name": "MY_SIZEOF",
+  "parameters": [
+    {"name": "type", "type": "type-name", "description": "The type to compute the size of"}
+  ],
+  "return_type": "size_t",
+  "constraints": [
+    "Must NOT use the sizeof operator in the macro implementation",
+    "Must work for primitive types, structs, arrays, and pointers",
+    "MY_SIZEOF(char) must return 1",
+    "Results must match built-in sizeof for all test cases"
+  ]
+}

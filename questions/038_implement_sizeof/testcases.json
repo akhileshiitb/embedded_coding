@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "description": "char: always 1 byte",
+    "inputs": {"type": "char"},
+    "expected_note": "sizeof(char) == 1 (guaranteed by C standard)"
+  },
+  {
+    "id": 2,
+    "description": "short: typically 2 bytes",
+    "inputs": {"type": "short"},
+    "expected_note": "sizeof(short) — platform dependent, typically 2"
+  },
+  {
+    "id": 3,
+    "description": "int: typically 4 bytes",
+    "inputs": {"type": "int"},
+    "expected_note": "sizeof(int) — platform dependent, typically 4"
+  },
+  {
+    "id": 4,
+    "description": "long: 4 bytes (32-bit) or 8 bytes (64-bit)",
+    "inputs": {"type": "long"},
+    "expected_note": "sizeof(long) — platform dependent"
+  },
+  {
+    "id": 5,
+    "description": "float: typically 4 bytes (IEEE 754)",
+    "inputs": {"type": "float"},
+    "expected_note": "sizeof(float) — typically 4 (IEEE 754 single)"
+  },
+  {
+    "id": 6,
+    "description": "double: typically 8 bytes (IEEE 754)",
+    "inputs": {"type": "double"},
+    "expected_note": "sizeof(double) — typically 8 (IEEE 754 double)"
+  },
+  {
+    "id": 7,
+    "description": "pointer: 4 bytes (32-bit) or 8 bytes (64-bit)",
+    "inputs": {"type": "int *"},
+    "expected_note": "sizeof(int*) — platform dependent (4 or 8)"
+  },
+  {
+    "id": 8,
+    "description": "int32_t: always 4 bytes",
+    "inputs": {"type": "int32_t"},
+    "expected_note": "sizeof(int32_t) == 4 (fixed-width)"
+  },
+  {
+    "id": 9,
+    "description": "int64_t: always 8 bytes",
+    "inputs": {"type": "int64_t"},
+    "expected_note": "sizeof(int64_t) == 8 (fixed-width)"
+  },
+  {
+    "id": 10,
+    "description": "struct padded {char; int32_t; char}: includes alignment padding",
+    "inputs": {"type": "struct padded"},
+    "expected_note": "sizeof(struct padded) — includes padding, typically 12"
+  },
+  {
+    "id": 11,
+    "description": "struct packed {char; int32_t; char}: no padding (packed)",
+    "inputs": {"type": "struct packed_s"},
+    "expected_note": "sizeof(struct packed_s) == 6 (no padding)"
+  },
+  {
+    "id": 12,
+    "description": "int32_t arr[10]: total array size (not pointer size)",
+    "inputs": {"type": "int32_t[10]"},
+    "expected_note": "sizeof(int32_t[10]) == 40"
+  }
+]
