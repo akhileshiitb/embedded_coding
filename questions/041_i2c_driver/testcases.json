@@ -1,0 +1,20 @@
+[
+  {"id": 1, "description": "Init 100kHz — CCR=80", "expected": "CCR=80, ret=0"},
+  {"id": 2, "description": "Init 400kHz — CCR=20", "expected": "CCR=20, ret=0"},
+  {"id": 3, "description": "Init with clock=50kHz returns error", "expected": "ret=-1"},
+  {"id": 4, "description": "Init with slave_addr=0x00 returns error", "expected": "ret=-1"},
+  {"id": 5, "description": "Init with slave_addr=0x78 returns error", "expected": "ret=-1"},
+  {"id": 6, "description": "Init with NULL handle returns error", "expected": "ret=-1"},
+  {"id": 7, "description": "Open sets CR.EN", "expected": "CR.EN=1, ret=0"},
+  {"id": 8, "description": "Open without init returns error", "expected": "ret=-1"},
+  {"id": 9, "description": "Write 2 bytes — START+STOP generated", "expected": "ret=0"},
+  {"id": 10, "description": "Write — last DR is data byte", "expected": "DR=0x42, ret=0"},
+  {"id": 11, "description": "Write without open returns -2", "expected": "ret=-2"},
+  {"id": 12, "description": "Write with NACK returns -4 (HW error)", "expected": "ret=-4"},
+  {"id": 13, "description": "Read 1 byte — STOP generated", "expected": "ret=0"},
+  {"id": 14, "description": "Read 1 byte — ACK cleared (NACK sent)", "expected": "ACK=0, ret=0"},
+  {"id": 15, "description": "Read without open returns -2", "expected": "ret=-2"},
+  {"id": 16, "description": "Close clears EN", "expected": "EN=0, ret=0"},
+  {"id": 17, "description": "Deinit resets CR, CCR, state", "expected": "ret=0"},
+  {"id": 18, "description": "Full lifecycle (400kHz, slave 0x68)", "expected": "all steps succeed"}
+]

@@ -1,0 +1,24 @@
+{
+  "id": 41,
+  "title": "I2C Master Driver with Generic Interface",
+  "slug": "i2c_driver",
+  "difficulty": "hard",
+  "tags": ["driver", "i2c", "interface-design", "vtable", "register-access", "bare-metal", "ack-nack"],
+  "function_name": "i2c_ops (vtable)",
+  "parameters": [
+    {"name": "handle", "type": "void*", "description": "Opaque pointer to i2c_device"},
+    {"name": "config", "type": "const void*", "description": "Pointer to i2c_config struct"},
+    {"name": "data", "type": "uint8_t*", "description": "Data buffer for read/write"},
+    {"name": "len", "type": "size_t", "description": "Number of bytes to read/write"}
+  ],
+  "return_type": "int (error code)",
+  "constraints": [
+    "Must access registers via volatile pointer (handle->regs)",
+    "Must validate all parameters and return error codes",
+    "Must enforce lifecycle: init before open, open before read/write",
+    "Must send NACK before last read byte (I2C protocol)",
+    "Must handle NACK from slave (return -4)",
+    "System clock is 16 MHz",
+    "Polling only"
+  ]
+}

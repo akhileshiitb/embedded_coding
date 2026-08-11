@@ -1,0 +1,20 @@
+[
+  {"id": 1, "description": "Init mode 0, 1MHz — CR1=0x30", "expected": "CR1=0x30, ret=0"},
+  {"id": 2, "description": "Init mode 3, 2MHz, LSB — CR1=0x2E", "expected": "CR1=0x2E, ret=0"},
+  {"id": 3, "description": "Init mode 1, 4MHz — CR1=0x14", "expected": "CR1=0x14, ret=0"},
+  {"id": 4, "description": "Init mode 2, 8MHz — CR1=0x02", "expected": "CR1=0x02, ret=0"},
+  {"id": 5, "description": "Init with mode=4 returns error", "expected": "ret=-1"},
+  {"id": 6, "description": "Init with NULL handle returns error", "expected": "ret=-1"},
+  {"id": 7, "description": "Init with clock_hz=0 returns error", "expected": "ret=-1"},
+  {"id": 8, "description": "Open sets EN bit", "expected": "CR1 |= EN, ret=0"},
+  {"id": 9, "description": "Open without init returns error", "expected": "ret=-1"},
+  {"id": 10, "description": "Write 0xA5 — CS asserted then deasserted", "expected": "DR=0xA5, CS=0, ret=0"},
+  {"id": 11, "description": "Write 4 bytes — last DR=0xEF, CS deasserted", "expected": "ret=0"},
+  {"id": 12, "description": "Write without open returns -2", "expected": "ret=-2"},
+  {"id": 13, "description": "Read — dummy TX, CS deasserted after", "expected": "ret=0, CS=0"},
+  {"id": 14, "description": "Read without open returns -2", "expected": "ret=-2"},
+  {"id": 15, "description": "Close clears EN, CS deasserted", "expected": "ret=0"},
+  {"id": 16, "description": "Close without open returns error", "expected": "ret=-2"},
+  {"id": 17, "description": "Deinit resets CR1, CR2, state", "expected": "ret=0"},
+  {"id": 18, "description": "Full lifecycle (mode 3, 2MHz, LSB)", "expected": "all steps succeed"}
+]

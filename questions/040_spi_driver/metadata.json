@@ -1,0 +1,23 @@
+{
+  "id": 40,
+  "title": "SPI Master Driver with Generic Interface",
+  "slug": "spi_driver",
+  "difficulty": "hard",
+  "tags": ["driver", "spi", "interface-design", "vtable", "register-access", "bare-metal", "full-duplex"],
+  "function_name": "spi_ops (vtable)",
+  "parameters": [
+    {"name": "handle", "type": "void*", "description": "Opaque pointer to spi_device"},
+    {"name": "config", "type": "const void*", "description": "Pointer to spi_config struct"},
+    {"name": "data", "type": "uint8_t*", "description": "Data buffer for read/write"},
+    {"name": "len", "type": "size_t", "description": "Number of bytes to read/write"}
+  ],
+  "return_type": "int (error code)",
+  "constraints": [
+    "Must access registers via volatile pointer (handle->regs)",
+    "Must validate all parameters and return error codes",
+    "Must enforce lifecycle: init before open, open before read/write",
+    "CS must be asserted before transfer and deasserted after",
+    "System clock is 16 MHz",
+    "Polling only"
+  ]
+}

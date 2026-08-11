@@ -1,0 +1,20 @@
+[
+  {"id": 1, "description": "Init with 115200 baud sets BRR=138", "expected": "BRR=138, ret=0"},
+  {"id": 2, "description": "Init with 9600 baud sets BRR=1666", "expected": "BRR=1666, ret=0"},
+  {"id": 3, "description": "Init with NULL handle returns error", "expected": "ret=-1"},
+  {"id": 4, "description": "Init with baud=0 returns error", "expected": "ret=-1"},
+  {"id": 5, "description": "Init with data_bits=9 returns error", "expected": "ret=-1"},
+  {"id": 6, "description": "Open sets CR=0x07 (EN|TXEN|RXEN)", "expected": "CR=0x07, ret=0"},
+  {"id": 7, "description": "Open without init returns error", "expected": "ret=error"},
+  {"id": 8, "description": "Write single byte 0x42 to DR", "expected": "DR=0x42, ret=0"},
+  {"id": 9, "description": "Write Hello — last byte in DR is 'o'", "expected": "DR=0x6F, ret=0"},
+  {"id": 10, "description": "Write without open returns -2", "expected": "ret=-2"},
+  {"id": 11, "description": "Read byte 0xAB from DR", "expected": "buf=0xAB, ret=0"},
+  {"id": 12, "description": "Read without open returns -2", "expected": "ret=-2"},
+  {"id": 13, "description": "Close clears CR to 0", "expected": "CR=0x00, ret=0"},
+  {"id": 14, "description": "Close without open returns error", "expected": "ret=error"},
+  {"id": 15, "description": "Deinit resets CR, BRR, and state", "expected": "CR=0, BRR=0, ret=0"},
+  {"id": 16, "description": "Write with NULL data returns -1", "expected": "ret=-1"},
+  {"id": 17, "description": "Write with len=0 returns -1", "expected": "ret=-1"},
+  {"id": 18, "description": "Full lifecycle integration test", "expected": "all steps succeed"}
+]
