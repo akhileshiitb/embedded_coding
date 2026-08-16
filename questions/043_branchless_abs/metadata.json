@@ -1,0 +1,18 @@
+{
+  "id": 43,
+  "title": "Branchless Absolute Value",
+  "slug": "branchless_abs",
+  "difficulty": "medium",
+  "tags": ["bitwise", "branchless", "arithmetic-shift", "twos-complement", "implementation-defined", "interview-classic"],
+  "function_name": "branchless_abs",
+  "parameters": [
+    {"name": "v", "type": "int32_t", "description": "The input signed integer"}
+  ],
+  "return_type": "int32_t",
+  "constraints": [
+    "Must NOT use if, else, ternary, or any branching construct",
+    "Must NOT call abs(), labs(), or any library function",
+    "Must use arithmetic right shift to create sign mask",
+    "abs(INT_MIN) wraps to INT_MIN (accepted)"
+  ]
+}
