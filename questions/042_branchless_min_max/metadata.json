@@ -1,0 +1,19 @@
+{
+  "id": 42,
+  "title": "Branchless Minimum and Maximum",
+  "slug": "branchless_min_max",
+  "difficulty": "medium",
+  "tags": ["bitwise", "branchless", "xor", "conditional-mask", "pipeline", "interview-classic"],
+  "function_name": "branchless_min / branchless_max",
+  "parameters": [
+    {"name": "x", "type": "int32_t", "description": "First integer"},
+    {"name": "y", "type": "int32_t", "description": "Second integer"}
+  ],
+  "return_type": "int32_t",
+  "constraints": [
+    "Must NOT use if, else, ternary, or any branching construct",
+    "Must NOT use subtraction (overflow risk)",
+    "Must work for all int32_t values including INT_MIN, INT_MAX",
+    "Equal values: min(x,x)==x and max(x,x)==x"
+  ]
+}
