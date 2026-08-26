@@ -1,0 +1,7 @@
+[
+  {"id": 1, "description": "Result matches host endianness (independent reference)", "expected": "matches host"},
+  {"id": 2, "description": "Result is a valid boolean (0 or 1)", "expected": "0 or 1"},
+  {"id": 3, "description": "Deterministic across repeated calls", "expected": "same value each call"},
+  {"id": 4, "description": "Matches pointer-cast method", "expected": "consistent"},
+  {"id": 5, "description": "Matches 16-bit union method", "expected": "consistent"}
+]

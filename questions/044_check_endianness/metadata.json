@@ -1,0 +1,16 @@
+{
+  "id": 44,
+  "title": "Check System Endianness",
+  "slug": "check_endianness",
+  "difficulty": "easy",
+  "tags": ["endianness", "union", "pointer-cast", "portability", "network-byte-order", "embedded-fundamentals"],
+  "function_name": "is_little_endian",
+  "parameters": [],
+  "return_type": "int",
+  "constraints": [
+    "Must determine endianness at runtime (not via compiler macros)",
+    "Must work on 32-bit and 64-bit platforms",
+    "No standard library calls required",
+    "Return 1 for little-endian, 0 for big-endian"
+  ]
+}
