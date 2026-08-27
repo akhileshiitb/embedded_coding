@@ -8,6 +8,7 @@ Implement a **bare-metal UART driver** behind a generic device driver interface.
 
 The driver must implement the standard lifecycle: `init → open → read/write → close → deinit`
 
+Note: After solving the question, make sure to read follow_ups.md to understand various design decisions as further questions. Think about those.
 ---
 
 ## Generic Driver Interface
