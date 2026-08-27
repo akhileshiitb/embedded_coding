@@ -1,0 +1,21 @@
+{
+  "id": 45,
+  "title": "Rotate an Array by K Positions (Left and Right)",
+  "slug": "rotate_array",
+  "difficulty": "medium",
+  "tags": ["arrays", "in-place", "reversal-algorithm", "O(1)-space", "rotation", "embedded-constraints"],
+  "function_name": "rotate_left / rotate_right",
+  "parameters": [
+    {"name": "arr", "type": "int32_t*", "description": "Pointer to the array to rotate"},
+    {"name": "n", "type": "int", "description": "Number of elements in the array"},
+    {"name": "k", "type": "int", "description": "Number of positions to rotate"}
+  ],
+  "return_type": "void",
+  "constraints": [
+    "1 <= n <= 1000",
+    "0 <= k (may be larger than n — normalize with k % n)",
+    "Elements can be any valid int32_t value",
+    "Must rotate in-place with O(1) auxiliary space",
+    "Handle edge cases: k=0, k=n, k>n, single-element array"
+  ]
+}
