@@ -423,3 +423,148 @@ read/write → close (drain BUSY, disable) → gate clock → deinit (reset stat
 Each step **keeps the same generic `driver_ops` interface** (Q2) — the upper layer
 never changes as the implementation evolves from polling to DMA. That is the whole
 point of the vtable abstraction.
+
+# Generic Driver Design Fundamentals (Peripheral-Agnostic)
+
+Concepts a senior firmware engineer must reason through when designing **any**
+device driver — UART, SPI, I2C, GPIO, timers, ADC, Ethernet, USB, sensors. UART is
+just one instance; the grammar below is shared. A driver is ~90% reusable skeleton
++ ~10% peripheral-specific glue (register map, status flags, protocol semantics).
+
+---
+
+## 1. Register & memory correctness
+- **`volatile` on all MMIO** — force actual reads/writes; no caching/eliding. Without
+  it, poll loops get optimized away.
+- **Memory ordering** — two separate risks: compiler reordering (`volatile` orders
+  volatile-vs-volatile only) and CPU reordering (needs Device memory type +
+  barriers `DMB`/`DSB` for cross-region / DMA ordering). `volatile` is NOT a barrier.
+- **Atomicity** — register RMW (`REG |= X`) is multiple bus cycles, not atomic. Use
+  SET/CLEAR and W1C registers to avoid RMW where hardware co-writes the word.
+- **Struct/register overlay** — exact layout match: explicit `reserved` fields,
+  correct alignment/packing. **Avoid C bitfields for registers** (layout is
+  compiler/endian-defined) — use masks + shifts.
+- **Endianness** — define byte order at bus/network boundaries; know where to swap.
+- **Bit discipline** — mask reserved bits, honor write-1-to-clear, prefer SET/CLEAR.
+
+## 2. Concurrency & synchronization
+- **First question: "who else touches this state/register?"** → pick the tool:
+  - thread ↔ thread → mutex / spinlock (same lock, right granularity).
+  - thread ↔ ISR (same core) → **disable interrupts**; never a mutex; a spinlock
+    self-deadlocks.
+  - across cores (SMP) → **spinlock + local IRQ disable** (`spin_lock_irqsave`).
+  - hardware / DMA co-writer → **locks are useless**; use SET/CLEAR or non-RMW design.
+- **Lock granularity** — per-device, not global; independent devices run in parallel.
+- **Critical-section scope** — protect the true invariant (e.g. a whole transfer),
+  but keep it **as short as possible**. Never hold a spinlock across a wait loop.
+- **Reentrancy / thread-safety** — is the API safe to call concurrently? Beware
+  non-reentrant libc, shared `errno`, and lifecycle-flag RMW races.
+
+## 3. Interrupts & data movement (performance progression)
+- **Polling → interrupt-driven → DMA** — the universal evolution as throughput rises.
+  Polling wastes CPU; interrupt-per-byte drowns at high rates; DMA offloads blocks.
+- **ISR discipline** — short, non-blocking, no locks held long, no blocking calls;
+  defer heavy work to a bottom half (task/workqueue/tasklet/DPC).
+- **Buffering** — ring buffers/FIFOs; **SPSC is lock-free** (single owner per index)
+  with `volatile` indices + a barrier; double-buffering/ping-pong for continuous DMA.
+- **Flow control / backpressure** — define behavior when producer outruns consumer:
+  block, drop, or overwrite; handle overrun/overflow errors explicitly.
+
+## 4. DMA & cache coherency
+- **Non-coherent DMA** → CPU cache and DMA see different memory. **Clean/flush cache
+  before TX** (memory→device), **invalidate cache after RX** (device→memory).
+- **Alignment landmine** — cache ops act on whole lines; DMA buffers must be
+  **cache-line aligned and size-padded**, or use a **non-cacheable** region.
+- **Barriers before "start DMA"** so buffer writes + cache maintenance are visible
+  first. `volatile` does nothing for coherency. Coherent interconnect/IOMMU removes
+  the manual maintenance.
+
+## 5. Determinism & real-time
+- **Interrupt latency & priorities** — worst-case latency, NVIC preemption, priority
+  inversion; priority-based masking (BASEPRI vs PRIMASK).
+- **WCET thinking** — bound worst-case execution; no unbounded operations on hot paths.
+- **Time sources** — tick vs tickless, monotonic vs wall-clock, counter overflow.
+
+## 6. Robustness & fault handling
+- **Every wait needs a timeout** — no infinite polls; return a hardware-error code
+  on expiry.
+- **Error-return contract** — consistent codes; report **partial progress** (bytes
+  transferred), not just success/fail; fail-fast vs retry.
+- **Mechanism vs policy** — driver moves data and reports what happened; the
+  **caller/upper layer owns retry/backoff/abort policy**. A `*_all()` wrapper can
+  add "transfer everything" semantics on top.
+- **Defensive validation** — validate at API boundaries; for `void *` handles add a
+  **magic/type tag** to catch wrong-type handles at runtime.
+- **Fault/watchdog** — fault handlers (capture fault status/stack), watchdog kick
+  placement (never inside a broken loop), power-loss/brown-out integrity for
+  persistent state.
+
+## 7. Lifecycle & state management
+- **Standard lifecycle** — init → open → transfer → close → deinit (names vary:
+  probe/remove, open/release). Enforce ordering; reject out-of-order calls.
+- **Store config in the handle** — enables resume/reconfigure and re-init after
+  power loss.
+- **Clean teardown** — drain in-flight activity (e.g. "transmitter busy") **before**
+  disabling; reset state fully.
+
+## 8. Abstraction & portability
+- **Generic ops vtable** (function-pointer table) — decouples upper layers from the
+  concrete driver; same interface as implementation evolves polling→DMA. Put the
+  vtable in **`const`/read-only** memory (flash, MMU/MPU RO) for RAM savings and
+  control-flow-hijack protection.
+- **HAL layering** — separate register access, driver logic, and protocol/policy.
+  Keep the driver "dumb" (moves bytes/words); protocol meaning lives above.
+- **`void *` handle tradeoff** — uniform polymorphism vs lost static type safety
+  (unchecked downcast); mitigate with type tags.
+
+## 9. Resource & runtime constraints (embedded-specific)
+- **No/'limited dynamic allocation** — prefer static/pool buffers; avoid heap
+  fragmentation and non-determinism. Know where every buffer lives at compile time.
+- **Stack bounds** — no unbounded recursion; measure high-water mark; guard against
+  overflow.
+- **Flash/RAM sections** — `.data` copy + `.bss` zero at startup; `const` in flash;
+  reason about footprint on constrained parts.
+
+## 10. Power management
+- **Clock gating** — disable peripheral clock when idle; **gate only after in-flight
+  activity drains**, and **ungate before any register access** (gated register access
+  can fault/hang).
+- **State save/restore** — deep sleep may drop a power domain; reprogram from stored
+  config on resume.
+- **Wake sources** — configure wake interrupt; account for first-byte-lost / wake
+  latency tradeoffs.
+
+## 11. Hardware literacy
+- **Datasheet/reference-manual reading** — register maps, timing diagrams, required
+  init sequences and post-enable delays.
+- **Errata first** — check silicon errata when hardware "misbehaves."
+- **Clock trees & prescaler math** — PLL/prescaler config; integer-division error
+  (e.g. baud/divisor rounding) and its tolerance limits.
+- **Silicon quirks** — write-buffering, read-back-to-confirm, mandatory dummy reads,
+  post-clock-enable settling.
+
+## 12. Verification & observability
+- **Testability** — register mocking / simulated register bank; HIL; loopback tests.
+- **Fault injection** — force error conditions (overrun, wedged transfer/timeout
+  path) that the happy path never exercises.
+- **Observability without breaking timing** — no `printf` in ISRs; lightweight trace
+  ring buffers, ITM/SWO, timestamped event logs.
+- **Debug tooling** — JTAG/SWD, logic analyzer/scope, map files; know what the
+  debugger cannot see (optimized-out non-`volatile` accesses).
+
+## 13. Security
+- **Read-only vtables / function-pointer tables** — reduce control-flow-hijack surface.
+- **Validate off-chip input** — treat data from other bus devices/peripherals as
+  untrusted.
+- **Secure/verified boot, signed firmware, A/B update with rollback** for updatable
+  images.
+
+---
+
+### The senior mindset (summary)
+1. **Visibility** → `volatile`. 2. **Ordering** → barriers + memory type.
+3. **Mutual exclusion** → the right lock for the right writer (hardware is not a lock
+participant). 4. **Determinism** → bounded everything, short ISRs. 5. **Robustness**
+→ timeouts, partial-progress contracts, mechanism-vs-policy. 6. **Abstraction** →
+stable ops interface as the implementation evolves. Every peripheral re-skins this
+same skeleton with a different register map and protocol.
