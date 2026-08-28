@@ -2,19 +2,19 @@
   "id": 25,
   "title": "Fixed-Block Pool Allocator",
   "slug": "pool_allocator",
-  "difficulty": "hard",
-  "tags": ["allocator", "memory-pool", "free-list", "embedded", "deterministic"],
+  "difficulty": "medium",
+  "tags": ["allocator", "memory-pool", "free-list", "embedded", "deterministic", "union"],
   "functions": [
-    {"name": "pool_init", "parameters": [{"name": "block_size", "type": "int", "description": "Block size (power of 2, >= 8)"}, {"name": "num_blocks", "type": "int", "description": "Number of blocks (1-64)"}], "return_type": "int"},
+    {"name": "pool_init", "parameters": [], "return_type": "int"},
     {"name": "pool_alloc", "parameters": [], "return_type": "void *"},
     {"name": "pool_free", "parameters": [{"name": "ptr", "type": "void *", "description": "Block to free"}], "return_type": "int"},
     {"name": "pool_available", "parameters": [], "return_type": "int"},
-    {"name": "pool_contains", "parameters": [{"name": "ptr", "type": "void *", "description": "Pointer to check"}], "return_type": "int"},
     {"name": "pool_is_aligned", "parameters": [{"name": "ptr", "type": "void *", "description": "Pointer to check"}, {"name": "alignment", "type": "int", "description": "Alignment requirement"}], "return_type": "int"}
   ],
   "constraints": [
-    "block_size >= 8 and power of 2, <= 256",
-    "num_blocks between 1 and 64",
+    "BLOCK_SIZE and NUM_BLOCKS are compile-time constants",
+    "BLOCK_SIZE is a power of 2 and >= sizeof(void *), enforced via _Static_assert",
+    "NUM_BLOCKS >= 1",
     "Freeing NULL or non-pool pointer returns -1",
     "O(1) alloc and free"
   ]

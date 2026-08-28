@@ -1,70 +1,58 @@
 #include <stddef.h>
 #include <stdint.h>
 
-// This is sample solution for this problem to refer if needed.
-
-#define POOL_MAX_BLOCKS 64
-#define POOL_MAX_BLOCK_SIZE 256
-
-/**
- * Pool memory — statically allocated, aligned.
- * Total size = POOL_MAX_BLOCKS * POOL_MAX_BLOCK_SIZE = 16384 bytes.
+/*
+ * Pool configuration — statically defined at compile time.
+ *
+ * BLOCK_SIZE must be a power of 2 and >= sizeof(void *) so that a free
+ * block can hold the free-list "next" pointer.
+ * NUM_BLOCKS is the fixed number of blocks in the pool.
  */
-static _Alignas(256) uint8_t pool_memory[POOL_MAX_BLOCKS * POOL_MAX_BLOCK_SIZE];
+#define BLOCK_SIZE 16
+#define NUM_BLOCKS 4
 
-/**
- * Free list head — points to the first available block.
- * Each free block contains a pointer to the next free block.
+/* Compile-time enforcement of the block-size invariants. */
+_Static_assert(BLOCK_SIZE >= sizeof(void *), "BLOCK_SIZE must hold a pointer");
+_Static_assert((BLOCK_SIZE & (BLOCK_SIZE - 1)) == 0, "BLOCK_SIZE must be a power of 2");
+_Static_assert(NUM_BLOCKS >= 1, "NUM_BLOCKS must be >= 1");
+
+/*
+ * A block is either:
+ *   - free:      its storage holds a pointer to the next free block
+ *   - allocated: its storage is raw bytes owned by the caller
+ * The union captures this dual use in a single type. `next` and `bytes`
+ * share the same memory; only one meaning is live at a time.
  */
-static void *free_list;
+typedef union block {
+    union block *next;          /* free-list link (valid only while free) */
+    uint8_t      bytes[BLOCK_SIZE];
+} block_t;
 
-/** Pool configuration */
-static int pool_block_size;
-static int pool_num_blocks;
+/* Pool memory — statically allocated, naturally aligned to a block. */
+static _Alignas(BLOCK_SIZE) block_t pool_memory[NUM_BLOCKS];
+
+/* Free list head — points to the first available block, or NULL if empty. */
+static block_t *free_list;
+
+/* Number of free blocks remaining. */
 static int free_blocks_count;
+
 /**
  * @brief Initialize the fixed-block pool allocator.
  *
- * Sets up the free list by threading pointers through each block.
+ * Threads every block into a singly linked free list, with the last
+ * block's `next` set to NULL.
  *
- * @param block_size  Size of each block (>= 8, power of 2, <= POOL_MAX_BLOCK_SIZE).
- * @param num_blocks  Number of blocks (1 to POOL_MAX_BLOCKS).
- * @return            0 on success, -1 if parameters invalid.
+ * @return 0 on success.
  */
-int pool_init(int block_size, int num_blocks) {
-    /* TODO: Implement your solution here
-     * - Validate parameters
-     * - Thread free list: block[i]->next = block[i+1], last->next = NULL
-     * - Set free_list = &block[0]
-     */
-
-    if ((block_size > POOL_MAX_BLOCK_SIZE) || (num_blocks > POOL_MAX_BLOCKS) || (block_size < 8))
-        return -1;
-
-    /* Block size must be power of 2 */
-    if (block_size & (block_size - 1))
-        return -1;
-    
-    pool_block_size = block_size;
-    pool_num_blocks = num_blocks;
-
-    free_list = (void *)pool_memory;
-    
-    uintptr_t next;
-
-    /* Create linked list of free blocks */
-    for (int i = 1; i < num_blocks; i += 1) {
-            next = (uintptr_t)&pool_memory[i * block_size];
-
-            *((uintptr_t *)(&pool_memory[(i - 1) * block_size])) = next;
-
-            if (i == (num_blocks - 1)) {
-                *((uintptr_t *)(&pool_memory[i * block_size])) = 0;
-            }
+int pool_init(void) {
+    for (int i = 0; i < NUM_BLOCKS - 1; i++) {
+        pool_memory[i].next = &pool_memory[i + 1];
     }
+    pool_memory[NUM_BLOCKS - 1].next = NULL;
 
-    
-    free_blocks_count = num_blocks;
+    free_list = &pool_memory[0];
+    free_blocks_count = NUM_BLOCKS;
 
     return 0;
 }
@@ -72,49 +60,45 @@ int pool_init(int block_size, int num_blocks) {
 /**
  * @brief Allocate one block from the pool.
  *
- * @return  Pointer to allocated block, or NULL if pool is exhausted.
+ * Pops the head of the free list (O(1)).
+ *
+ * @return Pointer to allocated block, or NULL if the pool is exhausted.
  */
 void *pool_alloc(void) {
-    /* TODO: Implement your solution here
-     * - If free_list == NULL, return NULL
-     * - Save free_list as the block to return
-     * - Advance free_list to the next free block
-     * - Return the allocated block
-     */
-    void *ret;
-
-    if (free_list == NULL) 
+    if (free_list == NULL)
         return NULL;
-    
-    ret = free_list;
 
-    free_list = (void *)(*((uintptr_t *)free_list));
-    
+    block_t *blk = free_list;
+    free_list = blk->next;      /* read link out before handing block over */
     free_blocks_count -= 1;
 
-    return ret;
+    return blk;
 }
 
-int pool_contains(void *ptr);
 /**
  * @brief Free a previously allocated block back to the pool.
  *
- * @param ptr  Pointer to the block to free.
- * @return     0 on success, -1 if ptr is NULL or not from this pool.
+ * Validates that ptr is a real block-start address within the pool, then
+ * pushes the block onto the head of the free list (O(1)).
+ *
+ * @param ptr Pointer to the block to free.
+ * @return 0 on success, -1 if ptr is NULL or not from this pool.
  */
 int pool_free(void *ptr) {
-    /* TODO: Implement your solution here
-     * - Validate ptr is not NULL and belongs to the pool
-     * - Push ptr onto the free list head
-     */
-
-    if ((!ptr) || (!pool_contains(ptr)))
+    if (ptr == NULL)
         return -1;
 
-    *((uintptr_t *)ptr) = (uintptr_t)free_list;
+    uintptr_t p     = (uintptr_t)ptr;
+    uintptr_t start = (uintptr_t)&pool_memory[0];
+    uintptr_t end   = (uintptr_t)&pool_memory[NUM_BLOCKS - 1];
 
-    free_list = ptr;
+    /* Must lie within the pool and sit exactly on a block boundary. */
+    if (p < start || p > end || (p - start) % BLOCK_SIZE != 0)
+        return -1;
 
+    block_t *blk = (block_t *)ptr;
+    blk->next = free_list;      /* repurpose storage as free-list link */
+    free_list = blk;
     free_blocks_count += 1;
 
     return 0;
@@ -123,48 +107,21 @@ int pool_free(void *ptr) {
 /**
  * @brief Get the number of free blocks remaining.
  *
- * @return  Number of available blocks.
+ * @return Number of available blocks.
  */
 int pool_available(void) {
-    /* TODO: Implement your solution here
-     * - Walk the free list and count, OR maintain a counter
-     */
     return free_blocks_count;
-}
-
-/**
- * @brief Check if a pointer belongs to this pool.
- *
- * @param ptr  Pointer to check.
- * @return     1 if ptr is a valid block start address in the pool, 0 otherwise.
- */
-int pool_contains(void *ptr) {
-    /* TODO: Implement your solution here
-     * - Check if ptr is within pool_memory bounds
-     * - Check if ptr is aligned to block_size (i.e., at a block boundary)
-     */
-    uintptr_t temp = (uintptr_t)ptr;
-
-    if (temp & (pool_block_size - 1))
-        return 0;
-
-    if ((temp < (uintptr_t)&pool_memory[0]) || (temp > (uintptr_t)&pool_memory[pool_block_size * (pool_num_blocks - 1)]))
-        return 0;
-
-    return 1;
 }
 
 /**
  * @brief Check if a pointer is aligned to the given boundary.
  *
- * @param ptr        Pointer to check.
- * @param alignment  Required alignment (power of 2).
- * @return           1 if aligned, 0 otherwise.
+ * @param ptr       Pointer to check.
+ * @param alignment Required alignment (power of 2).
+ * @return 1 if aligned, 0 otherwise.
  */
 int pool_is_aligned(void *ptr, int alignment) {
-    /* TODO: Implement your solution here */
-
-    if ((uintptr_t)ptr & (alignment - 1)) 
+    if ((uintptr_t)ptr & (uintptr_t)(alignment - 1))
         return 0;
 
     return 1;
