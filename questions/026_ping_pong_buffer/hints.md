@@ -2,48 +2,50 @@
 
 ## Hint 1
 
-- The core idea: two static buffers (`buf_a` and `buf_b`). A `write_buf` pointer always points to one, `read_buf` points to the other (or NULL if not ready).
-- `ppbuf_swap()` is called from the ISR: it makes the current write buffer "ready" and switches the write pointer to the other buffer.
-- `ppbuf_consume()` is called from the main loop: it sets `read_buf = NULL`.
-- Overrun = `ppbuf_swap()` is called while `read_buf != NULL` (consumer was too slow).
+- The core idea: two buffers (e.g. `buf_a` and `buf_b`). A `write_buf` pointer
+  always points to the one DMA is filling; a `read_buf` pointer points to the one
+  ready for the application (or you can derive "ready" from a state flag).
+- `ppbuf_swap()` is called from the ISR: it makes the current write buffer "ready"
+  and switches the write pointer to the other buffer.
+- `ppbuf_consume()` is called from the main loop: it marks the ready buffer as done.
+- Because the consumer is always faster than the producer, you never swap onto an
+  unconsumed buffer — so there is no overrun case to handle.
 
 ## Hint 2
 
-- State tracking:
-  - `IDLE`: `read_buf == NULL` (nothing to process)
-  - `READY`: `read_buf != NULL` (buffer waiting for consumer)
-  - `OVERRUN`: last swap happened while `read_buf` was still valid
+- The state machine has just two states:
+  - `IDLE`: nothing ready to process
+  - `READY`: a buffer is waiting for the consumer
+- Flow: `IDLE --swap()--> READY --consume()--> IDLE`
 - In `ppbuf_swap()`:
-  1. Check if `read_buf != NULL` → overrun
-  2. `read_buf = write_buf` (current write buffer is now ready for reading)
-  3. `write_buf = (write_buf == buf_a) ? buf_b : buf_a` (switch to other buffer)
-- For write/read sample: just index into write_buf/read_buf after bounds check.
+  1. Swap the write/read buffer pointers (current write buffer becomes the read buffer)
+  2. Set state to `READY`
+- In `ppbuf_consume()`: if state is `READY`, set state back to `IDLE`; otherwise return -1.
+- For write/read sample: bounds-check `index` against `buf_size`, then index into
+  the write/read buffer. `read_sample` returns 0 when no buffer is ready.
 
 ## Hint 3
 
 ```c
 int ppbuf_init(int size) {
     if (size < 1 || size > PPBUF_MAX_SIZE) return -1;
-    buf_size = size;
+    buf_size  = size;
     write_buf = buf_a;
-    read_buf = NULL;
-    state = PPBUF_STATE_IDLE;
-    overrun_count = 0;
+    read_buf  = buf_b;
+    state     = PPBUF_STATE_IDLE;
     return 0;
 }
 
 int ppbuf_swap(void) {
-    int overrun = 0;
-    if (read_buf != NULL) { overrun_count++; overrun = 1; }
-    read_buf = write_buf;
-    write_buf = (write_buf == buf_a) ? buf_b : buf_a;
-    state = overrun ? PPBUF_STATE_OVERRUN : PPBUF_STATE_READY;
-    return overrun ? -1 : 0;
+    int32_t *tmp = read_buf;
+    read_buf  = write_buf;   /* current write buffer is now ready */
+    write_buf = tmp;         /* DMA fills the other buffer next   */
+    state     = PPBUF_STATE_READY;
+    return 0;
 }
 
 int ppbuf_consume(void) {
-    if (read_buf == NULL) return -1;
-    read_buf = NULL;
+    if (state != PPBUF_STATE_READY) return -1;
     state = PPBUF_STATE_IDLE;
     return 0;
 }

@@ -10,9 +10,8 @@
   {"id": 9, "description": "Read sample[3] = 4000 from ready buffer", "expected": 4000},
   {"id": 10, "description": "Consume succeeds, state=IDLE, read=NULL", "expected": 0},
   {"id": 11, "description": "Consume with no ready buffer returns -1", "expected": -1},
-  {"id": 12, "description": "Overrun detected on double swap", "expected": -1},
-  {"id": 13, "description": "State is OVERRUN after overrun", "expected": 2},
-  {"id": 14, "description": "System recovers after overrun", "expected": 9999},
-  {"id": 15, "description": "write_sample out of range returns -1", "expected": -1},
-  {"id": 16, "description": "ppbuf_init(129) fails (too large)", "expected": -1}
+  {"id": 12, "description": "Repeated swap/consume cycle works (consumer keeps up)", "expected": "pass"},
+  {"id": 13, "description": "write_sample out of range returns -1", "expected": -1},
+  {"id": 14, "description": "ppbuf_init(129) fails (too large)", "expected": -1},
+  {"id": 15, "description": "read_sample out of range returns 0", "expected": 0}
 ]

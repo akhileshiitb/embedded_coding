@@ -5,7 +5,6 @@
 #define PPBUF_MAX_SIZE 128
 #define PPBUF_STATE_IDLE     0
 #define PPBUF_STATE_READY    1
-#define PPBUF_STATE_OVERRUN  2
 
 /* Declaration of solution functions */
 extern int      ppbuf_init(int buf_size);
@@ -14,12 +13,11 @@ extern int32_t *ppbuf_get_read_buffer(void);
 extern int      ppbuf_swap(void);
 extern int      ppbuf_consume(void);
 extern int      ppbuf_get_state(void);
-extern int      ppbuf_get_overrun_count(void);
 extern int      ppbuf_write_sample(int index, int32_t value);
 extern int32_t  ppbuf_read_sample(int index);
 
 int main(void) {
-    int num_tests = 16;
+    int num_tests = 15;
     int passed = 0;
     int result;
     int test_num = 0;
@@ -153,46 +151,24 @@ int main(void) {
                test_num, result);
     }
 
-    /* Test 12: Overrun detection — swap twice without consume */
+    /* Test 12: Repeated swap/consume cycle (consumer keeps up) */
     test_num++;
-    ppbuf_swap();  /* First swap: buffer becomes ready */
-    result = ppbuf_swap();  /* Second swap without consume: overrun! */
-    if (result == -1 && ppbuf_get_overrun_count() == 1) {
-        passed++;
-        printf("[PASS] Test %d: Overrun detected on double swap\n", test_num);
-    } else {
-        printf("[FAIL] Test %d: Overrun | result=%d, count=%d\n",
-               test_num, result, ppbuf_get_overrun_count());
-    }
-
-    /* Test 13: State is OVERRUN after overrun */
-    test_num++;
-    result = ppbuf_get_state();
-    if (result == PPBUF_STATE_OVERRUN) {
-        passed++;
-        printf("[PASS] Test %d: State is OVERRUN after overrun\n", test_num);
-    } else {
-        printf("[FAIL] Test %d: State after overrun | Expected: %d, Got: %d\n",
-               test_num, PPBUF_STATE_OVERRUN, result);
-    }
-
-    /* Test 14: System recovers after consume */
-    test_num++;
-    ppbuf_consume();
-    ppbuf_write_sample(0, 9999);
+    ppbuf_write_sample(0, 5555);
     ppbuf_swap();
-    sample = ppbuf_read_sample(0);
-    if (sample == 9999) {
+    int ok = (ppbuf_read_sample(0) == 5555) && (ppbuf_consume() == 0);
+    ppbuf_write_sample(0, 6666);
+    ppbuf_swap();
+    ok = ok && (ppbuf_read_sample(0) == 6666) && (ppbuf_consume() == 0);
+    if (ok && ppbuf_get_state() == PPBUF_STATE_IDLE) {
         passed++;
-        printf("[PASS] Test %d: System recovers after overrun\n", test_num);
+        printf("[PASS] Test %d: Repeated swap/consume cycle works\n", test_num);
     } else {
-        printf("[FAIL] Test %d: Recovery | Expected: 9999, Got: %d\n",
-               test_num, sample);
+        printf("[FAIL] Test %d: swap/consume cycle | state=%d\n",
+               test_num, ppbuf_get_state());
     }
 
-    /* Test 15: Write sample out of range returns -1 */
+    /* Test 13: Write sample out of range returns -1 */
     test_num++;
-    ppbuf_consume();
     result = ppbuf_write_sample(4, 100);
     if (result == -1) {
         passed++;
@@ -202,7 +178,7 @@ int main(void) {
                test_num, result);
     }
 
-    /* Test 16: Init with size > PPBUF_MAX_SIZE fails */
+    /* Test 14: Init with size > PPBUF_MAX_SIZE fails */
     test_num++;
     result = ppbuf_init(PPBUF_MAX_SIZE + 1);
     if (result == -1) {
@@ -212,6 +188,20 @@ int main(void) {
     } else {
         printf("[FAIL] Test %d: ppbuf_init(%d) | Expected: -1, Got: %d\n",
                test_num, PPBUF_MAX_SIZE + 1, result);
+    }
+
+    /* Test 15: read_sample out of range returns 0 (not a valid sample) */
+    test_num++;
+    ppbuf_init(4);
+    ppbuf_write_sample(0, 7777);
+    ppbuf_swap();                 /* buffer is now READY */
+    sample = ppbuf_read_sample(4);  /* index 4 is out of range for size 4 */
+    if (sample == 0) {
+        passed++;
+        printf("[PASS] Test %d: read_sample(4) out of range returns 0\n", test_num);
+    } else {
+        printf("[FAIL] Test %d: read_sample OOB | Expected: 0, Got: %d\n",
+               test_num, sample);
     }
 
     printf("\nResults: %d/%d passed\n", passed, num_tests);

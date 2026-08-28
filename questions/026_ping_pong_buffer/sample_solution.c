@@ -6,6 +6,15 @@
 #define PPBUF_STATE_IDLE     0
 #define PPBUF_STATE_READY    1
 
+struct ppbuff_t {
+    int32_t buff_a[PPBUF_MAX_SIZE];
+    int32_t buff_b[PPBUF_MAX_SIZE];
+    int32_t size;
+    int32_t state;
+    int32_t *write_ptr;
+    int32_t *read_ptr;
+} ppbuff;
+
 /*
  * Assumption: the consumer is always faster than the producer, so an overrun
  * (swap while a buffer is still unconsumed) never happens. You do not need to
@@ -22,7 +31,16 @@
  */
 int ppbuf_init(int size) {
     /* TODO: Implement */
-    return -1;
+
+    if (size <= 0 || size > PPBUF_MAX_SIZE)
+        return -1;
+
+    ppbuff.size = size;
+    ppbuff.state = PPBUF_STATE_IDLE;
+    ppbuff.write_ptr = ppbuff.buff_a;
+    ppbuff.read_ptr = ppbuff.buff_b;
+
+    return 0;
 }
 
 /**
@@ -30,7 +48,7 @@ int ppbuf_init(int size) {
  */
 int32_t *ppbuf_get_write_buffer(void) {
     /* TODO: Implement */
-    return NULL;
+    return ppbuff.write_ptr;
 }
 
 /**
@@ -39,7 +57,10 @@ int32_t *ppbuf_get_write_buffer(void) {
  */
 int32_t *ppbuf_get_read_buffer(void) {
     /* TODO: Implement */
-    return NULL;
+    if (ppbuff.state == PPBUF_STATE_IDLE)
+        return NULL;
+
+    return ppbuff.read_ptr;
 }
 
 /**
@@ -48,6 +69,12 @@ int32_t *ppbuf_get_read_buffer(void) {
  */
 int ppbuf_swap(void) {
     /* TODO: Implement */
+    int32_t *temp = ppbuff.write_ptr; 
+    ppbuff.write_ptr =  ppbuff.read_ptr;
+    ppbuff.read_ptr = temp;
+
+    ppbuff.state = PPBUF_STATE_READY;
+
     return 0;
 }
 
@@ -57,6 +84,12 @@ int ppbuf_swap(void) {
  */
 int ppbuf_consume(void) {
     /* TODO: Implement */
+
+    if (ppbuff.state == PPBUF_STATE_READY) {
+        ppbuff.state = PPBUF_STATE_IDLE;
+        return 0; 
+    }
+
     return -1;
 }
 
@@ -65,7 +98,7 @@ int ppbuf_consume(void) {
  */
 int ppbuf_get_state(void) {
     /* TODO: Implement */
-    return PPBUF_STATE_IDLE;
+    return ppbuff.state;
 }
 
 /**
@@ -76,7 +109,12 @@ int ppbuf_get_state(void) {
  */
 int ppbuf_write_sample(int index, int32_t value) {
     /* TODO: Implement */
-    return -1;
+    if (index < 0 || (index > (ppbuff.size - 1)))
+        return -1;
+
+    ppbuff.write_ptr[index] = value;
+
+    return 0;
 }
 
 /**
@@ -86,5 +124,11 @@ int ppbuf_write_sample(int index, int32_t value) {
  */
 int32_t ppbuf_read_sample(int index) {
     /* TODO: Implement */
-    return 0;
+    if (index < 0 || (index > (ppbuff.size - 1)))
+        return 0;
+
+    if (ppbuff.state == PPBUF_STATE_IDLE)
+        return 0;
+
+    return ppbuff.read_ptr[index];
 }

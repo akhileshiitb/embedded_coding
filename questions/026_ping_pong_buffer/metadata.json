@@ -2,7 +2,7 @@
   "id": 26,
   "title": "Ping-Pong (Double) Buffer for DMA/ISR",
   "slug": "ping_pong_buffer",
-  "difficulty": "hard",
+  "difficulty": "medium",
   "tags": ["DMA", "double-buffer", "ping-pong", "ISR", "streaming", "embedded"],
   "functions": [
     {"name": "ppbuf_init", "parameters": [{"name": "buf_size", "type": "int"}], "return_type": "int"},
@@ -11,14 +11,13 @@
     {"name": "ppbuf_swap", "parameters": [], "return_type": "int"},
     {"name": "ppbuf_consume", "parameters": [], "return_type": "int"},
     {"name": "ppbuf_get_state", "parameters": [], "return_type": "int"},
-    {"name": "ppbuf_get_overrun_count", "parameters": [], "return_type": "int"},
     {"name": "ppbuf_write_sample", "parameters": [{"name": "index", "type": "int"}, {"name": "value", "type": "int32_t"}], "return_type": "int"},
     {"name": "ppbuf_read_sample", "parameters": [{"name": "index", "type": "int"}], "return_type": "int32_t"}
   ],
   "constraints": [
     "buf_size between 1 and 128",
     "Only 2 buffers (true ping-pong)",
-    "Overrun increments counter but does not crash",
+    "Consumer is always faster than the producer (no overruns)",
     "Write and read buffer are never the same"
   ]
 }
