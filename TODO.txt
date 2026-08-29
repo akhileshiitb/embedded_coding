@@ -1,0 +1,10 @@
+1) Software timer using single HW timer (Google question)
+
+https://www.reddit.com/r/embedded/comments/lylnbt/software_timer_module_implementation/
+https://leetcode.com/discuss/post/1003861/c-implement-your-own-timer-library-embed-j17t/
+
+2) Logging system design in multicore system for embedded
+- Some small implementation. Inspired from kernel logging in dmesg. 
+- mini interview version of kernel style logining framework at printf()/printk() at its core.
+- https://interrupt.memfault.com/blog/device-logging
+- https://andydote.co.uk/2023/09/19/tracing-is-better/
