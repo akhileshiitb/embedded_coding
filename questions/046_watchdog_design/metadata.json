@@ -1,0 +1,21 @@
+{
+  "id": 46,
+  "title": "Watchdog Timer Driver with Task Check-In",
+  "slug": "watchdog_design",
+  "difficulty": "hard",
+  "tags": ["watchdog", "driver", "register-access", "bitmask", "task-checkin", "bare-metal", "deadlock-detection", "volatile"],
+  "function_name": "wdt_enable / wdt_pet / wdt_disable / wdt_task_check",
+  "parameters": [
+    {"name": "regs", "type": "volatile struct wdt_regs*", "description": "Pointer to simulated WDT registers"},
+    {"name": "timeout_ticks", "type": "uint32_t", "description": "Watchdog timeout in ticks"},
+    {"name": "task_id", "type": "int", "description": "Task identifier (0..31)"}
+  ],
+  "return_type": "void / int",
+  "constraints": [
+    "Access registers only via the volatile struct wdt_regs pointer",
+    "Task IDs are 0..31 (one bit each in a uint32_t)",
+    "Feeding must use WDT_KICK_MAGIC; a non-magic write must not feed",
+    "wdt_task_check feeds only when all registered tasks checked in, then clears the mask",
+    "Pure C, no libraries beyond <stdint.h>"
+  ]
+}

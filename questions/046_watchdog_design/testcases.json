@@ -1,0 +1,18 @@
+[
+  {"id": 1, "description": "enable sets LOAD=10, COUNT=10, EN=1", "expected": "CTRL.EN=1, LOAD=10, COUNT=10"},
+  {"id": 2, "description": "pet writes magic value to KICK", "expected": "KICK=0x5A5A5A5A"},
+  {"id": 3, "description": "disable clears EN", "expected": "CTRL.EN=0"},
+  {"id": 4, "description": "3 ticks -> COUNT=7, no reset", "expected": "COUNT=7, no reset"},
+  {"id": 5, "description": "SAD PATH: no pet -> SoC reset", "expected": "RESET flag set"},
+  {"id": 6, "description": "HAPPY PATH: regular pet -> no reset", "expected": "no reset over 20 ticks"},
+  {"id": 7, "description": "pet reloads COUNT to LOAD", "expected": "COUNT=9 after reload+tick"},
+  {"id": 8, "description": "non-magic write does not feed -> reset", "expected": "RESET flag set"},
+  {"id": 9, "description": "disabled WDT never resets", "expected": "no reset"},
+  {"id": 10, "description": "task_check with no tasks feeds (vacuously true)", "expected": "returns 1, KICK=magic"},
+  {"id": 11, "description": "task_check withholds when a registered task missing", "expected": "returns 0, no feed"},
+  {"id": 12, "description": "task_check feeds when all check in", "expected": "returns 1, KICK=magic"},
+  {"id": 13, "description": "check-in mask cleared after feed", "expected": "next round returns 0"},
+  {"id": 14, "description": "unregister stuck task lets feeding resume", "expected": "before=0, after=1"},
+  {"id": 15, "description": "DEADLOCK PATH: stuck task -> SoC reset", "expected": "RESET flag set"},
+  {"id": 16, "description": "healthy 3-task loop -> no reset", "expected": "no reset over 30 rounds"}
+]
