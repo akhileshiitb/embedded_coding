@@ -1,0 +1,25 @@
+{
+  "id": 47,
+  "title": "printk-style Log Ring Buffer",
+  "slug": "log_buffer",
+  "difficulty": "medium",
+  "tags": ["logging", "ring-buffer", "circular-buffer", "severity-levels", "printk", "dmesg", "embedded-design", "non-blocking"],
+  "function_name": "log_write / dmesg_read / log_set_level / log_init",
+  "parameters": [
+    {"name": "level", "type": "int", "description": "Severity: 0=ERR,1=WARN,2=INFO,3=DEBUG"},
+    {"name": "timestamp", "type": "unsigned int", "description": "Caller-supplied tick"},
+    {"name": "msg", "type": "const char*", "description": "Message string (bounded copy)"},
+    {"name": "threshold", "type": "int", "description": "Runtime severity filter"},
+    {"name": "out_level/out_timestamp/out_msg/out_msg_size", "type": "output pointers", "description": "dmesg_read outputs"}
+  ],
+  "return_type": "void / int",
+  "constraints": [
+    "No dynamic allocation — fixed static storage",
+    "Ring capacity 4 records; max message 31 chars + NUL",
+    "Keep a message only if level <= threshold",
+    "Overwrite the oldest record when full (never drop newest)",
+    "Truncate over-long messages safely; always NUL-terminate",
+    "Default threshold after log_init is DEBUG (3)",
+    "Candidate designs all internal types — solution.c has plain functions only"
+  ]
+}

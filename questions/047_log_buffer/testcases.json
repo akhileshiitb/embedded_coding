@@ -1,0 +1,14 @@
+[
+  {"id": 1, "description": "read on empty log returns 0", "expected": "returns 0"},
+  {"id": 2, "description": "single write/read returns correct fields", "expected": "level=0, ts=100, msg=boot fail"},
+  {"id": 3, "description": "FIFO order preserved", "expected": "first then second, then 0"},
+  {"id": 4, "description": "default threshold keeps DEBUG", "expected": "DEBUG record read back"},
+  {"id": 5, "description": "DEBUG dropped when threshold=INFO", "expected": "read returns 0"},
+  {"id": 6, "description": "threshold=WARN keeps exactly 2 records", "expected": "count=2 (ERR,WARN)"},
+  {"id": 7, "description": "capacity 7 fills and reads in order", "expected": "A..G then 0"},
+  {"id": 8, "description": "overwrite oldest — first read is B, A gone", "expected": "first read ts=2 B"},
+  {"id": 9, "description": "after 2 overflows, ring holds newest 7 (C..I)", "expected": "C D E F G H I"},
+  {"id": 10, "description": "long message truncated to <=31 chars", "expected": "len<=31, prefix match"},
+  {"id": 11, "description": "read respects small out_msg_size", "expected": "len<=3, prefix match"},
+  {"id": 12, "description": "log_init clears previous records", "expected": "returns 0 after re-init"}
+]
