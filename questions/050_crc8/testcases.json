@@ -1,0 +1,14 @@
+[
+  {"id": 1, "description": "crc8(\"123456789\") canonical check", "expected": "0xF4"},
+  {"id": 2, "description": "crc8(empty) = init", "expected": "0x00"},
+  {"id": 3, "description": "crc8({0x00})", "expected": "0x00"},
+  {"id": 4, "description": "crc8({0x01})", "expected": "0x07"},
+  {"id": 5, "description": "crc8({0xFF})", "expected": "0xF3"},
+  {"id": 6, "description": "crc8({0x00,0x00})", "expected": "0x00"},
+  {"id": 7, "description": "verify accepts correct CRC", "expected": "1"},
+  {"id": 8, "description": "verify rejects wrong CRC", "expected": "0"},
+  {"id": 9, "description": "single-bit change alters CRC", "expected": "different CRC"},
+  {"id": 10, "description": "CRC is order-sensitive", "expected": "different CRC on reorder"},
+  {"id": 11, "description": "crc8({0xDE,0xAD,0xBE,0xEF})", "expected": "0xCA"},
+  {"id": 12, "description": "crc8({0xFF,0xFF,0xFF,0xFF})", "expected": "0xDE"}
+]

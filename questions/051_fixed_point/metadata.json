@@ -1,0 +1,22 @@
+{
+  "id": 51,
+  "title": "Fixed-Point Arithmetic (Q16.16)",
+  "slug": "fixed_point",
+  "difficulty": "medium",
+  "tags": ["fixed-point", "q-format", "no-fpu", "arithmetic", "overflow", "dsp", "embedded-fundamentals"],
+  "function_name": "fp_from_int / fp_to_int / fp_add / fp_sub / fp_mul / fp_div",
+  "parameters": [
+    {"name": "i", "type": "int32_t", "description": "Integer to convert to Q16.16"},
+    {"name": "x", "type": "int32_t", "description": "Q16.16 value to convert to integer"},
+    {"name": "a", "type": "int32_t", "description": "Q16.16 operand"},
+    {"name": "b", "type": "int32_t", "description": "Q16.16 operand"}
+  ],
+  "return_type": "int32_t",
+  "constraints": [
+    "Q16.16 in signed 32-bit integer; scaling factor 65536",
+    "fp_mul and fp_div MUST use a 64-bit (int64_t) intermediate",
+    "fp_mul truncates (arithmetic >> 16); no rounding required",
+    "fp_div by zero returns 0",
+    "Correct for negative values (arithmetic shifts preserve sign)"
+  ]
+}

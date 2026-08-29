@@ -1,0 +1,21 @@
+{
+  "id": 50,
+  "title": "CRC-8 (SMBus)",
+  "slug": "crc8",
+  "difficulty": "medium",
+  "tags": ["crc", "error-detection", "bitwise", "polynomial", "shift-register", "serial-protocols", "embedded-fundamentals"],
+  "function_name": "crc8 / crc8_verify",
+  "parameters": [
+    {"name": "data", "type": "const uint8_t*", "description": "Input byte buffer"},
+    {"name": "len", "type": "size_t", "description": "Number of bytes"},
+    {"name": "expected", "type": "uint8_t", "description": "Expected CRC for verify"}
+  ],
+  "return_type": "uint8_t / int",
+  "constraints": [
+    "CRC-8/SMBus: poly 0x07, init 0x00, MSB-first (no reflection), XorOut 0x00",
+    "crc8(\"123456789\", 9) must equal 0xF4 (canonical check value)",
+    "len may be 0 (returns init 0x00)",
+    "Keep the running CRC to 8 bits",
+    "Bitwise or table-driven — candidate's choice"
+  ]
+}

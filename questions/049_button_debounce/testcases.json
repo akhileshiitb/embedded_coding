@@ -1,0 +1,12 @@
+[
+  {"id": 1, "description": "clean press debounced level", "expected": "commit PRESSED after 4 ones"},
+  {"id": 2, "description": "bounce rejected, commits only when stable", "expected": "debounced 0 until 4 stable ones"},
+  {"id": 3, "description": "one press -> one event", "expected": "events=1"},
+  {"id": 4, "description": "3 samples insufficient (no commit)", "expected": "no press, events=0"},
+  {"id": 5, "description": "exactly 4 commits + 1 event", "expected": "deb[4]=1, events=1"},
+  {"id": 6, "description": "two presses -> two events", "expected": "events=2"},
+  {"id": 7, "description": "interrupted count restarts", "expected": "commit only after 4 uninterrupted"},
+  {"id": 8, "description": "all-released, no events", "expected": "events=0"},
+  {"id": 9, "description": "release debounced symmetrically", "expected": "release needs 4 stable zeros"},
+  {"id": 10, "description": "press event is one-shot", "expected": "first=1, second=0"}
+]

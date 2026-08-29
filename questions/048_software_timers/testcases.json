@@ -1,0 +1,14 @@
+[
+  {"id": 1, "description": "single timer fires", "expected": "cb 1 fires at t=10"},
+  {"id": 2, "description": "no early fire", "expected": "no fire before expiry"},
+  {"id": 3, "description": "two timers in expiry order (in-order insert)", "expected": "1 then 2"},
+  {"id": 4, "description": "reverse insert fires in expiry order", "expected": "1, 2, 3"},
+  {"id": 5, "description": "step-by-step re-arm to next soonest", "expected": "1, then 2, then 3"},
+  {"id": 6, "description": "same-expiry timers all fire", "expected": "1,2,3 in any order"},
+  {"id": 7, "description": "past-due timer fires on next dispatch", "expected": "cb 7 fires"},
+  {"id": 8, "description": "interleaved start/dispatch", "expected": "9 then 2"},
+  {"id": 9, "description": "five timers global order", "expected": "1,2,3,4,5"},
+  {"id": 10, "description": "16 timers all fire in order", "expected": "1..16"},
+  {"id": 11, "description": "only due timer fires, future stays pending", "expected": "only cb 1"},
+  {"id": 12, "description": "late dispatch fires all overdue", "expected": "1 and 2"}
+]

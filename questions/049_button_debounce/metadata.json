@@ -1,0 +1,19 @@
+{
+  "id": 49,
+  "title": "Button Debounce",
+  "slug": "button_debounce",
+  "difficulty": "medium",
+  "tags": ["debounce", "state-machine", "gpio", "input-handling", "embedded-fundamentals", "edge-detection"],
+  "function_name": "debounce_init / debounce_update / debounce_pressed_event",
+  "parameters": [
+    {"name": "raw_sample", "type": "int", "description": "Raw button sample: 0=released, 1=pressed"}
+  ],
+  "return_type": "int",
+  "constraints": [
+    "DEBOUNCE_N = 4 consecutive identical samples required to accept a state change",
+    "Raw samples and debounced state are 0 or 1",
+    "Initial debounced state is 0 (released)",
+    "Press event = committed 0->1 transition, reported exactly once (one-shot)",
+    "Fixed static storage; candidate designs the internal state"
+  ]
+}

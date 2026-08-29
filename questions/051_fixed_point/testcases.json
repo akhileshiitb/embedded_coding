@@ -1,0 +1,18 @@
+[
+  {"id": 1, "description": "fp_from_int(3)", "expected": "196608"},
+  {"id": 2, "description": "fp_from_int(-2)", "expected": "-131072"},
+  {"id": 3, "description": "fp_to_int(196608)", "expected": "3"},
+  {"id": 4, "description": "fp_to_int(1.5) truncates", "expected": "1"},
+  {"id": 5, "description": "1.0 + 1.0", "expected": "131072 (2.0)"},
+  {"id": 6, "description": "1.0 - 0.5", "expected": "32768 (0.5)"},
+  {"id": 7, "description": "0.5 - 1.0", "expected": "-32768 (-0.5)"},
+  {"id": 8, "description": "2.0 * 3.0 (needs 64-bit intermediate)", "expected": "393216 (6.0)"},
+  {"id": 9, "description": "0.5 * 0.5", "expected": "16384 (0.25)"},
+  {"id": 10, "description": "-2.0 * 3.0", "expected": "-393216 (-6.0)"},
+  {"id": 11, "description": "x * 1.0 identity", "expected": "12345"},
+  {"id": 12, "description": "1.0 / 2.0", "expected": "32768 (0.5)"},
+  {"id": 13, "description": "7.0 / 2.0", "expected": "229376 (3.5)"},
+  {"id": 14, "description": "-6.0 / 3.0", "expected": "-131072 (-2.0)"},
+  {"id": 15, "description": "divide-by-zero returns 0", "expected": "0"},
+  {"id": 16, "description": "(3.0*2.5)/2.5 round trip", "expected": "196608 (3.0)"}
+]

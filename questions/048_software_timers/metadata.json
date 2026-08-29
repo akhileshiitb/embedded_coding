@@ -1,0 +1,22 @@
+{
+  "id": 48,
+  "title": "N Software Timers on One Hardware Timer",
+  "slug": "software_timers",
+  "difficulty": "hard",
+  "tags": ["timers", "multiplexing", "callbacks", "function-pointers", "data-structures", "scheduling", "embedded-design", "rtos"],
+  "function_name": "sw_timer_init / sw_timer_start / sw_timer_on_expire",
+  "parameters": [
+    {"name": "expiry", "type": "unsigned int", "description": "Absolute expiry time (ticks)"},
+    {"name": "cb", "type": "void (*)(void *arg)", "description": "Callback invoked on expiry"},
+    {"name": "arg", "type": "void*", "description": "Opaque argument passed to the callback"}
+  ],
+  "return_type": "void",
+  "constraints": [
+    "Only one hardware expiry may be armed at a time (hw_timer_set overrides previous)",
+    "One-shot timers only (each fires at most once)",
+    "Support at least 16 concurrent pending software timers",
+    "Fire ALL due timers (expiry <= now) on dispatch, then re-arm for the next soonest",
+    "Callbacks are void (*)(void *arg)",
+    "No dynamic allocation required; candidate chooses the internal data structure"
+  ]
+}
