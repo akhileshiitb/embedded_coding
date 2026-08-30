@@ -9,7 +9,7 @@
  *
  * Contract (see question.md for full spec):
  *   Levels: 0=ERR, 1=WARN, 2=INFO, 3=DEBUG   (lower = more severe)
- *   Ring capacity: 4 records
+ *   Ring capacity: 8 records
  *   Max message length: 31 chars + NUL
  *   Keep a message only if level <= threshold.
  *   When the ring is full, overwrite the OLDEST record.
