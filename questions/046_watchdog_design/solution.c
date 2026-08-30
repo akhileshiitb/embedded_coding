@@ -23,7 +23,7 @@ struct wdt_regs {
  * @brief Enable the watchdog with the given timeout (in ticks).
  *        Set LOAD and COUNT to timeout_ticks, then set the enable bit.
  */
-void wdt_enable(volatile struct wdt_regs *regs, uint32_t timeout_ticks) {
+void wdt_enable(struct wdt_regs *regs, uint32_t timeout_ticks) {
     /* TODO: Implement */
     (void)regs;
     (void)timeout_ticks;
@@ -32,7 +32,7 @@ void wdt_enable(volatile struct wdt_regs *regs, uint32_t timeout_ticks) {
 /**
  * @brief Feed (pet) the watchdog by writing the magic value to KICK.
  */
-void wdt_pet(volatile struct wdt_regs *regs) {
+void wdt_pet(struct wdt_regs *regs) {
     /* TODO: Implement */
     (void)regs;
 }
@@ -40,7 +40,7 @@ void wdt_pet(volatile struct wdt_regs *regs) {
 /**
  * @brief Disable the watchdog (clear the enable bit only).
  */
-void wdt_disable(volatile struct wdt_regs *regs) {
+void wdt_disable(struct wdt_regs *regs) {
     /* TODO: Implement */
     (void)regs;
 }
@@ -49,16 +49,11 @@ void wdt_disable(volatile struct wdt_regs *regs) {
  * Part B: Task check-in layer
  * ============================================================ */
 
-static uint32_t s_registered_tasks = 0;
-static uint32_t s_checked_in_tasks = 0;
-
 /**
  * @brief Reset both bitmasks to zero.
  */
 void wdt_task_init(void) {
     /* TODO: Implement */
-    (void)s_registered_tasks;
-    (void)s_checked_in_tasks;
 }
 
 /**
@@ -90,7 +85,7 @@ void wdt_task_checkin(int task_id) {
  *        tasks have checked in; if fed, clear the check-in mask.
  * @return 1 if the watchdog was fed, 0 if withheld.
  */
-int wdt_task_check(volatile struct wdt_regs *regs) {
+int wdt_task_check(struct wdt_regs *regs) {
     /* TODO: Implement */
     (void)regs;
     return 0;

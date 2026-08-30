@@ -235,6 +235,40 @@ systemd ── writes /dev/watchdog (RuntimeWatchdogSec) ▶ kernel watchdog fra
 The same "forward progress → feed, no progress → reset" principle applies at every layer —
 just with more software indirection than a bare-metal MCU.
 
+### How this coding question maps to the real Linux design (IMPORTANT — interview framing)
+
+Our coding question (§9 task check-in) is a **minimal bare-metal implementation of the exact
+same pattern systemd uses in production Linux**. The mapping is direct:
+
+| This coding question (bare-metal) | Real Linux / systemd |
+|-----------------------------------|----------------------|
+| Each task calls `wdt_task_checkin(id)` (sets its bit) | Each service sends a heartbeat via `sd_notify(WATCHDOG=1)` |
+| `registered_tasks` / `checked_in_tasks` bitmasks | systemd's internal table of monitored services + heartbeat state |
+| `wdt_task_check()` aggregates all check-ins and decides to pet or withhold | systemd aggregates all service heartbeats and decides |
+| `wdt_pet()` → magic write to `KICK` | systemd writes to `/dev/watchdog` |
+| HW counter → SoC reset | HW counter → SoC reset |
+
+So the **WDT task = systemd's aggregator role**, and the **per-task check-in bitmask = the
+per-service `sd_notify` heartbeats**. Same shape: *many producers report progress → one
+aggregator decides → one entity pets the hardware.*
+
+**The one key difference — recovery granularity:**
+- **This question (bare-metal):** if *any* registered task fails to check in, the pet is
+  withheld and the HW watchdog resets the **whole SoC**. All-or-nothing — because a small MCU
+  has no OS to selectively kill and respawn a single task.
+- **Linux/systemd:** if one service stops heartbeating, systemd can do a **targeted recovery**
+  — restart *just that service* (`Restart=on-watchdog`) without rebooting. It only escalates to
+  a full HW-watchdog reboot if systemd itself (PID 1) hangs, or if `FailureAction=reboot` is
+  configured. This is possible because Linux has process isolation, an MMU, and the ability to
+  respawn individual processes.
+
+**Interview takeaway:** be ready to say — *"My task check-in is the same producer/aggregator/petter
+pattern as systemd's watchdog. Tasks heartbeat like services call `sd_notify(WATCHDOG=1)`, my WDT
+task aggregates like systemd, and it pets the HW watchdog like systemd writes `/dev/watchdog`. The
+difference is recovery granularity: bare-metal can only do a full SoC reset, while systemd can
+restart individual services and only reboots if PID 1 itself hangs."* This shows you understand
+both the pattern *and* why the platform shapes the recovery strategy.
+
 ---
 
 ## 12. Two Must-Know Follow-Ups: Windowed Watchdog & Independent Clock
@@ -266,13 +300,30 @@ A **windowed watchdog** adds a *lower* bound, splitting the feed period into two
 - In short: single-sided catches "the code stopped"; windowed also catches "the code is running
   at the wrong rate."
 
+**The classic bug it catches:**
+```c
+while (1) {
+    wdt_pet();          // pet is INSIDE the loop
+    do_work();          // suppose corruption makes this spin fast / do nothing useful
+}
+```
+- **Single-sided watchdog:** the loop keeps calling `wdt_pet()`, so the counter never expires →
+  the hang is **completely masked**. The system looks healthy while spinning uselessly.
+- **Windowed watchdog:** the runaway loop pets **much faster than the intended cadence** → the
+  pet lands in the **CLOSED window** → **reset**. The abnormal *rate* is detected even though the
+  code is technically "still petting".
+
 STM32 exposes both flavors as separate peripherals: `IWDG` (simple, single-sided) and `WWDG`
 (windowed). On the STM32 WWDG, a reset occurs if the counter is reloaded outside the time
 window (or if it counts down past its floor).
 
+**Mental model:** a normal watchdog answers *"did the code stop?"* (liveness); a windowed
+watchdog also answers *"is the code running at the correct rate?"* (liveness + timing correctness).
+
 **Trade-off:** windowed watchdogs need more careful timing analysis — your feed cadence must be
 stable enough to always land in the open window, which is harder in an event-driven system with
-variable loop times.
+variable loop times (too-variable timing risks false resets). They suit predictable, periodic
+execution (control loops, motor control, periodic sampling) best.
 
 ### 12b. Independent Clock Source — survive a main-clock failure
 

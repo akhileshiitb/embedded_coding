@@ -87,7 +87,7 @@ static void regs_reset(struct wdt_regs *r) {
  * ============================================================ */
 int main(void) {
     int passed = 0;
-    int num_tests = 16;
+    int num_tests = 17;
     int test_num = 0;
     struct wdt_regs regs;
 
@@ -375,6 +375,36 @@ int main(void) {
             printf("[PASS] Test %d: healthy 3-task loop -> no reset\n", test_num);
         } else {
             printf("[FAIL] Test %d: healthy loop wrongly reset\n", test_num);
+        }
+    }
+
+    /* === Test 17: unregister must clear the stale check-in bit ===
+     *
+     * Spec: wdt_unregister_task clears the task's bit in BOTH masks.
+     * If it only clears registered_tasks, a stale check-in bit lingers.
+     * Re-registering the task would then make it look "alive" on the very
+     * first check WITHOUT a fresh check-in — a real watchdog safety hole.
+     */
+    {
+        test_num++;
+        regs_reset(&regs);
+        wdt_task_init();
+        wdt_enable(&regs, 5);
+
+        wdt_register_task(1);
+        wdt_task_checkin(1);           /* task 1 checks in (sets its check-in bit) */
+        wdt_unregister_task(1);        /* must clear BOTH masks for task 1 */
+
+        /* Task 1 comes back but has NOT checked in yet this life. */
+        wdt_register_task(1);
+        regs.KICK = 0;                 /* clear observation */
+        int fed = wdt_task_check(&regs);   /* should WITHHOLD: no fresh check-in */
+        if (fed == 0 && regs.KICK != WDT_KICK_MAGIC) {
+            passed++;
+            printf("[PASS] Test %d: unregister clears stale check-in (re-registered task must re-check-in)\n", test_num);
+        } else {
+            printf("[FAIL] Test %d: stale check-in bit survived unregister | fed=%d, KICK=0x%X\n",
+                   test_num, fed, regs.KICK);
         }
     }
 
